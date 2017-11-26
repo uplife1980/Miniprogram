@@ -1,12 +1,38 @@
 {
-  "pages":[
+
+
+  "pages": [
     "pages/index/index",
     "pages/logs/logs"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
+  "window": {
+    "backgroundTextStyle":"dark",
+    "navigationBarBackgroundColor": "#ffc6c6",
+    "navigationBarTitleText": "咸鱼少女",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f1f1f1",
+    "enablePullDownRefresh": "true"
+  },
+  "tabBar":{
+  "list":
+  [
+    {
+    "pagePath":"pages/index/index",
+    "text":"我要求书",
+    "iconPath":"img/m2.png",
+    "selectedIconPath": "img/m.png"
+    },
+    {
+    "pagePath":"pages/logs/logs",
+    "text":"我要出书",
+    "iconPath":"img/w2.png",
+    "selectedIconPath": "img/w.png"
+    }
+  ],
+  "position": "bottom",
+  "selectedColor": "#ff00ee",
+  "color":"#ffc6c6"
   }
 }
+
+
