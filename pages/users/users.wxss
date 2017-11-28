@@ -1,0 +1,33 @@
+/**index.wxss**/
+.userinfo {
+  display: flex;
+  height:150rpx;
+  margin-top: 5rpx;
+  background: yellow;
+  width:100%;
+  align-items: center;
+  padding:50rpx;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+  background: white;
+margin-left:40%;
+font-size: 1.5em;
+}
+.option{
+  background:pink;
+  margin:3%;
+  height:190rpx;
+  align-items: center;
+}
+.option-text{
+  color:cornflowerblue;
+}
