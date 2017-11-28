@@ -1,0 +1,91 @@
+MyFirstServlet类继承了HttpServlet
+重写doGet()和doPost()方法
+HttpServletRequest和HttpServletResponse 是所有doXXX()方法的默认参数
+Servlet生命周期方法
+web容器通过调用init()方法来初始化Servlet实例，这个方法在实例的生命周期里只调用一次
+web容器调用Servelt的service()方法来处理每一个请求
+web容器调用destroy()方法来终结Servlet
+
+使用@WebServlet注解来开发Servlet
+@WebServlet(name = "MyFirstServlet", urlPatterns = {"/MyFirstServlet"})
+public class MyFirstServlet extends HttpServlet{
+	@Override
+	protected void doGet(HttpServletRequest request,
+		HttpServletResponse response) throws ServletException,IOException{
+	}
+	@Override
+	protected void doPost(HttpServletRequest request,
+		HttpServletResponse response) throws ServletException,IOException{
+	}	
+}
+打包和部署Servlet到Tomcat服务器 --使用eclipse Run As Server
+或不使用IDE，使用命令提示符编译应用，使用ANT去生成war文件
+
+编写动态的Servlet响应内容
+处理Servlet请求和响应
+	调用HttpServletRequest对象的getParameter()方法获取请求参数
+	使用HttpServletResponse对象给客户端发送响应
+	response.setContentType("text/html;charset=UTF-8");
+	PrintWriter out = response.getWriter();
+	为了发送内容给客户端，你需要使用从HttpServletResponse里获取的PrintWriter对象。
+	任何写到对象的内容都会被写进outputstream里，并把内容发送回给客户端。
+监听Servlet容器事件
+	可以使用其中一个方法
+	1）利用@WebListener注解
+	2）在web.xml应用部署文件里注册监听器
+	3）使用ServletContext里定义的addListener()方法
+
+传递Servlet初始化参数
+
+为特定的URl请求添加Servlet过滤器
+Web过滤器在给定的URL被访问时对请求进行预处理并调用相应的功能是很有用的。
+相 比于直接调用给定URL请求的Servlet，包含相同URL模式的过滤器（filter）会在Servlet调用前被调用。
+这在很多情况下是很有用的。 或许最大的用处就是执行日志，验证或者其他不需要与用户交互的后台服务。
+
+过滤器必须要实现 javax.servlet.Filter 接口。这个接口包含了init()，descriptor()和doFilter()这些方法。
+init()和destroy()方法会被容器调用。 doFilter()方法用来在过滤器类里实现逻辑任务。
+如果你想把过滤器组成过滤链（chain filter）或者存在多匹配给定URL模式的个过滤器，它们就会根据web.xml里的配置顺序被调用。
+
+为了在web.xml里配置过滤器，需要使用<filter>和<filter-mapping> XML元素以及相关的子元素标签。
+<filter>
+    <filter-name>LoggingFilter</filter-name>
+    <filter-class>LoggingFilter</filter-class>
+</filter>
+<filter-mapping>
+    <filter-name>LogingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
+如果你要使用注解来为特定的servlet配置过滤器，你可以使用@WebFilter注解。
+
+使用Servlet下载二进制文件
+
+使用RequestDispatch.forward()转发请求到另一个Servlet
+	request.getRequestDispatcher("/XXXServlet").forward(request,response);
+使用HttpServletResponse.sendRedirect()重定向请求到另一个Servlet
+	response.sendRedirect("/XXXURL");
+使用Servlet读写Cookie
+
+创建cookie，设置属性	
+Cookie cookie = new Cookie("sessionId","123456789");
+cookie.setHttpOnly(true);
+cookie.setMaxAge(-30);
+response.addCookie(cookie);
+要读取服务端的cookie信息
+Cookie[] cookies = request.getCookies();
+for(Cookie cookie :　cookies){
+	cookie.getName();
+	cookie.getValue();
+}
+
+
+Servlet – Upload、Download、Async、动态注册
+http://www.importnew.com/20173.html
+
+Servlet – Listener、Filter、Decorator
+http://www.importnew.com/20105.html
+
+Servlet 3特性：异步Servlet
+http://www.importnew.com/8864.html
+
+Servlet – 会话跟踪
+http://www.importnew.com/19871.html
