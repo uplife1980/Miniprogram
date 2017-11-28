@@ -1,0 +1,14 @@
+<view class="container">
+  <view class="userinfo">
+    <block>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+  </view>
+
+</view>
+
+  <navigator url="../maishu/maishu" class="option">我要卖书</navigator>
+<navigator url="../shouru/shouru" class="option">已借图书</navigator>
+<navigator url="../xinxi/xinxi" class="option">我的信息</navigator>
+<navigator url="../guanyu" class="option">关于程序</navigator>

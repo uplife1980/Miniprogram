@@ -3,7 +3,13 @@
 
   "pages": [
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/users/users",
+    "pages/maishu/maishu",
+    "pages/yijie/yijie",
+    "pages/xinxi/xinxi",
+    "pages/guanyu/guanyu",
+    "pages/detail/detail"
   ],
   "window": {
     "backgroundTextStyle":"dark",
@@ -18,13 +24,13 @@
   [
     {
     "pagePath":"pages/index/index",
-    "text":"我要求书",
+    "text":"找书",
     "iconPath":"img/m2.png",
     "selectedIconPath": "img/m.png"
     },
     {
-    "pagePath":"pages/logs/logs",
-    "text":"我要出书",
+    "pagePath":"pages/users/users",
+    "text":"我的",
     "iconPath":"img/w2.png",
     "selectedIconPath": "img/w.png"
     }
