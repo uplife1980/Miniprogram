@@ -7,10 +7,19 @@ Page({
       sizeType: ["compressed"],
       sourceType: [],
       success: function(res) {
-            that.setData({
-          img: res.tempFilePaths,
-          display:"block"
+        that.setData({
+          display: "block"
         })
+        var i = 0
+        var tempimg=that.data.img
+        while (res.tempFilePaths[i]){
+          tempimg.push({ imgsrc: res.tempFilePaths[i++] })
+          that.setData({
+          img:tempimg
+          
+          })
+        }
+        
       },
       fail: function(res) {},
       complete: function(res) {},
@@ -39,8 +48,10 @@ Page({
     input1: false,
     input2:true,
     isbn: '',
-    img:'',
-    display:"none",
+    img:[
+
+    ],
+    display:"block",
    
   },
   /**
@@ -58,11 +69,43 @@ Page({
       input2: that
     })
   },
+  findbook:function(){
+    wx.request({
+      url: "https://api.douban.com/v2/book/isbn/:"+that.data.isbn,
+      data: {},
+      header: {},
+      method: "GET",
+      dataType: json,
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
+    })
+  },
  
-  onLoad: function () {
-    
+  formSubmit:function(e){
+    var that=this;
+    wx.request({
+      url: 'www.echohuiyin.com',
+      data: {
+      book:e.detail.value.name,
+      isbn:e.detail.value.isbn,
+      maishu:e.detail.value.maishu,
+      borrow:e.detail.value.borrow,
+      chuzu:e.detail.value.chuzu,
+      buy:e.detail.value.buy},
+      header: {
+        'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
 },
-
+      method: "POST",
+      success: function(res) {
+       
+      },
+      fail: function(res) {},
+      complete: function(res) {
+          console.log("刚才提交的数据是:" + that.data)
+      },
+    })
+  }
  
   
 })
