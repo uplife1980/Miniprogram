@@ -4,14 +4,15 @@
 
 图书名称:<input type='text'></input>
 <button bindtap='iwantcode'>扫描图书二维码</button>
-<text>{{a}}</text>
+<text>{{isbn}}</text>
 <button bindtap='iwantpic'>图书真照</button>
+<image src="{{img}}" style="display:{{display}}"></image>
 <switch checked bindchange='switch1'/>出租
 图书出租价格:
- <input id="" type='digit' maxlength='10000'focus disabled="{{input1}}"/>
-<switch />出售
+ <input id="" type='digit' maxlength='10000' disabled="{{input1}}"/>
+<switch bindchange='switch2'/>出售
 图书出售价格:
-<input type="digit" maxlength='10000' focus />
+<input type="digit" maxlength='10000' disabled="{{input2}}"/>
 <button form-type='submit' type="primary">提交</button>
 </form>
 </view>

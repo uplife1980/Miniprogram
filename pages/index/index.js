@@ -6,6 +6,9 @@ Page({
     imgUrls: [
 
     ],
+    name:[],
+    borrow:[],
+    budy:[],
     indicatorDots: true,
     autoplay: true,
     interval: 3000,
@@ -46,39 +49,10 @@ Page({
     }
     var that = this;
     //ajax请求数据
-    wx.request({
-      method: "GET",
-      url: ajaxUrl.ajaxUrl() + "?method=index.getHomeData",
+    
 
-      data: {
-
-      },
-      header: {
-        'Content-Type': 'application/json'
-      },
-      success: function (res) {
-
-        if (res.data.result == 0) {
-          //console.log(res.data.data)
-          //将图片从接口拿过来，并且用七牛参数处理一下
-          var bannerImg = [];
-          // _.each(res.data.data.banner,function(v,i){
-          //     bannerImg.push(ajaxUrl.cdnUrl() + v.image+"?imageView2/1/w/750/h/380/q/60");
-          // })
-          for (var i in res.data.data.banner) {
-            bannerImg.push(ajaxUrl.cdnUrl() + res.data.data.banner[i].image + "?imageView2/1/w/750/h/380/q/60");
-          }
-
-          that.setData({
-            'imgUrls': bannerImg
-          })
-        }
-
-      }
-    })
-
-    that.fetchImgListDate();
-    // console.log(that.data.postsList)
+     that.fetchImgListDate();
+    //  console.log(that.data.postsList)
   },
   //跳转至详情页
   redictDetail: function (e) {
@@ -111,15 +85,15 @@ Page({
         postsList: []
       });
     }
-    wx.request({
+    wx.request({  //注意服务器返回的data.result是一个数组,每次8个
       method: "GET",
-      url: ajaxUrl.ajaxUrl() + "?method=index.getChoicenessList",
+      url: ajaxUrl.ajaxUrl() + "?method=index.getChoicenessList",//URL改成自己的服务器
       data: {
         "fromPageId": 0,
         "pageSize": 10,
         "viewUserId": '',
         "page": self.data.page
-      },
+      },  //记录纸的张数,每页放置的物件
       header: {
         'Content-Type': 'application/json'
       },
@@ -139,12 +113,12 @@ Page({
         self.setData({
           postsList: self.data.postsList
         })
-        //   self.data.postsList = contentObj
+        //   从传递的data返回给真正的data
         setTimeout(function () {
           self.setData({
             hidden: true
           });
-        }, 300);
+        }, 300);  //加载中
       }
     })
 

@@ -10,7 +10,9 @@ Page({
     ],
 
     image: "",
-    content: ""
+    content: "",
+    borrow:'',
+    buy:''
   },
   onLoad: function (options) {
     this.fetchData(options.viewUserId, options.suitId);
@@ -34,7 +36,7 @@ Page({
       },
       success: function (res) {
         if (res.data.result == 0) {
-          //console.log(res.data.data)
+          console.log(res)
           //    that.setData({
           //         'img':ajaxUrl.cdnUrl() + res.data.data.image+"?imageMogr/v2/auto-orient/thumbnail/750x/quality/80/"
           //     })
