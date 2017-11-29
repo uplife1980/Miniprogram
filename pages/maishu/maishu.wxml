@@ -6,7 +6,10 @@
 <button bindtap='iwantcode'>扫描图书二维码</button>
 <text name="isbn">{{isbn}}</text>
 <button bindtap='iwantpic'>图书真照</button>
-<image wx:for="{{img}}" wx:key="unique" src="{{item.imgsrc}}" style="display:{{display}}"></image>
+
+<image   src="{{img}}" style="display:{{display1}}"></image>
+<button bindtap='iwantpic2'>图书立体照</button>
+<image   src="{{img2}}" style="display:{{display2}}"></image>
 <switch checked bindchange='switch1' name="chuzu"/>出租
 图书出租价格:
  <input name="borrow" type='digit' maxlength='10000' disabled="{{input1}}"/>
