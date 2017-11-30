@@ -78,9 +78,6 @@ Page({
 
   formSubmit: function (e) {
     var that = this;
-   
-    var i=0;
-    while(i<=1){
     wx.uploadFile({
       url: '',
       filePath: that.data.img[0],
@@ -91,28 +88,26 @@ Page({
       fail: function (res) { },
       complete: function (res) { },
     })
-    }
-  wx.uploadFile({
-    url: '',
-    filePath: that.data.img2[0],
-    name: 'imgsrc2',
-    header: { 'content-type': 'multipart/form-data' },
-    formData: {},
-    success: function (res) { },
-    fail: function (res) { },
-    complete: function (res) { },
-  })
-
-
+    wx.uploadFile({
+      url: '',
+      filePath: that.data.img2[0],
+      name: 'imgsrc2',
+      header: { 'content-type': 'multipart/form-data' },
+      formData: {},
+      success: function (res) { },
+      fail: function (res) { },
+      complete: function (res) { },
+    })
+    
     wx.request({
       url: 'www.echohuiyin.com',
       data: {
-        book: e.detail.value.name,
-        isbn: e.detail.value.isbn,
-        maishu: e.detail.value.maishu,
-        borrow: e.detail.value.borrow,
-        chuzu: e.detail.value.chuzu,
-        buy: e.detail.value.buy
+        name: e.detail.value.name,//书的名字
+        information: e.detail.value.isbn,//isbn号
+        borrowable: e.detail.value.maishu,//卖书的开关，1是卖，0是不卖
+        rent_price: e.detail.value.borrow,//出租的价格
+        rentable: e.detail.value.chuzu,//出租的开关，同卖书
+        sale_price: e.detail.value.buy//买书的价格
       },
       header: {
         'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
