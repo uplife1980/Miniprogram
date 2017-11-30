@@ -1,5 +1,16 @@
 // pages/maishu/maishu.js
+var app=getApp();
 Page({
+  data: {
+    input1: false,
+    input2: true,
+    isbn: '',
+    img: '',
+    img2: '',
+    display1: "none",
+    display2: "none",
+    phone:""
+  },
   iwantpic: function () {
     var that = this
     wx.chooseImage({
@@ -51,15 +62,7 @@ Page({
    * 页面的初始数据
    */
 
-  data: {
-    input1: false,
-    input2: true,
-    isbn: '',
-    img: '',
-    img2: '',
-    display1: "none",
-    display2:"none",
-  },
+  
   /**
    * 生命周期函数--监听页面加载
    */
@@ -78,12 +81,10 @@ Page({
 
   formSubmit: function (e) {
     var that = this;
-   
     var i=0;
-    while(i<=1){
     wx.uploadFile({
       url: '',
-      filePath: that.data.img[0],
+      filePath: that.data.img[i],
       name: 'imgsrc',
       header: { 'content-type': 'multipart/form-data' },
       formData: {},
@@ -91,7 +92,7 @@ Page({
       fail: function (res) { },
       complete: function (res) { },
     })
-    }
+    
   wx.uploadFile({
     url: '',
     filePath: that.data.img2[0],
@@ -112,7 +113,8 @@ Page({
         maishu: e.detail.value.maishu,
         borrow: e.detail.value.borrow,
         chuzu: e.detail.value.chuzu,
-        buy: e.detail.value.buy
+        buy: e.detail.value.buy,
+        phone:e.detail.value.phone
       },
       header: {
         'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -123,10 +125,32 @@ Page({
       },
       fail: function (res) { },
       complete: function (res) {
-        console.log("刚才提交的数据是:" + that.data)
+        //console.log(e.detail.value.phone)
       },
     })
-  }
+  },
+  onLoad: function () {
+  var that=this
+  wx.request({
+    url: 'URL'+'method?=getUserPhone',
+    data: {
+      "user": app.globalData.userInfo.nickName},
+    header: {
+      'Content-Type': 'application/json'
+},
+    method: "GET",
+    success: function(res) {
+      if(res.data.fail==0){
+      that.setData({
+        phone:res.data.phone
+      })
+      }
+    },
+    fail: function(res) {},
+    complete: function(res) {},
+  })
+  },
+
  
   
 })
