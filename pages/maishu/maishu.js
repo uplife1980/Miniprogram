@@ -1,6 +1,7 @@
 // pages/maishu/maishu.js
-var app=getApp();
+var app = getApp();
 Page({
+ 
   data: {
     input1: false,
     input2: true,
@@ -9,7 +10,8 @@ Page({
     img2: '',
     display1: "none",
     display2: "none",
-    phone:""
+    phone: "",
+    error:''
   },
   iwantpic: function () {
     var that = this
@@ -61,7 +63,7 @@ Page({
    * 页面的初始数据
    */
 
-  
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -76,10 +78,26 @@ Page({
     this.setData({
       input2: that
     })
+      },
+  formCheck:function(e){
+    var that=this
+    if (that.data.img[0] != null && that.data.img2[0] != null && e.detail.value.book != 0 && e.detail.value.isbn != 0 && e.detail.value.phone != 0&&(e.detail.value.borrow||e.detail.value.buy)!=0)
+    {
+      that.setData({
+        error: ""
+      })
+      formSubmit(e)
+     
+      }
+    else
+    that.setData({
+      error:"信息没有填写完整,请检查!"
+    })
   },
-
   formSubmit: function (e) {
     var that = this;
+    var date=new Date() //9+4
+    var request_id = date.getTime() + Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
     wx.uploadFile({
       url: 'http://localhost:8082/BookShare/upload/uploading',
       filePath: that.data.img[0],
@@ -124,6 +142,7 @@ Page({
       },
       method: "POST",
       success: function (res) {
+
         console.log(res.data.result)
       },
       fail: function (res) {},
@@ -132,15 +151,19 @@ Page({
     })
   },
   onLoad: function () {
-  var that=this
-  wx.request({
-      url: 'URL'+'method?=getUserPhone',
+    var that = this
+
+    wx.request({
+      url: 'https://localhost/request' + 'method?=getUserPhone',
       data: {
-       "user": app.globalData.userInfo.nickName},
+        "user": app.globalData.userInfo.nickName
+      },
+
       header: {
         'Content-Type': 'application/json'
       },
       method: "GET",
+
       success: function(res) {
         if(res.data.fail==0){
           that.setData({
