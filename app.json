@@ -1,6 +1,4 @@
 {
-
-
   "pages": [
     "pages/index/index",
     "pages/logs/logs",
@@ -40,5 +38,3 @@
   "color":"#ffc6c6"
   }
 }
-
-
