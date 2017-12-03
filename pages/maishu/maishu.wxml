@@ -1,19 +1,22 @@
 <!--pages/maishu/maishu.wxml-->
 <view class="container">
+<<<<<<< HEAD
 <form bindsubmit='formCheck' >
+=======
+<form bindsubmit='formSubmit'>
+>>>>>>> 92bfe104f301d0490644d661a2583f56f425fc51
 
-图书名称:<input type='text' name="book"></input>
+图书名称:
+<input type='text' name="book"></input>
 <button bindtap='iwantcode'>扫描图书二维码</button>
 <text name="isbn">{{isbn}}</text>
 <button bindtap='iwantpic'>图书真照</button>
-
-
 <image   src="{{img}}" style="display:{{display1}}"></image>
 <button bindtap='iwantpic2'>图书立体照</button>
 <image   src="{{img2}}" style="display:{{display2}}"></image>
 <switch checked bindchange='switch1' name="chuzu"/>出租
 图书出租价格:
- <input name="borrow" type='digit' maxlength='5' disabled="{{input1}}"/>
+<input name="borrow" type='digit' maxlength='5' disabled="{{input1}}"/>
 <switch bindchange='switch2' name="chushou"/>出售
 图书出售价格:
 <input type="digit" name="buy" maxlength='10000' disabled="{{input2}}"/>
