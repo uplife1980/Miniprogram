@@ -51,7 +51,6 @@ Page({
         that.setData({
           isbn: res.result
         })
-
       },
       fail: function (res) { },
       complete: function (res) {
@@ -81,76 +80,77 @@ Page({
 
   formSubmit: function (e) {
     var that = this;
-    var i=0;
     wx.uploadFile({
-      url: '',
-      filePath: that.data.img[i],
+      url: 'http://localhost:8082/BookShare/upload/uploading',
+      filePath: that.data.img[0],
       name: 'imgsrc',
-      header: { 'content-type': 'multipart/form-data' },
-      formData: {},
-      success: function (res) { },
+      header: { 
+        'content-type': 'multipart/form-data'
+         },
+      formData: {"onlycode": "001"},
+      success: function (res) {
+        console.log(res)
+       },
+      fail: function (res) { },
+      complete: function (res) { },
+    })
+    wx.uploadFile({
+      url: 'http://localhost:8082/BookShare/upload/uploading',
+      filePath: that.data.img2[0],
+      name: 'imgsrc2',
+      header: { 
+        'content-type': 'multipart/form-data'
+         },
+      formData: {"onlycode" : "001"},
+      success: function (res) { 
+      },
       fail: function (res) { },
       complete: function (res) { },
     })
     
-  wx.uploadFile({
-    url: '',
-    filePath: that.data.img2[0],
-    name: 'imgsrc2',
-    header: { 'content-type': 'multipart/form-data' },
-    formData: {},
-    success: function (res) { },
-    fail: function (res) { },
-    complete: function (res) { },
-  })
-
-
     wx.request({
-      url: 'www.echohuiyin.com',
+      url: 'http://localhost:8082/BookShare/rentable/bookapplication',
       data: {
-        book: e.detail.value.name,
-        isbn: e.detail.value.isbn,
-        maishu: e.detail.value.maishu,
-        borrow: e.detail.value.borrow,
-        chuzu: e.detail.value.chuzu,
-        buy: e.detail.value.buy,
-        phone:e.detail.value.phone
+        name        :   e.detail.value.book,//书的名字
+        information :   e.detail.value.isbn,//isbn号 
+        borrowable  :   e.detail.value.maishu,//卖书的开关，1是卖，0是不卖
+        rent_price  :   e.detail.value.borrow,//出租的价格
+        rentable    :   e.detail.value.chuzu,//出租的开关，同卖书
+        sale_price  :   e.detail.value.buy//买书的价格
       },
       header: {
-        'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        //'content-type'  :   'application/json'
+        'content-type': 'application/x-www-form-urlencoded'
       },
       method: "POST",
       success: function (res) {
-
+        console.log(res.data.result)
       },
-      fail: function (res) { },
+      fail: function (res) {},
       complete: function (res) {
-        //console.log(e.detail.value.phone)
       },
     })
   },
   onLoad: function () {
   var that=this
   wx.request({
-    url: 'URL'+'method?=getUserPhone',
-    data: {
-      "user": app.globalData.userInfo.nickName},
-    header: {
-      'Content-Type': 'application/json'
-},
-    method: "GET",
-    success: function(res) {
-      if(res.data.fail==0){
-      that.setData({
-        phone:res.data.phone
-      })
-      }
-    },
-    fail: function(res) {},
-    complete: function(res) {},
-  })
+      url: 'URL'+'method?=getUserPhone',
+      data: {
+       "user": app.globalData.userInfo.nickName},
+      header: {
+        'Content-Type': 'application/json'
+      },
+      method: "GET",
+      success: function(res) {
+        if(res.data.fail==0){
+          that.setData({
+            phone:res.data.phone
+          })
+        }
+      },
+      fail: function(res) {},
+      complete: function(res) {},
+    })
   },
 
- 
-  
 })

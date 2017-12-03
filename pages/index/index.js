@@ -1,6 +1,6 @@
 
 var ajaxUrl = require('../../utils/url.js');
-var app = getApp()
+var app = getApp();
 Page({
   data: {
     imgUrls: [
@@ -101,10 +101,9 @@ Page({
         console.log(res)
         // var contentObj = [];
         if (res.data.result == 0) {
-
           for (var i in res.data.data.result) {
             self.data.postsList.push({
-              imgUrl: res.data.data.result[i].image + "?imageMogr/v2/auto-orient/thumbnail/750x/quality/80/",
+              imgUrl: res.data.data.result[i].image + "?   imageMogr/v2/auto-orient/thumbnail/750x/quality/80/",
               userId: res.data.data.result[i].userId,
               suitId: res.data.data.result[i].suitId
             });
@@ -121,12 +120,5 @@ Page({
         }, 300);  //加载中
       }
     })
-
   }
-
-
-
 })
-
-
-
