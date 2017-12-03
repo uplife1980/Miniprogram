@@ -10,7 +10,8 @@ Page({
     img2: '',
     display1: "none",
     display2: "none",
-    phone: ""
+    phone: "",
+    error:''
   },
   iwantpic: function () {
     var that = this
@@ -77,8 +78,22 @@ Page({
     this.setData({
       input2: that
     })
+      },
+  formCheck:function(e){
+    var that=this
+    if (that.data.img[0] != null && that.data.img2[0] != null && e.detail.value.book != 0 && e.detail.value.isbn != 0 && e.detail.value.phone != 0&&(e.detail.value.borrow||e.detail.value.buy)!=0)
+    {
+      that.setData({
+        error: ""
+      })
+      formSubmit(e)
+     
+      }
+    else
+    that.setData({
+      error:"信息没有填写完整,请检查!"
+    })
   },
-
   formSubmit: function (e) {
     var that = this;
     var date=new Date() //9+4
