@@ -1,6 +1,6 @@
 <!--pages/maishu/maishu.wxml-->
 <view class="container">
-<form bindsubmit='formSubmit' >
+<form bindsubmit='formCheck' >
 
 图书名称:<input type='text' name="book"></input>
 <button bindtap='iwantcode'>扫描图书二维码</button>
