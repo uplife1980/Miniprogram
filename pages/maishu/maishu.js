@@ -119,8 +119,16 @@ Page({
       header: { 
         'content-type': 'multipart/form-data'
          },
-      formData: {"onlycode" : "001"},
+      formData: {"onlycode" : "001",
+        name: e.detail.value.book,//书的名字
+        information: e.detail.value.isbn,//isbn号 
+        borrowable: e.detail.value.maishu,//卖书的开关，1是卖，0是不卖
+        rent_price: e.detail.value.borrow,//出租的价格
+        rentable: e.detail.value.chuzu,//出租的开关，同卖书
+        sale_price: e.detail.value.buy//买书的价格,
+      },
       success: function (res) { 
+        console.log("123")
       },
       fail: function (res) { },
       complete: function (res) { },
