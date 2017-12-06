@@ -1,22 +1,12 @@
-
-var ajaxUrl = require('../../utils/url.js');
 var app = getApp();
 Page({
   data: {
-    imgUrls: [
-
-    ],
-    name:[],
-    borrow:[],
-    budy:[],
     indicatorDots: true,
     autoplay: true,
     interval: 3000,
     duration: 1000,
-    page: 1,
-    postsList: [
-
-    ],
+    number: 1,
+    postsList: [],
     hidden: false
   },
 
@@ -48,17 +38,14 @@ Page({
       })
     }
     var that = this;
-    //ajax请求数据
     
 
      that.fetchImgListDate();
-    //  console.log(that.data.postsList)
   },
   //跳转至详情页
   redictDetail: function (e) {
-    var userId = e.currentTarget.dataset.userid;
-    var suitId = e.currentTarget.dataset.suitid;
-    var link = "../detail/detail?viewUserId=" + userId + "&suitId=" + suitId
+    var number = e.currentTarget.dataset.suitid;
+    var link = "../detail/detail?suitId=" + number
     wx.navigateTo({
       url: link
     })
@@ -67,10 +54,10 @@ Page({
   lower: function (e) {
     var self = this;
     self.setData({
-      page: self.data.page + 1
+      number: self.data.number + 8
     });
 
-    self.fetchImgListDate({ page: self.data.page });
+    self.fetchImgListDate({ number: self.data.number });
   },
 
   fetchImgListDate: function (data) {
@@ -79,45 +66,59 @@ Page({
       hidden: false
     });
     if (!data) data = {};
-    if (!data.page) data.page = 1;
-    if (data.page === 1) {
+    if (!data.number) data.page = 1;
+    if (data.number === 1) {
       self.setData({
         postsList: []
       });
     }
-    wx.request({  //注意服务器返回的data.result是一个数组,每次8个
+    wx.request({  
       method: "GET",
-      url: ajaxUrl.ajaxUrl() + "?method=index.getChoicenessList",//URL改成自己的服务器
+      url:'',//URL变量改成自己的服务器
       data: {
-        "fromPageId": 0,
-        "pageSize": 10,
-        "viewUserId": '',
-        "page": self.data.page
-      },  //记录纸的张数,每页放置的物件
+        "number": self.data.number
+      }, 
       header: {
         'Content-Type': 'application/json'
       },
       success: function (res) {
         console.log(res)
-        // var contentObj = [];
-        if (res.data.result == 0) {
-          for (var i in res.data.data.result) {
+        var way;
+          for (var i in res.data.result) {
+            switch(res.data.result[i].way)
+            {
+              case 1:{
+                way="出租";
+                break;
+              }
+              case 2:{
+                way="出售";
+                break;
+              }
+              case 3:{
+               way="可租可售"
+              }
+            }
             self.data.postsList.push({
-              imgUrl: res.data.data.result[i].image + "?   imageMogr/v2/auto-orient/thumbnail/750x/quality/80/",
-              userId: res.data.data.result[i].userId,
-              suitId: res.data.data.result[i].suitId
+              picture1: res.data.result[i].picture1,
+              picture2:res.data.result[i].picture2,
+              bookindex: res.data.result[i].index,
+              name:res.data.result[i].name,
+              way:way,
+              rentprice: res.data.result[i].rent_price,
+              saleprice: res.data.result[i].sale_price
             });
           }
-        }
+
         self.setData({
           postsList: self.data.postsList
         })
-        //   从传递的data返回给真正的data
+        //   后续图片传递给网页
         setTimeout(function () {
           self.setData({
             hidden: true
           });
-        }, 300);  //加载中
+        }, 300); 
       }
     })
   }
