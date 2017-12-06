@@ -1,61 +1,43 @@
-var ajaxUrl = require('../../utils/url.js');
-var util = require('../../utils/util.js');
-
 var app = getApp();
 Page({
   data: {
-
-    "tag": [
-
-    ],
-
-    image: "",
-    content: "",
-    borrow:'',
-    buy:''
+  name:'',
+  way:1,
+    picture1: "",
+    picture2:"",
+    information: "",
+    rentprice:'',
+    saleprice:''
   },
   onLoad: function (options) {
-    this.fetchData(options.viewUserId, options.suitId);
+    this.fetchData(options.suitId);
 
 
   },
-  fetchData: function (userId, suitId) {
+  fetchData: function (suitId) {
     var that = this;
     wx.request({
       method: "GET",
-      url: ajaxUrl.ajaxUrl() + "?method=suit.getInfo",
+      url: '',      //服务器地址
 
       data: {
-        "needCommentCount": 10,
-        "needCollectCount": 10,
-        "viewUserId": userId,
-        "suitId": suitId
+        "index": suitId,
       },
       header: {
         'Content-Type': 'application/json'
       },
       success: function (res) {
-        if (res.data.result == 0) {
           console.log(res)
-          //    that.setData({
-          //         'img':ajaxUrl.cdnUrl() + res.data.data.image+"?imageMogr/v2/auto-orient/thumbnail/750x/quality/80/"
-          //     })
           that.setData({
-            "image": ajaxUrl.cdnUrl() + res.data.data.image + "?imageMogr/v2/auto-orient/thumbnail/750x/quality/80/",
-            "content": res.data.data.content
+            "name":res.data.name,
+            "picture1": res.data.picture2,
+            "picture2":res.data.picture1,
+            "way":res.data.way,
+            "information":res.data.information,
+            "rentprice":res.data.rent_price,
+            "saleprice":res.data.sale_price
+            
           })
-          var tagList = [];
-          // _.each(res.data.data.tags,function(v,i){
-          //     tagList.push(res.data.data.tags[i])
-          // })
-          for (var i in res.data.data.tags) {
-            tagList.push(res.data.data.tags[i])
-          }
-          that.setData({
-            "tag": tagList
-          })
-        }
-
       }
 
     })

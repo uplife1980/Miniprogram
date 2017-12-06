@@ -124,8 +124,7 @@ Page({
         "onlycode"  :   request_id,
         "imagename" :   "second"
         },
-      success: function (res) { 
-      },
+      success: function (res) { },
       fail: function (res) { },
       complete: function (res) { },
     })
