@@ -53,6 +53,15 @@ Page({
         that.setData({
           isbn: res.result
         })
+        wx.request({
+          url: "http://api.jisuapi.com/isbn/query?appkey=85c75335fa427fe4&isbn="+that.data.isbn,
+          data: {},
+          header: {},
+          method:"POST",
+          success: function(res) {console.log(res)},
+          fail: function(res) {},
+          complete: function(res) {},
+        })
       },
       fail: function (res) { },
       complete: function (res) {
