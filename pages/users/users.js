@@ -2,9 +2,7 @@
 //获取应用实例
 const app = getApp()
 function jump(link){
-  wx.navigateTo({
-    url: '../zhaoshu/zhaoshu' + link + link
-  })
+  
 }
 Page({
   data: {
