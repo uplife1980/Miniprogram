@@ -158,7 +158,8 @@ Page({
     var that = this
 
     wx.request({
-      url: 'https://localhost/request' + 'method?=getUserPhone',
+      //url: 'https://localhost/request' + 'method?=getUserPhone',
+      url: '',
       data: {
         "user": app.globalData.userInfo.nickName
       },
