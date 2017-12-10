@@ -8,6 +8,7 @@ Page({
     information: "",
     rentprice:'',
     saleprice:''
+    
   },
   onLoad: function (options) {
     this.fetchData(options.suitId);
