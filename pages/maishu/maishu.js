@@ -1,7 +1,7 @@
 // pages/maishu/maishu.js
 var app = getApp();
 Page({
- 
+
   data: {
     input1: false,
     input2: true,
@@ -11,7 +11,7 @@ Page({
     display1: "none",
     display2: "none",
     phone: "",
-    error:''
+    error: ''
   },
   iwantpic: function () {
     var that = this
@@ -78,13 +78,15 @@ Page({
     this.setData({
       input2: that
     })
+
       },
   /*formCheck:function(e){
     var that=this;
     if (that.data.img[0] != null && that.data.img2[0] != null && e.detail.value.book != 0 &&  e.detail.value.isbn != 0 && e.detail.value.phone != 0&&(e.detail.value.borrow||e.detail.value.buy)!=0){
       that.setData({
-        error: ""
+        error: "信息没有填写完整,请检查!"
       })
+
       formSubmit(e);
     }
     else
@@ -94,11 +96,13 @@ Page({
   },*/
   formSubmit: function (e) {
     var that = this;
-    var date = new Date()//9+4
-    var request_id = date.getTime()+ Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
+    var date = new Date() //9+4
+    var request_id = date.getTime()*10000 + Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
+  console.log(request_id)
     wx.uploadFile({
       url: 'http://localhost:8082/BookShare/upload/image',
       filePath: that.data.img[0],
+
       name: 'imagefile',
       header: { 
         'content-type': 'multipart/form-data'
@@ -107,15 +111,14 @@ Page({
         "onlycode"  : request_id,
         "imagename" : "first"
         },
-      success: function (res) {
-        console.log(res)
-       },
+      success: function (res) { },
       fail: function (res) { },
       complete: function (res) { },
     })
     wx.uploadFile({
       url: 'http://localhost:8082/BookShare/upload/image',
       filePath: that.data.img2[0],
+
       name: 'imagefile',
       header: { 
         'content-type': 'multipart/form-data'
@@ -128,7 +131,7 @@ Page({
       fail: function (res) { },
       complete: function (res) { },
     })
-    
+
     wx.request({
       url: 'http://localhost:8082/BookShare/rentable/bookapplication',
       data: {
@@ -147,11 +150,11 @@ Page({
       },
       method: "POST",
       success: function (res) {
-        console.log(res.data.result)
+        
       },
-      fail: function (res) {},
-      complete: function (res) {
-      },
+      fail: function (res) { },
+      complete: function (res) {}
+      ,
     })
   },
   onLoad: function () {
@@ -168,15 +171,15 @@ Page({
       },
       method: "GET",
 
-      success: function(res) {
-        if(res.data.fail==0){
+      success: function (res) {
+        if (res.data.fail == 0) {
           that.setData({
-            phone:res.data.phone
+            phone: res.data.phone
           })
         }
       },
-      fail: function(res) {},
-      complete: function(res) {},
+      fail: function (res) { },
+      complete: function (res) { },
     })
   },
 

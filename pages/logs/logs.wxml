@@ -1,23 +1,34 @@
-<view class="section">
-  <view class="section__title">vertical scroll</view>
-  <scroll-view scroll-y style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
-    <view id="green" class="scroll-view-item bc_green"></view>
-    <view id="red"  class="scroll-view-item bc_red"></view>
-    <view id="yellow" class="scroll-view-item bc_yellow"></view>
-    <view id="blue" class="scroll-view-item bc_blue"></view>
-  </scroll-view>
+<view class='container'>
+  <form bindsubmit='userCheck'>买
+    <switch name="way" checked disabled="{{disabled}}" /> 租
+<button form-type='submit' type="primary">下单!</button>
+  </form>
 
-  <view class="btn-area">
-    <button size="mini" bindtap="tap">click me to scroll into view </button>
-    <button size="mini" bindtap="tapMove">click me to scroll</button>
+</view>
+<view class="modal-box" hidden="{{userinfo_hidden}}">
+
+  <view class="modal-body">
+    <view class="modal-content">
+      <form bindsubmit='userSubmit'>
+        地址
+        <input type="text" name="address"></input>
+        手机号码
+        <input type='number' name="tel" /> 性别
+        <radio-group name="sex">
+          <radio value="man" />男
+          <radio value="woman" checked="checked" />女
+        </radio-group>
+        
+
+        <picker name ="grade" range='{{array}}' value="{{index}}" bindchange='bindchange'>
+        <view>
+      你的年级：{{array[index]}}
+    </view>
+        </picker>
+<button form-type='submit' type="primary">提交</button>
+      </form>
+    </view>
   </view>
 </view>
-<view class="section section_gap">
-  <view class="section__title">horizontal scroll</view>
-  <scroll-view class="scroll-view_H" scroll-x style="width: 100%">
-    <view id="green" class="scroll-view-item_H bc_green"></view>
-    <view id="red"  class="scroll-view-item_H bc_red"></view>
-    <view id="yellow" class="scroll-view-item_H bc_yellow"></view>
-    <view id="blue" class="scroll-view-item_H bc_blue"></view>
-  </scroll-view>
-</view>
+
+<toast hidden="{{hidden}}" duration="1000" bindchange="toastChange">提交成功</toast>
