@@ -1,4 +1,5 @@
 var app = getApp();
+var listcache=[];
 Page({
   data: {
     indicatorDots: true,
@@ -9,7 +10,7 @@ Page({
     postsList: [],
     hidden: false
   },
-
+  
   onLoad: function () {
     if (app.globalData.userInfo) {
       this.setData({
@@ -38,19 +39,21 @@ Page({
       })
     }
     var that = this;
-    
 
-     that.fetchImgListDate();
-  },
-  //跳转至详情页
-  redictDetail: function (e) {
-    var number = e.currentTarget.dataset.suitid;
-    var link = "../detail/detail?suitId=" + number
-    wx.navigateTo({
-      url: link
+    wx.getStorage({
+      key: 'listcache',
+      success: function(res) {
+        listcache=res;
+        that.listcacheToData();
+        that.fetchImgListDate();
+      },
+      fail: function (res) {
+        that.fetchImgListDate();
+},
+      complete: function(res) {},
     })
   },
-
+  
   lower: function (e) {
     var self = this;
     self.setData({
@@ -60,18 +63,13 @@ Page({
     self.fetchImgListDate({ number: self.data.number });
   },
 
-  fetchImgListDate: function (data) {
+  fetchImgListDate: function () {
     var self = this;
+    var data=self.data;
     self.setData({
       hidden: false
     });
     if (!data) data = {};
-    if (!data.number) data.page = 1;
-    if (data.number === 1) {
-      self.setData({
-        postsList: []
-      });
-    }
     wx.request({  
       method: "GET",
       url:'',//URL变量改成自己的服务器
@@ -108,12 +106,27 @@ Page({
               rentprice: res.data.result[i].rent_price,
               saleprice: res.data.result[i].sale_price
             });
+            listcache.push(res.data.result[i] );
           }
-
         self.setData({
           postsList: self.data.postsList
         })
         //   后续图片传递给网页
+
+
+        //缓存模块
+        wx.setStorage({
+          key: 'listcache',
+          data: listcache,
+          success: function (res) {
+            wx.getStorageInfo({
+              success: function (res) { console.log(res) }   //看看存了啥
+            })
+          },
+          fail: function (res) { },
+          complete: function (res) { },
+        })
+
         setTimeout(function () {
           self.setData({
             hidden: true
@@ -121,5 +134,49 @@ Page({
         }, 300); 
       }
     })
+  },
+
+  //将listcache的result分拆
+  listdataToData:function(){
+    var that=this;
+    var data=[];
+    var way;
+    for(var i in listcache){
+      switch (listcache[i].way) {
+        case 1: {
+          way = "出租";
+          break;
+        }
+        case 2: {
+          way = "出售";
+          break;
+        }
+        case 3: {
+          way = "可租可售"
+        }
+      }
+     data.push({
+        picture1: listcache[i].picture1,
+        picture2: listcache[i].picture2,
+        bookindex: listcache[i].index,
+        name: listcache[i].name,
+        way: way,
+        rentprice: listcache[i].rent_price,
+        saleprice:listcahce[i].sale_price
+      });
+    }
+    that.setData({
+      postsList:data
+    })
+  },
+
+  //跳转至详情页
+  redictDetail: function (e) {
+    var number = e.currentTarget.dataset.suitid;
+    var link = "../detail/detail?suitId=" + number
+    wx.navigateTo({
+      url: link
+    })
   }
+  
 })
