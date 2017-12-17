@@ -4,7 +4,7 @@ Page({
   name:'',
   way:1,
     picture1: "",
-    picture2:"",
+    picture2: "",
     information: "",
     rentprice:'',
     saleprice:''
@@ -19,7 +19,7 @@ Page({
     var that = this;
     wx.request({
       method: "GET",
-      url: '',      //服务器地址
+      url: 'http://localhost:8082/BookShare/bookinfo/ofdetail',
 
       data: {
         "index": suitId,
@@ -31,8 +31,8 @@ Page({
           console.log(res)
           that.setData({
             "name":res.data.name,
-            "picture1": res.data.picture2,
-            "picture2":res.data.picture1,
+            "picture1": res.data.picture,
+            "picture2":res.data.picturesec,
             "way":res.data.way,
             "information":res.data.information,
             "rentprice":res.data.rent_price,

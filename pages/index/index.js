@@ -6,7 +6,8 @@ Page({
     autoplay: true,
     interval: 3000,
     duration: 1000,
-    number: 1,
+    number: 0,
+    size : 8,
     postsList: [],
     hidden: false
   },
@@ -57,7 +58,7 @@ Page({
   lower: function (e) {
     var self = this;
     self.setData({
-      number: self.data.number + 8
+      number: self.data.number + self.data.size
     });
 
     self.fetchImgListDate({ number: self.data.number });
@@ -70,37 +71,40 @@ Page({
       hidden: false
     });
     if (!data) data = {};
+    if (!data.number) data.page = 1;
+    if (data.number === 0) {
+      self.setData({
+        postsList: []
+      });
+    }
     wx.request({  
       method: "GET",
-      url:'',//URL变量改成自己的服务器
+      url:'http://localhost:8082/BookShare/bookinfo/ofindex',
       data: {
-        "number": self.data.number
+        'startlocation' : self.data.number,
+        'size': self.data.size
       }, 
       header: {
         'Content-Type': 'application/json'
       },
       success: function (res) {
-        console.log(res)
+        if (res.data.result.length == 0)
+            console.log("您已浏览全部商品");//这里可以加一个判断如果data为undefined 则打印已经截止
+            //有一个浮动的窗口，hidden = false
+        console.log(res.data.result);
         var way;
           for (var i in res.data.result) {
             switch(res.data.result[i].way)
             {
-              case 1:{
-                way="出租";
-                break;
-              }
-              case 2:{
-                way="出售";
-                break;
-              }
-              case 3:{
-               way="可租可售"
-              }
+              case 1: way="出租";break;
+              case 2: way="出售";break;
+              case 3: way="可租可售";
+              default : way = "不可租售";
             }
             self.data.postsList.push({
-              picture1: res.data.result[i].picture1,
-              picture2:res.data.result[i].picture2,
-              bookindex: res.data.result[i].index,
+              picture1: res.data.result[i].picture,
+              picture2:res.data.result[i].picturesec,
+              bookindex: res.data.result[i].id,
               name:res.data.result[i].name,
               way:way,
               rentprice: res.data.result[i].rent_price,
