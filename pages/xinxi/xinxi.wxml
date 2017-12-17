@@ -1,2 +1,15 @@
 <!--pages/xinxi/xinxi.wxml-->
 <text>pages/xinxi/xinxi.wxml</text>
+<block wx:for="{{postsList}}" wx:key="unique">
+<text>--------------------------------------------</text>
+  <view>{{item.name}}</view>
+  <view>出租过程
+    <block wx:for="{{item.recording}}" wx:key="unique" wx:for-item="record">
+      <view>{{item.record.paynumber}}</view>
+      <view>{{item.record.date}}</view>
+      <view>{{item.record.way}}</view>
+      <view>{{item.record.buyer}}</view>
+
+    </block>
+  </view>
+</block>

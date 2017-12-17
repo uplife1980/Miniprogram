@@ -9,7 +9,8 @@ Page({
     number: 0,
     size : 8,
     postsList: [],
-    hidden: false
+    hidden: false,
+    allStuff:true
   },
   
   onLoad: function () {
@@ -89,7 +90,11 @@ Page({
       },
       success: function (res) {
         if (res.data.result.length == 0)
-            console.log("您已浏览全部商品");//这里可以加一个判断如果data为undefined 则打印已经截止
+            console.log("您已浏览全部商品");
+            self.setData({
+              allStuff:false
+              })
+              //这里可以加一个判断如果data为undefined 则打印已经截止
             //有一个浮动的窗口，hidden = false
         console.log(res.data.result);
         var way;
@@ -98,7 +103,7 @@ Page({
             {
               case 1: way="出租";break;
               case 2: way="出售";break;
-              case 3: way="可租可售";
+              case 3: way="可租可售";break;
               default : way = "不可租售";
             }
             self.data.postsList.push({
@@ -180,6 +185,11 @@ Page({
     var link = "../detail/detail?suitId=" + number
     wx.navigateTo({
       url: link
+    })
+  },
+  hiddenAllStuff:function(){
+    that.setData({
+      allStuff:true
     })
   }
   
