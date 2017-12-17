@@ -1,4 +1,5 @@
 var app = getApp();
+var listcache=[];
 Page({
   data: {
     indicatorDots: true,
@@ -8,9 +9,10 @@ Page({
     number: 0,
     size : 8,
     postsList: [],
-    hidden: false
+    hidden: false,
+    allStuff:true
   },
-
+  
   onLoad: function () {
     if (app.globalData.userInfo) {
       this.setData({
@@ -39,19 +41,21 @@ Page({
       })
     }
     var that = this;
-    
 
-     that.fetchImgListDate();
-  },
-  //跳转至详情页
-  redictDetail: function (e) {
-    var number = e.currentTarget.dataset.suitid;
-    var link = "../detail/detail?suitId=" + number
-    wx.navigateTo({
-      url: link
+    wx.getStorage({
+      key: 'listcache',
+      success: function(res) {
+        listcache=res;
+        that.listcacheToData();
+        that.fetchImgListDate();
+      },
+      fail: function (res) {
+        that.fetchImgListDate();
+},
+      complete: function(res) {},
     })
   },
-
+  
   lower: function (e) {
     var self = this;
     self.setData({
@@ -61,8 +65,9 @@ Page({
     self.fetchImgListDate({ number: self.data.number });
   },
 
-  fetchImgListDate: function (data) {
+  fetchImgListDate: function () {
     var self = this;
+    var data=self.data;
     self.setData({
       hidden: false
     });
@@ -85,7 +90,11 @@ Page({
       },
       success: function (res) {
         if (res.data.result.length == 0)
-            console.log("您已浏览全部商品");//这里可以加一个判断如果data为undefined 则打印已经截止
+            console.log("您已浏览全部商品");
+            self.setData({
+              allStuff:false
+              })
+              //这里可以加一个判断如果data为undefined 则打印已经截止
             //有一个浮动的窗口，hidden = false
         console.log(res.data.result);
         var way;
@@ -94,7 +103,7 @@ Page({
             {
               case 1: way="出租";break;
               case 2: way="出售";break;
-              case 3: way="可租可售";
+              case 3: way="可租可售";break;
               default : way = "不可租售";
             }
             self.data.postsList.push({
@@ -106,12 +115,27 @@ Page({
               rentprice: res.data.result[i].rent_price,
               saleprice: res.data.result[i].sale_price
             });
+            listcache.push(res.data.result[i] );
           }
-
         self.setData({
           postsList: self.data.postsList
         })
         //   后续图片传递给网页
+
+
+        //缓存模块
+        wx.setStorage({
+          key: 'listcache',
+          data: listcache,
+          success: function (res) {
+            wx.getStorageInfo({
+              success: function (res) { console.log(res) }   //看看存了啥
+            })
+          },
+          fail: function (res) { },
+          complete: function (res) { },
+        })
+
         setTimeout(function () {
           self.setData({
             hidden: true
@@ -119,5 +143,54 @@ Page({
         }, 300); 
       }
     })
+  },
+
+  //将listcache的result分拆
+  listdataToData:function(){
+    var that=this;
+    var data=[];
+    var way;
+    for(var i in listcache){
+      switch (listcache[i].way) {
+        case 1: {
+          way = "出租";
+          break;
+        }
+        case 2: {
+          way = "出售";
+          break;
+        }
+        case 3: {
+          way = "可租可售"
+        }
+      }
+     data.push({
+        picture1: listcache[i].picture1,
+        picture2: listcache[i].picture2,
+        bookindex: listcache[i].index,
+        name: listcache[i].name,
+        way: way,
+        rentprice: listcache[i].rent_price,
+        saleprice:listcahce[i].sale_price
+      });
+    }
+    that.setData({
+      postsList:data
+    })
+  },
+
+  //跳转至详情页
+  redictDetail: function (e) {
+    var number = e.currentTarget.dataset.suitid;
+    var link = "../detail/detail?suitId=" + number
+    wx.navigateTo({
+      url: link
+    })
+  },
+  hiddenAllStuff:function(){
+    that.setData({
+      allStuff:true
+    })
   }
+  
 })
