@@ -11,7 +11,7 @@ Page({
     display1: "none",
     display2: "none",
     phone: "",
-    error: ''
+    error: '',
   },
   iwantpic: function () {
     var that = this
@@ -51,14 +51,17 @@ Page({
       onlyFromCamera: false,
       success: function (res) {
         that.setData({
-          isbn: res.result
+          isbn : res.result
         })
         wx.request({
           url: "http://api.jisuapi.com/isbn/query?appkey=85c75335fa427fe4&isbn="+that.data.isbn,
           data: {},
           header: {},
           method:"POST",
-          success: function(res) {console.log(res)},
+          success: function(res) {
+            console.log(res)
+            //setData 设置书的信息，让一个request一起传过去
+            },
           fail: function(res) {},
           complete: function(res) {},
         })
@@ -145,13 +148,13 @@ Page({
       url: 'http://localhost:8082/BookShare/rentable/bookapplication',
       data: {
         name        :   e.detail.value.book,//书的名字
-        information :   e.detail.value.isbn,//isbn号 
-        borrowable  :   e.detail.value.sellbtn,//卖书的开关，1是卖，0是不卖
-        rent_price  :   e.detail.value.borrow,//出租的价格
-        rentable    :   e.detail.value.rentbtn,//出租的开关，同卖书
-        sale_price  :   e.detail.value.buy,//买书的价格
+        isbn        :   e.detail.value.isbn,//isbn号 
+        rentbtn     :   e.detail.value.rentbtn,//出租的开关，同卖书
+        sellbtn     :   e.detail.value.sellbtn,//卖书的开关，1是卖，0是不卖
+        rent_price  :   (e.detail.value.rentbtn == false) ? 0 : e.detail.value.borrow,//出租的价格
+        sale_price  :   (e.detail.value.sellbtn == false) ? 0 : e.detail.value.buy,//买书的价格
         onlycode    :   request_id,
-        former_tel  :   e.detail.value.phone
+        origin_tel  :   e.detail.value.phone
       },
       header: {
         //'content-type'  :   'application/json'
@@ -159,7 +162,42 @@ Page({
       },
       method: "POST",
       success: function (res) {
-        
+        console.log(res.data)
+        if (res.data.result != "exist") {
+          that.setData({
+            isbn: res.data.result
+          })
+          wx.request({
+            url: "http://api.jisuapi.com/isbn/query?appkey=85c75335fa427fe4&isbn=" + res.data.result,
+            data: {},
+            header: {},
+            method: "POST",
+            success: function (res) {
+              console.log(res)
+                wx.request({
+                  url: 'http://localhost:8082/BookShare/rentable/saveisbn',
+                  data: {
+                      title   : res.data.tile,
+                      subtitle: res.data.subtitle,
+                      pic     : res.data.pic,
+                      author  : res.data.author,   
+                      summary : res.data.summary,
+                      isbn    : res.data.isbn      //还有其它字段          
+                  },
+                  header: {
+                    //'content-type'  :   'application/json'
+                    'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                  },
+                  method: "POST",
+                  success: function (res) { },
+                  fail: function (res) { },
+                  complete: function (res) { },
+                })
+            },
+            fail: function (res) { },
+            complete: function (res) { },
+          })
+        }
       },
       fail: function (res) { },
       complete: function (res) {}
