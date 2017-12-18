@@ -52,7 +52,7 @@ Page({
       success: function (res) {
         that.setData({
           isbn : res.result
-        })
+        })//这个request可以删除，现在留作测试数据用
         wx.request({
           url: "http://api.jisuapi.com/isbn/query?appkey=85c75335fa427fe4&isbn="+that.data.isbn,
           data: {},
@@ -177,12 +177,12 @@ Page({
                 wx.request({
                   url: 'http://localhost:8082/BookShare/rentable/saveisbn',
                   data: {
-                      title   : res.data.tile,
-                      subtitle: res.data.subtitle,
-                      pic     : res.data.pic,
-                      author  : res.data.author,   
-                      summary : res.data.summary,
-                      isbn    : res.data.isbn      //还有其它字段          
+                      title   : res.data.result.tile,
+                      subtitle: res.data.result.subtitle,
+                      pic     : res.data.result.pic,
+                      author  : res.data.result.author,   
+                      summary : res.data.result.summary,
+                      isbn    : res.data.result.isbn      //还有其它字段          
                   },
                   header: {
                     //'content-type'  :   'application/json'
