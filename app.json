@@ -11,11 +11,11 @@
   ],
   "window": {
     "backgroundTextStyle":"dark",
-    "navigationBarBackgroundColor": "#ffc6c6",
-    "navigationBarTitleText": "咸鱼少女",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "书--遇见",
     "navigationBarTextStyle": "black",
     "backgroundColor": "#f1f1f1",
-    "enablePullDownRefresh": "true"
+    "enablePullDownRefresh": "false"
   },
   "tabBar":{
   "list":
