@@ -1,4 +1,4 @@
-// pages/yijie/yijie.js
+// pages/buysuccess/buysuccess.js
 Page({
 
   /**

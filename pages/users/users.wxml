@@ -8,7 +8,8 @@
 
 </view>
 
-  <navigator url="../maishu/maishu" class="option">我要卖书</navigator>
-<navigator url="../shouru/shouru" class="option">已借图书</navigator>
-<navigator url="../xinxi/xinxi" class="option">已出图书信息</navigator>
-<navigator url="../guanyu" class="option">关于程序</navigator>
+  <navigator url="../maishu/maishu" class="option">上传图书</navigator>
+<navigator url="../mybook/mybook" class="option">我手里的书</navigator>
+<navigator url="../needcomfirm/needcomfirm" class="option">待确认的交易</navigator>
+<navigator url="../needcomfirm/needstop" class="option">待确认的停止分享</navigator>
+<navigator url="../myshare/myshare" class="option">我的分享</navigator>

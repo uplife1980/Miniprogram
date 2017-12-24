@@ -8,6 +8,9 @@ Page({
   information: "这是一本好书",
   rentprice:'2333',
   saleprice:'122',
+  tel:'',
+  checked_man:false,
+  checked_woman:true,
   array: ['大一', '大二', '大三', '大四', '研一', '研二', '研三', '其他'],
   index: 0,       //年级
   suitId: 12345,
@@ -71,12 +74,17 @@ Page({
       method: "GET",
       success: function (res) {
         var that = this
-        if (res.data.fail == 1) {
+       
           that.setData({ userinfo_hidden: false })
-        }
-        else {
-          formSubmit(e)
-        }
+          if (res.data.fail == 0) {
+             that.setData({
+              tel:res.data.tel,
+              checked_man:res.data.checked_man,
+              checked_woman:res.data.checked_woman,
+              index:res.data.index
+             })
+          }
+       
       },
       fail: function (res) { },
       complete: function (res) { },
@@ -94,21 +102,21 @@ Page({
         "sex": e.detail.value.sex,
         "tel": e.detail.value.tel,
         "grade": e.detail.value.grade,
-        "address": e.detail.value.address
       },
       header: {
         'Content-Type': 'application/json'
       },
       method: "POST",
-      success: function (res) { },
+      success: function (res) {formSubmit(e)},
       fail: function (res) { },
       complete: function (res) { },
     })
   },
-  toastChange: function () {        //信息补全成功!
+  toastChange: function () {        //信息补全成功并跳转新页面
     this.setData({
       hidden: true
     })
+    wx.navigateTo({url: '../buysuccess/buysuccess'})
   },
   formSubmit: function (e) {    //购买
     var that = this

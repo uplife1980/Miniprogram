@@ -1,13 +1,15 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/logs/logs",
     "pages/users/users",
     "pages/maishu/maishu",
-    "pages/yijie/yijie",
-    "pages/xinxi/xinxi",
-    "pages/guanyu/guanyu",
-    "pages/detail/detail"
+    "pages/detail/detail",
+    "pages/buysuccess/buysuccess",
+    "pages/mybook/mybook",
+    "pages/myshare/myshare",
+    "pages/needcomfirm/needcomfirm",
+    "pages/needstop/needstop",
+    "pages/continueshare/continueshare"
   ],
   "window": {
     "backgroundTextStyle":"dark",

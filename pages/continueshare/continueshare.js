@@ -1,10 +1,8 @@
-// pages/guanyu/guanyu.js
+// pages/continueshare/continueshare.js
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
+  bookname:'',
   
   },
 

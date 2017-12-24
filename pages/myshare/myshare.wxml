@@ -1,0 +1,17 @@
+<view>
+<view class="piece">
+  <block wx:for="{{upload_list}}" wx:key="unique" wx:for-item="upload" wx:for-index="upload_index">
+  {{upload.name}}
+  {{status[upload.status]}}
+  <button bindtap='stopshare' disabled="{{stopshare[upload.status]}}"id="stop{{upload_index}}">停止分享</button>
+  <button bindtap="continueshare" disabled="{{continueshare[upload.status]}}"id="stop{{upload_index}}">继续分享</button>
+
+  流通记录
+  <block wx:for="{{upload.recording}}" wx:key="unique" wx:for-item="recording" wx:for-index="recording_index">
+  <view>{{recording.id}}</view>
+  <view>{{recording.deal_time}}</view>
+  </block>
+
+  </block>
+</view>
+</view>
