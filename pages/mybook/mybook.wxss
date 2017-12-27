@@ -1,0 +1,6 @@
+.bar{
+  width:100%;
+  background-color: yellow;
+  height:30px;
+  text-align: center
+}

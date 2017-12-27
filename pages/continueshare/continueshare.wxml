@@ -1,18 +1,17 @@
-<!--pages/maishu/maishu.wxml-->
+<!-- pages/maishu/maishu.wxml
 <view class="container">
 <form bindsubmit='formSubmit' >
 
+
+图书名称:{{bookname}}
 <button bindtap='iwantcode'>扫描图书二维码</button>
 <text name="isbn">{{isbn}}</text>
-<button bindtap='iwantpic'>图书真照</button>
+<button bindtap='iwantpic'>图书照</button>
 <image   src="{{img}}" style="display:{{display1}}"></image>
-<switch checked bindchange='switch1' name="rentbtn"/>出租
 图书每日租价:<input type='digit' name="borrow" maxlength='5' disabled="{{input1}}"/>
-<switch bindchange='switch2' name="sellbtn"/>出售
-图书出售价格:<input type="digit" name="buy" maxlength='10000' disabled="{{input2}}"/>
 联系电话:<input name="phone" type="number" value="{{phone}}" maxlength='11'/>
 <button form-type='submit' type="primary">提交</button>
 <text>{{error}}</text>
 
 </form>
-</view>
+</view> -->
