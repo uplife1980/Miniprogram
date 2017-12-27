@@ -40,22 +40,7 @@ Page({
         }
       })
     }
-    var that = this;
-
-    wx.getStorage({
-      key: 'listcache',
-      success: function(res) {
-        listcache=res;
-        that.listcacheToData();
-        that.fetchImgListDate();
-      },
-      fail: function (res) {
-        that.fetchImgListDate();
-},
-      complete: function(res) {},
-    })
   },
-  
   lower: function (e) {
     var self = this;
     self.setData({
@@ -90,12 +75,9 @@ Page({
       },
       success: function (res) {
         if (res.data.result.length == 0)
-            console.log("您已浏览全部商品");
             self.setData({
               allStuff:false
               })
-              //这里可以加一个判断如果data为undefined 则打印已经截止
-            //有一个浮动的窗口，hidden = false
         console.log(res.data.result);
         var way;
           for (var i in res.data.result) {
@@ -108,74 +90,22 @@ Page({
             }
             self.data.postsList.push({
               picture1: res.data.result[i].picture,
-              picture2:res.data.result[i].picturesec,
               bookindex: res.data.result[i].id,
-              name:res.data.result[i].name,
               way:way,
               rentprice: res.data.result[i].rent_price,
               saleprice: res.data.result[i].sale_price
             });
-            listcache.push(res.data.result[i] );
           }
         self.setData({
           postsList: self.data.postsList
         })
         //   后续图片传递给网页
-
-
-        //缓存模块
-        wx.setStorage({
-          key: 'listcache',
-          data: listcache,
-          success: function (res) {
-            wx.getStorageInfo({
-              success: function (res) { console.log(res) }   //看看存了啥
-            })
-          },
-          fail: function (res) { },
-          complete: function (res) { },
-        })
-
         setTimeout(function () {
           self.setData({
             hidden: true
           });
         }, 300); 
       }
-    })
-  },
-
-  //将listcache的result分拆
-  listdataToData:function(){
-    var that=this;
-    var data=[];
-    var way;
-    for(var i in listcache){
-      switch (listcache[i].way) {
-        case 1: {
-          way = "出租";
-          break;
-        }
-        case 2: {
-          way = "出售";
-          break;
-        }
-        case 3: {
-          way = "可租可售"
-        }
-      }
-     data.push({
-        picture1: listcache[i].picture1,
-        picture2: listcache[i].picture2,
-        bookindex: listcache[i].index,
-        name: listcache[i].name,
-        way: way,
-        rentprice: listcache[i].rent_price,
-        saleprice:listcahce[i].sale_price
-      });
-    }
-    that.setData({
-      postsList:data
     })
   },
 
@@ -187,10 +117,10 @@ Page({
       url: link
     })
   },
-  hiddenAllStuff:function(){
+  hiddenAllStuff:function (){
+    var that = this;
     that.setData({
       allStuff:true
     })
   }
-  
 })

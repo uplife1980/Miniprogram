@@ -10,5 +10,5 @@
 
   <navigator url="../maishu/maishu" class="option">我要卖书</navigator>
 <navigator url="../shouru/shouru" class="option">已借图书</navigator>
-<navigator url="../xinxi/xinxi" class="option">已出图书信息</navigator>
+<navigator url="../xinxi/xinxi" class="option">我的信息</navigator>
 <navigator url="../guanyu" class="option">关于程序</navigator>

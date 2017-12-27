@@ -101,7 +101,7 @@ Page({
       url: 'http://localhost:8082/BookShare/rentable/bookapplication',
       data: {
         userid      :   request_id,//以后会用openID替代
-        isbn        :   e.detail.value.isbn,//isbn号 
+        isbn        :   "9787302290124",//isbn号 
         rentbtn     :   e.detail.value.rentbtn,//出租的开关，同卖书
         sellbtn     :   e.detail.value.sellbtn,//卖书的开关，1是卖，0是不卖
         rent_price  :   (e.detail.value.rentbtn == false) ? 0 : e.detail.value.borrow,//出租的价格

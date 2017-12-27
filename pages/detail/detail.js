@@ -36,13 +36,13 @@ Page({
       success: function (res) {
         console.log(res)
         that.setData({
-          "name": res.data.name,
-          "picture1": res.data.picture,
-          "picture2": res.data.picturesec,
-          "way": res.data.way,
-          "information": res.data.information,
-          "rentprice": res.data.rent_price,
-          "saleprice": res.data.sale_price
+          "name": res.data.result.id,
+          "picture1": res.data.result.picture,
+          "picture2": res.data.result.picturesec,
+          "way": res.data.result.way,
+          "information": res.data.result.information,
+          "rentprice": res.data.result.rent_price,
+          "saleprice": res.data.result.sale_price
 
         })
       }
