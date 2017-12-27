@@ -19,13 +19,11 @@
   <view class="modal-body">
     <view class="modal-content">
       <form bindsubmit='userSubmit'>
-        地址
-        <input type="text" name="address"></input>
         手机号码
-        <input type='number' name="tel" /> 性别
+        <input type='number' name="tel" value="{{tel}}"/> 性别
         <radio-group name="sex">
-          <radio value="man" />男
-          <radio value="woman" checked="checked" />女
+          <radio value="man" checked="{{checked_man}}"/>男
+          <radio value="woman" checked="{{checked_woman}}" />女
         </radio-group>
         
 

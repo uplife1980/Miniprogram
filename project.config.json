@@ -22,7 +22,14 @@
 		},
 		"miniprogram": {
 			"current": -1,
-			"list": []
+			"list": [
+				{
+					"id": -1,
+					"name": "test",
+					"pathName": "pages/users/users",
+					"query": ""
+				}
+			]
 		}
 	}
 }
