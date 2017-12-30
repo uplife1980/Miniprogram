@@ -5,11 +5,10 @@
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </block>
   </view>
-
 </view>
 
 <navigator url="../maishu/maishu" class="option">上传图书</navigator>
 <navigator url="../mybook/mybook" class="option">我手里的书</navigator>
-<navigator url="../needcomfirm/needcomfirm" class="option">待确认的交易</navigator>
-<navigator url="../needcomfirm/needstop" class="option">待确认的停止分享</navigator>
+<navigator url="../needconfirm/needconfirm" class="option">待确认的交易</navigator>
+<navigator url="../needstop/needstop" class="option">待确认的停止分享</navigator>
 <navigator url="../myshare/myshare" class="option">我的分享</navigator>

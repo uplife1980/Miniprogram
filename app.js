@@ -1,5 +1,8 @@
 //app.js
 App({
+  globalData: {
+    userid : ""
+  },
   onLaunch: function () {
     var that=this
     // 展示本地存储能力
@@ -11,21 +14,37 @@ App({
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        wx.request({
-          url: '',
-          data: {
-            "code":res.code
-          },
-          header: {
-            'Content-Type': 'application/json'
-          },
-          method: "POST",
-          success: function(res) {
-            that.globalData.openId=res.data.openId
-          },
-          fail: function(res) {},
-          complete: function(res) {},
-        })
+        if(res.code){
+          wx.request({
+            url: 'https://api.weixin.qq.com/sns/jscode2session?appid=wx09392aba647dbe03&secret=650307c831d52a8629fee1a5c0358881&js_code='+res.code+'&grant_type=authorization_code',
+            header: {
+              'Content-Type': 'application/json'
+            },
+            method: "POST",
+            success: function (res) {
+              if(res.data.openid!=null){
+                that.globalData.userid = res.data.openid;
+                console.log(res.data.openid);
+                wx.request({
+                  url: 'http://localhost:8082/BookShare/user/register',
+                  data: {
+                    userid: res.data.openid
+                  },
+                  header: {},
+                  success: function (res) {
+                    console.log(res.data.status);
+                  }
+                })
+              }else{
+                console.log(res.data.errcode+" : "+res.data.errmsg);
+              } 
+            },
+            fail: function (res) { },
+            complete: function (res) { },
+          })
+        }else{
+          console.log('获取用户登录态失败！' + res.errMsg)
+        }
       }
     })
     // 获取用户信息

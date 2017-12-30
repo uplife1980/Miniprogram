@@ -1,5 +1,4 @@
 var app = getApp();
-var listcache=[];
 Page({
   data: {
     indicatorDots: true,
@@ -10,7 +9,8 @@ Page({
     size : 8,
     postsList: [],
     hidden: false,
-    allStuff:true
+    allStuff:true,
+    way:["出租","出售","可租可售","不可租售"]
   },
   
   onLoad: function () {
@@ -19,7 +19,7 @@ Page({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
       })
-    } else if (this.data.canIUse) {
+    }else if (this.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
@@ -28,7 +28,7 @@ Page({
           hasUserInfo: true
         })
       }
-    } else {
+    }else {
       // 在没有 open-type=getUserInfo 版本的兼容处理
       wx.getUserInfo({
         success: res => {
@@ -40,13 +40,14 @@ Page({
         }
       })
     }
+    var that = this;
+    that.fetchImgListDate();
   },
   lower: function (e) {
     var self = this;
     self.setData({
       number: self.data.number + self.data.size
     });
-
     self.fetchImgListDate({ number: self.data.number });
   },
 
@@ -77,25 +78,7 @@ Page({
         if (res.data.result.length == 0)
             self.setData({
               allStuff:false
-              })
-        console.log(res.data.result);
-        var way;
-          for (var i in res.data.result) {
-            switch(res.data.result[i].way)
-            {
-              case 1: way="出租";break;
-              case 2: way="出售";break;
-              case 3: way="可租可售";break;
-              default : way = "不可租售";
-            }
-            self.data.postsList.push({
-              picture1: res.data.result[i].picture,
-              bookindex: res.data.result[i].id,
-              way:way,
-              rentprice: res.data.result[i].rent_price,
-              saleprice: res.data.result[i].sale_price
-            });
-          }
+            })
         self.setData({
           postsList: self.data.postsList
         })
@@ -112,7 +95,7 @@ Page({
   //跳转至详情页
   redictDetail: function (e) {
     var number = e.currentTarget.dataset.suitid;
-    var link = "../detail/detail?suitId=" + number
+    var link = "../detail/detail?bookid=" + number
     wx.navigateTo({
       url: link
     })

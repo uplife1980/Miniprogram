@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-  comfirm_hidden:true,
+  confirm_hidden:true,
   cancel_hidden:true,
   booklist:[]
   },
@@ -16,9 +16,9 @@ Page({
   onLoad: function (options) {
     var that=this
   wx.request({
-    url: '',
+    url: 'http://localhost:8082/BookShare/bookdeal/viewnotconfirm',
     data: {
-      openId:app.globalData.openId
+      userid:app.globalData.openId
     },
     header: {
       'Content-Type': 'application/json'
@@ -26,7 +26,7 @@ Page({
     method:" GET",
     success: function(res) {
       that.setData({
-        booklist:res.data.bookinfo
+        booklist:res.data.sale
       })
     },
     fail: function(res) {},
@@ -34,22 +34,20 @@ Page({
   })
   },
 
- comfirm:function(e){
+ confirm:function(e){
    var that=this;
    var index = e.target.id.replace(/[^0-9]/ig, ""); 
    wx.request({
-     url: '',
+     url: 'http://localhost:8082/BookShare/user/confirm',
      data: {
-       openId:app.globalData.openId,
-       index:index,
-       comfirm:1
+      bookid:booklist[index].bookid
      },
      header: {
        'Content-Type': 'application/json'
 },
      method:"POST",
      success: function(res) {that.setData({
-       comfirm_hidden:false
+       confirm_hidden:false
      })},
      fail: function(res) {},
      complete: function(res) {},
@@ -59,11 +57,9 @@ Page({
    var index = e.target.id.replace(/[^0-9]/ig, "");
    var that=this
    wx.request({
-     url: '',
+     url: 'http://localhost:8082/BookShare/user/cancel',
      data: {
-       openId: app.globalData.openId,
-       index: index,
-       cancel: 1
+       bookid: booklist[index].bookid
      },
      header: {
        'Content-Type': 'application/json'
@@ -78,15 +74,15 @@ Page({
  },
  toastChange1:function(){
    this.setData({
-     comfirm_hidden:true
+     confirm_hidden:true
    })
-   wx.navigateTo({ url: '../needcomfirm/needcomfirm' })
+   wx.navigateTo({ url: '../needconfirm/needconfirm' })
 
  },
  toastChange2:function(){
    this.setData({
      cancel_hidden:true
    })
-   wx.navigateTo({ url: '../needcomfirm/needcomfirm' })
+   wx.navigateTo({ url: '../needconfirm/needconfirm' })
  }
 })

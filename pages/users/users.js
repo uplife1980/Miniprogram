@@ -39,6 +39,4 @@ Page({
       userInfo: e.detail.userInfo,
     })
   }
-
-
 })

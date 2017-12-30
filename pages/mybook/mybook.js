@@ -17,26 +17,26 @@ Page({
   onLoad: function (options) {
     var that=this;
     wx.request({          //获取已经购买图书
-      url: '',
+      url: 'http://localhost:8082/BookShare/user/viewBookinhand',
       data: {
-        openId: app.globalData.openId
+        userid: app.globalData.openId
       },
       header: {
         'Content-Type': 'application/json'
-},
+      },
       method: "GET",
       success: function(res) {
         var that=this
         _saveVideoToPhotosAlbumSuccessObject.setData({
-          bought_list:res.data.bought_list,
-          borrowing_list: res.data.borrowing_list,
-          notborrow_list: res.data.notborrow_list,
-          neverborrow_list: res.data.neverborrow_list
+          bought_list:res.data.bought,
+          borrowing_list: res.data.renting,
+          notborrow_list: res.data.outdate,
+          neverborrow_list: res.data.rentable
         })
         var today=0;
         var borrowing_list=that.data.borrowing_list;
         for(var i in borrowing_list){
-          var endDate = Date.parse(borrowing_list[i].time.replace('/-/g', '/'));  
+          var endDate = Date.parse(borrowing_list[i].period.replace('/-/g', '/'));  
           var days = (endDate - today)/ (1 * 24 * 60 * 60 * 1000); 
           borrowing_list[i].push({days:days}) 
         }
@@ -50,11 +50,12 @@ Page({
   },
 
 renew:function(e){        //续命
+  var index = e.target.id.replace(/[^0-9]/ig, ""); 
   wx.request({
-    url: '',
+    url: 'http://localhost:8082/BookShare/bookdeal/reRent',
     data: {
-      openId: app.globalData.openId,
-      book_number:e.target.id
+      userid: app.globalData.openId,
+      bookid: borrowing_list[index].bookid
     },
     header: {
       'Content-Type': 'application/json'
@@ -66,7 +67,7 @@ renew:function(e){        //续命
   })
 },
 
-updatePic:function(e){
+updatePic:function(e){          //上传新图片
   var that=this;
   var index = e.target.id.replace(/[^0-9]/ig, ""); 
 
@@ -75,42 +76,37 @@ updatePic:function(e){
     sizeType: ["compressed"],
     sourceType: [],
     success: function(res) {
-      wx.request({
-        url: '',
-        data:{
-          openId:app.globalData.openId,
-          index:index,
-          picture: res.tempFilePaths[0]	
-        } ,
+      wx.uploadFile({
+        url: 'http://localhost:8082/BookShare/upload/image',
+        filePath: res.tempFilePaths[0]	,
+        name: 'imagefile',
         header: {
-          'Content-Type': 'application/json'
-},
-        method: "POST",
-        success: function(res) {
-          that.setData({
-            hidden:false
-          })
+          'content-type': 'multipart/form-data'
         },
+        formData: {
+          "onlycode": notborrowing_list[index].onlycode,
+
+        },
+        success: function (res) { },
+        
       })
+     
     },
-    fail: function(res) {},
-    complete: function(res) {},
   })
 },
 
-repeal1:function(e){
+repeal1:function(e){      //操作确认提示框
 this.setData({
   comfirm:false
 })
 },
-repeal:function(e){
+repeal:function(e){       //撤销此单
   var index = e.target.id.replace(/[^0-9]/ig, ""); 
 
     wx.request({
-      url: '',
+      url: 'http://localhost:8082/BookShare/rentable/cancel',
       data: {
-        openId: app.globalData.openId,
-        index:index
+        bookid:neverborrow_list[index].bookid
       },
       header: {
         'Content-Type': 'application/json'

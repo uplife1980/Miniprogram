@@ -1,42 +1,35 @@
 <view>
-    <image src="{{picture1}}" class="top-img" mode="aspectFill"></image>
-    <image src="{{picture2}}" class="top-img" mode="aspectFill"></image>
-    <view>{{name}}</view>
-    <view>{{information}}</view>
-    <view class="clearfix">
-       <view  class="tag fl">租价:{{rentprice}}</view>
-      <view  class="tag fl">售价:{{saleprice}}</view>
-    </view>
-    <view class='container'>
-  <form bindsubmit='userCheck'>买
-    <switch name="way" checked="{{canIChange}}" disabled="{{disabled}}" /> 租
-<button form-type='submit' type="primary">下单!</button>
-  </form>
-
-</view>
-<view class="modal-box" hidden="{{userinfo_hidden}}">
-
-  <view class="modal-body">
-    <view class="modal-content">
-      <form bindsubmit='userSubmit'>
-        手机号码
-        <input type='number' name="tel" value="{{tel}}"/> 性别
-        <radio-group name="sex">
-          <radio value="man" checked="{{checked_man}}"/>男
-          <radio value="woman" checked="{{checked_woman}}" />女
-        </radio-group>
-        
-
-        <picker name ="grade" range='{{array}}' value="{{index}}" bindchange='bindchange'>
-        <view>
-      你的年级：{{array[index]}}
-    </view>
-        </picker>
-<button form-type='submit' type="primary">提交</button>
-      </form>
+  <image src="{{picture1}}" class="top-img" mode="aspectFill"></image>
+  <image src="{{picture2}}" class="top-img" mode="aspectFill"></image>
+  <view>{{name}}</view>
+  <view>{{information}}</view>
+  <view class="clearfix">
+    <view class="tag fl">租价:{{rentprice}}</view>
+    <view class="tag fl">售价:{{saleprice}}</view>
+  </view>
+  <view class='container'>
+    <form bindsubmit='userCheck'>买
+      <switch name="way" checked="{{canIChange}}" disabled="{{disabled}}" /> 租
+      <button form-type='submit' type="primary">下单!</button>
+    </form>
+  </view>
+  <view class="modal-box" hidden="{{userinfo_hidden}}">
+    <view class="modal-body">
+      <view class="modal-content">
+        <form bindsubmit='userSubmit'>
+          手机号码
+          <input type='number' name="tel" value="{{tel}}" /> 性别
+          <radio-group name="sex">
+            <radio value="man" checked="{{checked_man}}" />男
+            <radio value="woman" checked="{{checked_woman}}" />女
+          </radio-group>
+          <picker name="grade" range='{{array}}' value="{{index}}" bindchange='bindchange'>
+            <view>你的年级：{{array[index]}}</view>
+          </picker>
+          <button form-type='submit' type="primary">提交</button>
+        </form>
+      </view>
     </view>
   </view>
-</view>
-
-<toast hidden="{{hidden}}" duration="1000" bindchange="toastChange">提交成功</toast>
+  <toast hidden="{{hidden}}" duration="1000" bindchange="toastChange">提交成功</toast>
 </view>
