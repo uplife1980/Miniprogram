@@ -14,7 +14,7 @@ Page({
     checked_man: false,
     checked_woman: true,
     hidden: true,     //信息补全成功
-    array: ['大一', '大二', '大三', '大四', '研一', '研二', '研三', '其他'],
+    array: ['大一', '大二', '大三', '大四', '研一', '研二', '研三', '其他','保密'],
     index: 0,       //年级
   },
   iwantpic: function () {
@@ -87,7 +87,7 @@ Page({
     var date = new Date() //9+4
     var request_id = date.getTime()*10000 + Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
     wx.uploadFile({
-      url: 'http://localhost:8082/BookShare/upload/image',
+      url: 'http://192.168.1.107:8082/BookShare/upload/image',
       filePath: that.data.img[0],
 
       name: 'imagefile',
@@ -103,7 +103,7 @@ Page({
     })
 
     wx.request({
-      url: 'http://localhost:8082/BookShare/rentable/bookapplication',
+      url: 'http://192.168.1.107:8082/BookShare/rentable/bookapplication',
       data: {
        userid      :   request_id,
        isbn        :   that.data.isbn,//isbn号 
@@ -134,7 +134,7 @@ Page({
               console.log(that.data.isbn);
               console.log(res.data);
                 wx.request({
-                  url: 'http://localhost:8082/BookShare/rentable/saveisbn',
+                  url: 'http://192.168.1.107:8082/BookShare/rentable/saveisbn',
                   data: {
                       title   : res.data.result.title,
                       subtitle: res.data.result.subtitle,
@@ -161,10 +161,7 @@ Page({
                     'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
                   },
                   method: "POST",
-                  success: function (res) { },
-                  fail: function (res) { },
-                  complete: function (res) { },
-                })
+                  })
             },
             fail: function (res) { },
             complete: function (res) { },
@@ -190,20 +187,33 @@ Page({
       hidden: false
     })
     var grade;
-    grade = (e.detail.value.checked_man === 1) ? 0 : 1;     //0为男生，1为女生
+    sex = (e.detail.value.checked_man === 0) ? "man" : "woman";     //0为男生，1为女生
+    switch(index)
+    {
+      case 0:grade="大一";break;
+      case 1:grade="大二";break;
+      case 2:grade="大三";break;
+      case 3:grade="大四";break;
+      case 5:grade="研一";break;
+      case 6:grade="研二";break;
+      case 7:grade="研三";break;
+      case 8:grade="其他";break;
+      case 9:grade="保密";break;
+    }
     wx.request({
-      url: 'http://localhost:8082/BookShare/user/complementInfo',
+      url: 'http://192.168.1.107:8082/BookShare/user/complementInfo',
       data: {
-        "userid": getAPP().globalData.userid,
-        "sex"  : e.detail.value.sex,
-        "phone": e.detail.value.tel,
-        "grade": e.detail.grade,
+        userid  :   app.globalData.openId,
+        sex     :   sex,
+        phone   :   e.detail.value.tel,
+        grade   :   grade,
       },
       header: {
-        'Content-Type': 'application/json'
-      },
+        'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
+},
       method: "POST",
       success: function (res) {
+        console.log(app.globalData.openId)
         that.setData({
           phone:e.detail.value.tel
         })

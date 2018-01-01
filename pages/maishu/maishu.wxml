@@ -12,7 +12,7 @@
 图书出售价格:<input type="digit" name="buy" maxlength='10000' disabled="{{input2}}"/>
 联系电话:<input name="phone" type="number" value="{{phone}}" maxlength='11'/>
 <button form-type='submit' type="primary">提交</button>
-<text>{{error}}</text>
+
 
 </form>
 </view>

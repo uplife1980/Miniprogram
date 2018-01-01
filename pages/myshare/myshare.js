@@ -11,7 +11,7 @@ Page({
 
   onLoad: function (options) {
     wx.request({
-      url: 'http://localhost:8082/BookShare/user/viewsharelog',
+      url: 'http://1921681107:8082/BookShare/user/viewsharelog',
       data: {
         userId: app.globalData.openId
       },
