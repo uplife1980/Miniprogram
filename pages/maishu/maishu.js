@@ -105,7 +105,7 @@ Page({
     wx.request({
       url: 'http://localhost:8082/BookShare/rentable/bookapplication',
       data: {
-       userid      : request_id,
+       userid      :   request_id,
        isbn        :   that.data.isbn,//isbn号 
        rentbtn     :   e.detail.value.rentbtn,//出租的开关，同卖书
        sellbtn     :   e.detail.value.sellbtn,//卖书的开关，1是卖，0是不卖
