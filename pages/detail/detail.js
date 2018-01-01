@@ -1,11 +1,12 @@
+var Url=require('../../url.js');
 var app = getApp();
 Page({
   data: {
     name: '',
-    way: 1,
+    way: 2,
     picture1: "",
     picture2: "",
-    information: "这是一本好书",
+    information: "",
     rentprice: '2333',
     saleprice: '122',
     tel: '',
@@ -13,22 +14,24 @@ Page({
     checked_woman: true,
     array: ['大一', '大二', '大三', '大四', '研一', '研二', '研三', '其他'],
     index: 0,       //年级
-    bookid: 12345,
-    disabled: 0,      //不可更改的选项
-    canIChange: "checked", //默认是租
+    bookid: '',
+    disabled: false,      //不可更改的选项
+    canIChange: "1", //默认是租
     userinfo_hidden: true,    //补全个人信息表
-    hidden: true      //信息补全成功
+    hidden: true    ,  //信息补全成功
+    peroid_hidden:true
   },
 
   onLoad: function (options) {            //抓取网址的物品ID
     this.fetchData(options.bookid);
+    
   },
 
   fetchData: function (bookid) {          //用ID获取全部信息
     var that = this;
     wx.request({
       method: "GET",
-      url: 'http://localhost:8082/BookShare/bookinfo/ofdetail',
+      url: Url.Url()+'bookinfo/ofdetail',
 
       data: {
         bookid: bookid,
@@ -37,20 +40,26 @@ Page({
         'Content-Type': 'application/json'
       },
       success: function (res) {
-        console.log(res)
+        console.log(res.data)
         that.setData({
-          "name": res.data.result.id,
-          "picture1": res.data.result.picture,
-          "picture2": res.data.result.picturesec,
-          "way": res.data.result.way,
-          "information": res.data.result.information,
-          "rentprice": res.data.result.rent_price,
-          "saleprice": res.data.result.sale_price
-
+          "name": res.data.detail.title,
+          "picture1": res.data.detail.picture,
+          "picture2": res.data.rentable.picture,
+          way: res.data.rentable.way,
+          "information": res.data.rentable.information,
+          "rentprice": res.data.rentable.rent_price,
+          "saleprice": res.data.rentable.sale_price,
+          bookid:res.data.rentable.id
         })
+        switch (that.data.way) {
+          case 1: { that.setData({ canIChange: "1", disabled: true, period_hidden: false }); break; }
+          case 2: { that.setData({ canIChange: "0", disabled: true }); break; }
+          case 3: { that.setData({ canIChange: "1", disabled: false }); break; }
+        }
       }
-
+        
     })
+    
 
   },
 
@@ -62,7 +71,7 @@ Page({
   userCheck: function (e) {       //检查用户是否注册?
     var that = this
     wx.request({
-      url: 'http://localhost:8082/BookShare/user/getUserInfo',
+      url: Url.Url()+'user/getUserInfo',
       data: {
         "userid": app.globalData.openId
       },
@@ -71,12 +80,11 @@ Page({
       },
       method: "GET",
       success: function (res) {
-        var that = this;
-        
-        if (res.data.result.status === 0) { 
+       console.log(res.data)
+        if (res.data.status === 0) { 
           that.setData({ userinfo_hidden: false })      }
         else{
-          formSubmit(e)
+          that.formSubmit(e)
         }
       },
     })
@@ -90,7 +98,7 @@ Page({
     var grade;
     grade=(e.detail.value.checked_man===1)?0:1;
     wx.request({
-      url: 'http://localhost:8082/BookShare/user/complementInfo',
+      url: Url.Url()+'user/complementInfo',
       data: {
         "sex": e.detail.value.sex,
         "phone": e.detail.value.tel,
@@ -103,6 +111,16 @@ Page({
       success: function (res) { },
     })
   },
+  peroid_check:function(e){
+    var that=this;
+  console.log(e)
+  if (e.detail.value == 0) {
+    that.setData({ peroid_hidden: true })
+  }
+  else {
+    that.setData({ peroid_hidden: false })
+  }
+  },
   toastChange: function () {        //信息补全成功并跳转新页面
     this.setData({
       hidden: true
@@ -114,12 +132,14 @@ Page({
     that.setData({
       hidden: false
     })
+    console.log(e.detail.value.way)
     wx.request({
-      url: '',
+      url: Url.Url()+'bookdeal/trade',
       data: {
-        "userid": app.globalData.openId,
-        "bookid": bookid,
-        "way": e.detail.value.way
+        userid: app.globalData.openId,
+        bookid: that.data.bookid,
+        rorbtn: e.detail.value.way,
+        period: e.detail.value.peroid
       },
       header: { 'content-type': 'application/x-www-form-urlencoded;charset=UTF-8' },
       method: "POST",

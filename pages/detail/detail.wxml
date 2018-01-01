@@ -9,7 +9,8 @@
   </view>
   <view class='container'>
     <form bindsubmit='userCheck'>买
-      <switch name="way" checked="{{canIChange}}" disabled="{{disabled}}" /> 租
+      <slider name="way" value="{{canIChange}}" step="1"max="1"show-value="false" min="0" disabled="{{disabled}}" bindchange='peroid_check'/> 租
+      <text hidden="{{peroid_hidden}}">我要租多久</text><input type="number" name="peroid" hidden="{{peroid_hidden}}"/>
       <button form-type='submit' type="primary">下单!</button>
     </form>
   </view>

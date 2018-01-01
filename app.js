@@ -23,10 +23,10 @@ App({
             method: "POST",
             success: function (res) {
               if(res.data.openid!=null){
-                that.globalData.userid = res.data.openid;
+                that.globalData.openId = res.data.openid;
                 console.log(res.data.openid);
                 wx.request({
-                  url: 'http://localhost:8082/BookShare/user/register',
+                  url: 'http://192.168.1.107:8082/BookShare/user/register',
                   data: {
                     userid: res.data.openid
                   },
