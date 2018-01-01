@@ -1,4 +1,6 @@
 var app = getApp();
+var Url = require('../../url.js');
+
 Page({
   data: {
     indicatorDots: true,
@@ -6,20 +8,21 @@ Page({
     interval: 3000,
     duration: 1000,
     number: 0,
-    size : 8,
+    allbooks_len: 1,
+    size: 8,
     postsList: [],
     hidden: false,
-    allStuff:true,
-    way:["出租","出售","可租可售","不可租售"]
+    allStuff: true,
+    way: ["不可租售", "出租", "出售", "可租可售"]
   },
-  
+
   onLoad: function () {
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
       })
-    }else if (this.data.canIUse) {
+    } else if (this.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
@@ -28,7 +31,7 @@ Page({
           hasUserInfo: true
         })
       }
-    }else {
+    } else {
       // 在没有 open-type=getUserInfo 版本的兼容处理
       wx.getUserInfo({
         success: res => {
@@ -53,7 +56,7 @@ Page({
 
   fetchImgListDate: function () {
     var self = this;
-    var data=self.data;
+    var data = self.data;
     self.setData({
       hidden: false
     });
@@ -64,32 +67,44 @@ Page({
         postsList: []
       });
     }
-    wx.request({  
-      method: "GET",
-      url:'http://localhost:8082/BookShare/bookinfo/ofindex',
-      data: {
-        'startlocation' : self.data.number,
-        'size': self.data.size
-      }, 
-      header: {
-        'Content-Type': 'application/json'
-      },
-      success: function (res) {
-        if (res.data.result.length == 0)
+    if (self.data.number <= self.data.allbooks_len) {
+      wx.request({
+        method: "GET",
+        url: 'http://192.168.1.107:8082/BookShare/bookinfo/ofindex',
+        data: {
+          'startlocation': self.data.number,
+          'size': self.data.size
+        },
+        header: {
+          'Content-Type': 'application/json'
+        },
+        success: function (res) {
+
+          if (res.data.result.length == 0)
             self.setData({
-              allStuff:false
+              allStuff: false
             })
-        self.setData({
-          postsList: self.data.postsList
-        })
-        //   后续图片传递给网页
-        setTimeout(function () {
+          console.log(res.data)
           self.setData({
-            hidden: true
-          });
-        }, 300); 
-      }
-    })
+            postsList: res.data.result,
+            allbooks_len: res.data.len
+          })
+          //   后续图片传递给网页
+          setTimeout(function () {
+            self.setData({
+
+              hidden: true
+            });
+          }, 300);
+        }
+      })
+    }
+    else {
+      self.setData({
+        hidden: true,
+        allStuff: false
+      })
+    }
   },
 
   //跳转至详情页
@@ -100,10 +115,42 @@ Page({
       url: link
     })
   },
-  hiddenAllStuff:function (){
+  hiddenAllStuff: function () {
     var that = this;
     that.setData({
-      allStuff:true
+      allStuff: true
+    })
+  },
+  search: function (e) {
+    var self=this;
+    wx.request({
+      url: Url.Url() + 'bookinfo/ofsearch',
+      data: {
+        keyword: e.detail.value
+      },
+      header: { 'content-type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+      method: "GET",
+      success: function (res) {
+        if (res.data.result.length == 0)
+          self.setData({
+            allStuff: false
+          })
+        console.log(res.data)
+        self.setData({
+          postsList: res.data.result,
+          allbooks_len: res.data.len
+        })
+        //   后续图片传递给网页
+        setTimeout(function () {
+          self.setData({
+
+            hidden: true
+          });
+        }, 300);
+
+      },
+      fail: function (res) { },
+      complete: function (res) { },
     })
   }
 })
