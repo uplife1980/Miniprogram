@@ -15,16 +15,6 @@ Page({
     allStuff: true,
     way: ["不可租售", "出租", "出售", "可租可售"]
   },
-onPullDownRefresh:function(){
-  wx.startPullDownRefresh({
-    success: function(res) {wx.switchTab({
-      url: '../index/index',
-      
-    })},
-    fail: function(res) {},
-    complete: function(res) {},
-  })
-},
   onLoad: function () {
     if (app.globalData.userInfo) {
       this.setData({

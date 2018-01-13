@@ -21,7 +21,7 @@ Page({
 
   //从服务器获取用户信息
   onLoad: function () {
-    var that=this
+    var that = this
     wx.request({
       url: Url.Url() + 'user/getUserInfo',
       data: {
@@ -29,13 +29,13 @@ Page({
       },
       method: "GET",
       success: function (res) {
-       console.log(res.data)
-       console.log(res.data.result)
+        console.log(res.data)
 
         if (res.data.status == 1) {
-          that.setData({
-            index: res.data.result.grade,
-            phone: res.data.result.phone
+
+            that.setData({
+            index: parseInt(res.data.result.grade),
+            phone: parseInt(res.data.result.phone)
           })
             (res.data.result.sex == 0) ? that.setData({ checked_man: true }) : that.setData({ checked_woman: true })
         }
@@ -154,7 +154,7 @@ Page({
 
             //图书不存在时去爬图书信息
             if (res.data.result != "exist") {
-              
+
               that.setData({
                 isbn: res.data.isbn
               })
@@ -166,7 +166,7 @@ Page({
 
                 //把服务器没有的信息补全给服务器
                 success: function (res) {
-                 
+
                   wx.request({
                     url: Url.Url() + 'rentable/saveisbn',
                     data: {
@@ -216,9 +216,9 @@ Page({
               },
               success: function (res) {
                 that.setData({
-                  hidden:false
+                  hidden: false
                 })
-               },
+              },
               fail: function (res) { },
               complete: function (res) { },
             })
@@ -245,12 +245,12 @@ Page({
       userinfo_hidden: false
     })
   },
-  upComplete:function(){        //跳转新页面
-  this.setData({
-    hidden:true
-  })
-  wx.switchTab({
-    url: '../users/users'
-  })
+  upComplete: function () {        //跳转新页面
+    this.setData({
+      hidden: true
+    })
+    wx.switchTab({
+      url: '../users/users'
+    })
   }
 })

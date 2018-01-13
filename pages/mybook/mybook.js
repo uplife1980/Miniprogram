@@ -30,7 +30,7 @@ Page({
       },
       method: "GET",
       success: function (res) {
-        var that = this
+        console.log(res.data)
         that.setData({
           bought_list: res.data.bought,
           borrowing_list: res.data.renting,
