@@ -138,8 +138,9 @@ onPullDownRefresh:function(){
         keyword: e.detail.value
       },
       header: { 'content-type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-      method: "GET",
+      method: "POST",
       success: function (res) {
+        console.log(res.data.result);
         if (res.data.result.length == 0)
           self.setData({
             allStuff: false

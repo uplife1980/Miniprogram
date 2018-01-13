@@ -1,5 +1,6 @@
 //app.js
 
+var Url = require('url.js');
 App({
   globalData: {
     userid : ""
@@ -28,7 +29,7 @@ App({
                 that.globalData.openId = res.data.openid;
                 console.log(res.data.openid);
                 wx.request({
-                  url: Url.Url()+'user/register',
+                  url: Url.Url() +'user/register',
                   data: {
                     userid: res.data.openid
                   },
