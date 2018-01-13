@@ -1,4 +1,5 @@
 //app.js
+var Url = require('url.js');
 App({
   globalData: {
     userid : ""
@@ -26,7 +27,7 @@ App({
                 that.globalData.openId = res.data.openid;
                 console.log(res.data.openid);
                 wx.request({
-                  url: 'http://192.168.1.107:8082/BookShare/user/register',
+                  url: Url.Url() +'user/register',
                   data: {
                     userid: res.data.openid
                   },
