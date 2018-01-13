@@ -15,7 +15,6 @@ Page({
     allStuff: true,
     way: ["不可租售", "出租", "出售", "可租可售"]
   },
-
   onLoad: function () {
     if (app.globalData.userInfo) {
       this.setData({
@@ -85,6 +84,15 @@ Page({
               allStuff: false
             })
           console.log(res.data)
+          for (var i in res.data.result) {
+          self.data.postsList.push({
+            picture1: res.data.result[i].picture,
+            bookindex: res.data.result[i].id,
+            name: res.data.result[i].title,
+            way: res.data.result[i].way,
+            rentprice: res.data.result[i].rent_price,
+            saleprice: res.data.result[i].sale_price
+          });}
           self.setData({
             postsList: res.data.result,
             allbooks_len: res.data.len

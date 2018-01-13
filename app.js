@@ -1,10 +1,12 @@
 //app.js
+
 var Url = require('url.js');
 App({
   globalData: {
     userid : ""
   },
   onLaunch: function () {
+    var Url = require('url.js');
     var that=this
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
@@ -72,5 +74,7 @@ App({
   globalData: {
     userInfo: null,
     openId:null
+  
   }
+  
 })

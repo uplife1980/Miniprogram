@@ -21,7 +21,7 @@ Page({
 
   //从服务器获取用户信息
   onLoad: function () {
-    var that = this;
+    var that = this
     wx.request({
       url: Url.Url() + 'user/getUserInfo',
       data: {
@@ -29,13 +29,18 @@ Page({
       },
       method: "GET",
       success: function (res) {
-        console.log(res.data);
-        if (res.data.result.status == 1) {
-          that.setData({
-            index: res.data.result.grade,
-            phone: res.data.result.phone
-          })
-          (res.data.result.sex == 0) ? that.setData({ checked_man: true }) : that.setData({ checked_woman: true })
+        console.log(res.data)
+
+        if (res.data.status == 1) {
+
+            that.setData({
+              index: parseInt(res.data.result.grade),
+              phone:res.data.result.phone
+            })
+            if(parseInt(res.data.result.sex) == 0) 
+              that.setData({ checked_man: true }) 
+            else
+              that.setData({ checked_woman: true })
         }
       },
 
@@ -122,9 +127,9 @@ Page({
       url: Url.Url() + 'user/complementInfo',
       data: {
         userid: app.globalData.openId,
-        sex   : sex,
-        phone : e.detail.value.tel,
-        grade : grade,
+        sex: sex,
+        phone: e.detail.value.tel,
+        grade: e.detail.value.grade
       },
       header: {
         'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -135,8 +140,8 @@ Page({
         wx.request({
           url: Url.Url() + 'rentable/bookapplication',
           data: {
-            userid : app.globalData.openId,
-            isbn   : that.data.isbn,//isbn号 
+            userid: app.globalData.openId,
+            isbn: that.data.isbn,//isbn号 
             rentbtn: e.detail.value.rentbtn,//出租的开关，同卖书
             sellbtn: e.detail.value.sellbtn,//卖书的开关，1是卖，0是不卖
             rent_price: (e.detail.value.rentbtn == false) ? 0 : e.detail.value.borrow,//出租的价格
@@ -152,7 +157,7 @@ Page({
 
             //图书不存在时去爬图书信息
             if (res.data.result != "exist") {
-              console.log(res.data.isbn);
+
               that.setData({
                 isbn: res.data.isbn
               })
@@ -164,8 +169,7 @@ Page({
 
                 //把服务器没有的信息补全给服务器
                 success: function (res) {
-                  console.log(that.data.isbn);
-                  console.log(res.data);
+
                   wx.request({
                     url: Url.Url() + 'rentable/saveisbn',
                     data: {
@@ -215,9 +219,9 @@ Page({
               },
               success: function (res) {
                 that.setData({
-                  hidden:false
+                  hidden: false
                 })
-               },
+              },
               fail: function (res) { },
               complete: function (res) { },
             })
@@ -239,14 +243,17 @@ Page({
       index: e.detail.value
     })
   },
-  submitTap: function () {        //信息补全成功
+  submitTap: function () {        //信息补全
     this.setData({
       userinfo_hidden: false
     })
   },
-  upComplete:function(){
-    wx.navigateTo({
-      url: '../users/users',
+  upComplete: function () {        //跳转新页面
+    this.setData({
+      hidden: true
+    })
+    wx.switchTab({
+      url: '../users/users'
     })
   }
 })

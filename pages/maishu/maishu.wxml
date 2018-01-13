@@ -18,7 +18,7 @@
       <view class="modal-body">
         <view class="modal-content">
           手机号码
-          <input type='number' name="tel" value="{{tel}}" /> 性别
+          <input type='number' name="tel" value="{{phone}}" /> 性别
           <radio-group name="sex">
             <radio value="man" checked="{{checked_man}}" />男
             <radio value="woman" checked="{{checked_woman}}" />女
