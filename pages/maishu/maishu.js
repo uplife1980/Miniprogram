@@ -21,14 +21,18 @@ Page({
 
   //从服务器获取用户信息
   onLoad: function () {
+    var that=this
     wx.request({
       url: Url.Url() + 'user/getUserInfo',
       data: {
-        openId: app.globalData.openId
+        userid: app.globalData.openId
       },
       method: "GET",
       success: function (res) {
-        if (res.data.result.status == 1) {
+       console.log(res.data)
+       console.log(res.data.result)
+
+        if (res.data.status == 1) {
           that.setData({
             index: res.data.result.grade,
             phone: res.data.result.phone
@@ -122,7 +126,7 @@ Page({
         userid: app.globalData.openId,
         sex: sex,
         phone: e.detail.value.tel,
-        grade: grade,
+        grade: e.detail.value.grade,
       },
       header: {
         'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -150,7 +154,7 @@ Page({
 
             //图书不存在时去爬图书信息
             if (res.data.result != "exist") {
-              console.log(res.data.isbn);
+              
               that.setData({
                 isbn: res.data.isbn
               })
@@ -162,8 +166,7 @@ Page({
 
                 //把服务器没有的信息补全给服务器
                 success: function (res) {
-                  console.log(that.data.isbn);
-                  console.log(res.data);
+                 
                   wx.request({
                     url: Url.Url() + 'rentable/saveisbn',
                     data: {
@@ -237,14 +240,17 @@ Page({
       index: e.detail.value
     })
   },
-  submitTap: function () {        //信息补全成功
+  submitTap: function () {        //信息补全
     this.setData({
       userinfo_hidden: false
     })
   },
-  upComplete:function(){
-    wx.navigateTo({
-      url: '../users/users',
-    })
+  upComplete:function(){        //跳转新页面
+  this.setData({
+    hidden:true
+  })
+  wx.switchTab({
+    url: '../users/users'
+  })
   }
 })

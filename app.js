@@ -1,9 +1,11 @@
 //app.js
+
 App({
   globalData: {
     userid : ""
   },
   onLaunch: function () {
+    var Url = require('url.js');
     var that=this
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
@@ -26,7 +28,7 @@ App({
                 that.globalData.openId = res.data.openid;
                 console.log(res.data.openid);
                 wx.request({
-                  url: 'http://192.168.1.107:8082/BookShare/user/register',
+                  url: Url.Url()+'user/register',
                   data: {
                     userid: res.data.openid
                   },
@@ -71,5 +73,7 @@ App({
   globalData: {
     userInfo: null,
     openId:null
+  
   }
+  
 })

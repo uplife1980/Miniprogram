@@ -19,7 +19,7 @@ Page({
     wx.request({
       url: Url.Url()+'bookdeal/viewnotconfirm',
       data: {
-        openId: app.globalData.openId
+        userid: app.globalData.openId
       },
       header: {
         'Content-Type': 'application/json'
@@ -27,7 +27,7 @@ Page({
       method: " GET",
       success: function (res) {
         that.setData({
-          booklist: res.data.bookinfo
+          booklist: res.data.sales
         })
       },
       fail: function (res) { },
@@ -39,11 +39,11 @@ Page({
     var that = this;
     var index = e.target.id.replace(/[^0-9]/ig, "");
     wx.request({
-      url: '',
+      url: Url.Url() +'user/confirm',
       data: {
-        openId: app.globalData.openId,
-        index: index,
-        comfirm: 1
+        userid: app.globalData.openId,
+        bookid: booklist[index].id,
+       
       },
       header: {
         'Content-Type': 'application/json'
@@ -62,11 +62,10 @@ Page({
     var index = e.target.id.replace(/[^0-9]/ig, "");
     var that = this
     wx.request({
-      url: '',
+      url: Url.Url() + 'user/cancel',
       data: {
-        openId: app.globalData.openId,
-        index: index,
-        cancel: 1
+        userid: app.globalData.openId,
+        bookid: booklist[index].id,
       },
       header: {
         'Content-Type': 'application/json'
