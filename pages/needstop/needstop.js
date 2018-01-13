@@ -1,3 +1,4 @@
+var Url = require('../../url.js');
 var app = getApp();
 Page({
 
@@ -16,7 +17,7 @@ Page({
   onLoad: function (options) {
     var that = this
     wx.request({
-      url: '',
+      url: Url.Url()+'bookdeal/viewnotconfirm',
       data: {
         openId: app.globalData.openId
       },
