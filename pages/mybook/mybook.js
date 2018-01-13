@@ -30,19 +30,19 @@ Page({
       },
       method: "GET",
       success: function (res) {
-        var that = this
+        console.log(res.data)
         that.setData({
           bought_list: res.data.bought,
           borrowing_list: res.data.renting,
           notborrow_list: res.data.outdate,
           neverborrow_list: res.data.rentable
         })
-        var today = 0;
+        var today = new Date;
         var borrowing_list = that.data.borrowing_list;
         for (var i in borrowing_list) {
-          var endDate = Date.parse(borrowing_list[i].period.replace('/-/g', '/'));
-          var days = (endDate - today) / (1 * 24 * 60 * 60 * 1000);
-          borrowing_list[i].push({ days: days })
+          // var endDate = Date.parse(borrowing_list[i].period.replace('/-/g', '/'));
+          var days = (borrowing_list[i].end_time - today.getTime()) / (1 * 24 * 60 * 60 * 1000);
+          borrowing_list[i].days=parseInt(days) 
         }
         that.setData({
           borrowing_list: borrowing_list
@@ -83,9 +83,9 @@ Page({
       url: Url.Url() + 'bookdeal/reRent',
       data: {
         userid: app.globalData.openId,
-        bookid: borrowing_list[index].bookid,
+        bookid: that.data.borrowing_list[index].id,
         period: e.detail.value.period,
-        onlycode:borrowing_list[index].onlycode
+        onlycode:that.data.borrowing_list[index].onlycode
       },
       header: {
         'Content-Type': 'application/json'
@@ -100,7 +100,7 @@ Page({
             'content-type': 'multipart/form-data'
           },
           formData: {
-            onlycode:borrowing_list[index].onlycode
+            onlycode:that.data.borrowing_list[index].onlycode
           },
         })
 

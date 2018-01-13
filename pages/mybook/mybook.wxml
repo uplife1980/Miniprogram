@@ -4,7 +4,7 @@
     <view class="bar">已经购买的图书</view>
     <block wx:for="{{bought_list}}" wx:key="unique" wx:for-index="bought_index" wx:for-item="bought">
       <view>
-        {{bought.pic}} {{bought.name}}
+        <image src="{{bought.picture}}"/> {{bought.name}}
       </view>
     </block>
   </view>
@@ -12,18 +12,18 @@
     <view class="bar">正在租用的图书</view>
     <block wx:for="{{borrowing_list}}" wx:key="unique" wx:for-item="borrowing" wx:for-index="borrowing_index">
       <view>
-        {{borrowing.pic}} {{borrowing.name}} 剩余天数 {{borrowing.days}}
+        <image src="{{bought.picture}}"/>{{borrowing.name}} 剩余天数 {{borrowing.days}}天
         <button bindtap='renew' >我要续命</button>
       </view>
       <!--续命  -->
       <view class="modal-box" hidden="{{xuming_hidden}}">
         <view class="modal-body">
           <view class="modal-content">
-            <form bindsubmit='renewFormSubmit'>
+            <form bindsubmit='renewFormSubmit'  id="xuming{{borrowing_index}}">
               我要再租: <input type="number" name="period" />
               <button bindtap='iwantpic'>图书照片更新</button>
               <image src=" {{img}} " style="display:{{display1}} "></image>
-              <button form-type='submit' type="primary" id="xuming{{borrowing_index}}">提交</button>
+              <button form-type='submit' type="primary">提交</button>
 
             </form>
 

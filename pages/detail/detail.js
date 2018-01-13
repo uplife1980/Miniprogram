@@ -52,15 +52,29 @@ Page({
           bookid:res.data.rentable.id
         })
         switch (that.data.way) {
-          case 1: { that.setData({ canIChange: "1", disabled: true, period_hidden: false }); break; }
-          case 2: { that.setData({ canIChange: "0", disabled: true }); break; }
-          case 3: { that.setData({ canIChange: "1", disabled: false }); break; }
+          case 1: { that.setData({ canIChange: true, disabled: true, peroid_hidden: false }); break; }
+          case 2: { that.setData({ canIChange: false, disabled: true }); break; }
+          case 3: { that.setData({ canIChange: true, disabled: false,peroid_hidden:false }); break; }
         }
       }
         
     })
     
 
+  },
+  rorChange:function(e){               //买租更改时的时长隐藏
+  var that=this
+        if(e.detail.value==true){
+          that.setData({
+            peroid_hidden:false
+          })
+        }
+        else
+        {
+          that.setData({
+            peroid_hidden:true
+          })
+        }
   },
 
   bindchange: function (e) {          //更改年级显示出来
@@ -132,7 +146,6 @@ Page({
     that.setData({
       hidden: false
     })
-    console.log(e.detail.value.way)
     wx.request({
       url: Url.Url()+'bookdeal/trade',
       data: {
@@ -143,7 +156,9 @@ Page({
       },
       header: { 'content-type': 'application/x-www-form-urlencoded;charset=UTF-8' },
       method: "POST",
-      success: function (res) { },
+      success: function (res) { 
+        console.log(res.data)
+      },
       fail: function (res) { },
       complete: function (res) { },
     })
