@@ -24,8 +24,9 @@ Page({
     header: {
       'Content-Type': 'application/json'
 },
-    method:" GET",
+    method:"GET",
     success: function(res) {
+      console.log(res)
       that.setData({
         booklist:res.data.sale
       })

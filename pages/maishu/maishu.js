@@ -37,7 +37,10 @@ Page({
             index: parseInt(res.data.result.grade),
             phone: parseInt(res.data.result.phone)
           })
-            (res.data.result.sex == 0) ? that.setData({ checked_man: true }) : that.setData({ checked_woman: true })
+            if(res.data.result.sex == 0) 
+            that.setData({ checked_man: true }) 
+            else
+            that.setData({ checked_woman: true })
         }
       },
 
@@ -137,7 +140,7 @@ Page({
         wx.request({
           url: Url.Url() + 'rentable/bookapplication',
           data: {
-            userid: request_id,
+            userid: app.globalData.openId,
             isbn: that.data.isbn,//isbn号 
             rentbtn: e.detail.value.rentbtn,//出租的开关，同卖书
             sellbtn: e.detail.value.sellbtn,//卖书的开关，1是卖，0是不卖
