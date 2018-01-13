@@ -24,7 +24,7 @@ Page({
     wx.request({
       url: Url.Url() + 'user/getUserInfo',
       data: {
-        openId: app.globalData.openId
+        userid: app.globalData.openId
       },
       method: "GET",
       success: function (res) {
