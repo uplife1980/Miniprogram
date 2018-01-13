@@ -10,7 +10,7 @@ Page({
     display2: "none",
     phone: "",
     error: '',
-    userinfo_hidden: false,    //补全个人信息表
+    userinfo_hidden: true,    //补全个人信息表
     checked_man: false,
     checked_woman: true,
     hidden: true,     //信息补全成功
