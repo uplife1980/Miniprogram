@@ -23,6 +23,7 @@ Page({
       },
       method: "GET",
       success: function (res) {
+        console.log(res)
         var data = [{ recording: [] }];
         var stopshare = [];
         var continueshare = [];

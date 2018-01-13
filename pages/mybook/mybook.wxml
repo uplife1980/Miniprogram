@@ -42,9 +42,9 @@
   <view class="piece ">
     <view class="bar ">未有被租用和购买过的图书</view>
     <block wx:for="{{neverborrow_list}} " wx:key="unique " wx:for-index="neverborrow_index " wx:for-item="neverborrow ">
-      {{neverborrow.pic}} {{neverborrow.name}}
+      {{neverborrow.pic}} 
       <button bindtap="repeal1 " id="repeal{{neverborrow_index}} ">撤销此单</button>
-
+      {{neverborrow.name}}
     </block>
   </view>
 </view>

@@ -10,11 +10,11 @@ Page({
     hasUserInfo: false
   },
   //事件处理函数
-  bindViewTap: function () {
-    wx.navigateTo({
-      url: '../detail/detail'
-    })
-  },
+  // bindViewTap: function () {
+  //   wx.navigateTo({
+  //     url: '../detail/detail'
+  //   })
+  // },
   onLoad: function () {
 
     if (app.globalData.userInfo) {
