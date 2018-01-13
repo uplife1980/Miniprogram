@@ -3,42 +3,54 @@
   <view class="piece">
     <view class="bar">已经购买的图书</view>
     <block wx:for="{{bought_list}}" wx:key="unique" wx:for-index="bought_index" wx:for-item="bought">
-    <view>
-    {{bought.pic}}
-    {{bought.name}}
-    </view>
+      <view>
+        {{bought.pic}} {{bought.name}}
+      </view>
     </block>
   </view>
   <view class="piece">
     <view class="bar">正在租用的图书</view>
-        <block wx:for="{{borrowing_list}}" wx:key="unique" wx:for-item="borrowing" wx:for-index="borrowing_index" >
-        <view>
-        {{borrowing.pic}}
-        {{borrowing.name}}
-        剩余天数
-        {{borrowing.days}}
-        <button bindtap='renew' id="xuming{{borrowing_index}}">我要续命</button>
-        </view>
-</block>
-  </view>
-  <view class="piece">
-    <view class="bar">租期已经到且未被别人借走/购买</view>
-     <block wx:for="{{notborrow_list}}" wx:key="unique" wx:for-index="notborrow_index" wx:for-item="notborrow">
-     {{notborrow.pic}}
-     {{notborrow.name}}
-     <button bindtap="updatePic" id="update{{notborrow_index}}">更新图片</button>
-</block>
-  </view>
-  <view class="piece">
-    <view class="bar">未有被租用和购买过的图书</view>
-     <block wx:for="{{neverborrow_list}}" wx:key="unique" wx:for-index="neverborrow_index" wx:for-item="neverborrow">
-      {{neverborrow.pic}}
-      {{neverborrow.name}}
-      <button bindtap="repeal1" id="repeal{{neverborrow_index}}">撤销此单</button>
+    <block wx:for="{{borrowing_list}}" wx:key="unique" wx:for-item="borrowing" wx:for-index="borrowing_index">
+      <view>
+        {{borrowing.pic}} {{borrowing.name}} 剩余天数 {{borrowing.days}}
+        <button bindtap='renew' >我要续命</button>
+      </view>
+      <!--续命  -->
+      <view class="modal-box" hidden="{{xuming_hidden}}">
+        <view class="modal-body">
+          <view class="modal-content">
+            <form bindsubmit='renewFormSubmit'>
+              我要再租: <input type="number" name="period" />
+              <button bindtap='iwantpic'>图书照片更新</button>
+              <image src=" {{img}} " style="display:{{display1}} "></image>
+              <button form-type='submit' type="primary" id="xuming{{borrowing_index}}">提交</button>
 
-</block>
+            </form>
+
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+  <view class="piece ">
+    <view class="bar ">租期已经到且未被别人借走/购买</view>
+    <block wx:for="{{notborrow_list}} " wx:key="unique " wx:for-index="notborrow_index " wx:for-item="notborrow ">
+      {{notborrow.pic}} {{notborrow.name}}
+      <button bindtap="updatePic " id="update{{notborrow_index}} ">更新图片</button>
+    </block>
+  </view>
+  <view class="piece ">
+    <view class="bar ">未有被租用和购买过的图书</view>
+    <block wx:for="{{neverborrow_list}} " wx:key="unique " wx:for-index="neverborrow_index " wx:for-item="neverborrow ">
+      {{neverborrow.pic}} {{neverborrow.name}}
+      <button bindtap="repeal1 " id="repeal{{neverborrow_index}} ">撤销此单</button>
+
+    </block>
   </view>
 </view>
 
-<toast hidden="{{hidden}}" duration="1000" bindchange="toastChange">提交成功</toast>
-<modal hidden="{{comfirm}}" bindconfirm="repeal"title="警告">即将停止本图书的分享,您真的要这样做吗?</modal>
+
+
+
+<toast hidden="{{hidden}} " duration="1000 " bindchange="toastChange ">提交成功</toast>
+<modal hidden="{{comfirm}} " bindconfirm="repeal " title="警告 ">即将停止本图书的分享,您真的要这样做吗?</modal>

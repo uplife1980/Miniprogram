@@ -70,7 +70,7 @@ Page({
     if (self.data.number <= self.data.allbooks_len) {
       wx.request({
         method: "GET",
-        url: 'http://192.168.1.107:8082/BookShare/bookinfo/ofindex',
+        url: Url.Url()+'bookinfo/ofindex',
         data: {
           'startlocation': self.data.number,
           'size': self.data.size
