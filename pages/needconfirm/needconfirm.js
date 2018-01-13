@@ -38,20 +38,20 @@ Page({
   })
   },
 
- confirm:function(e){
+ comfirm:function(e){
    var that=this;
    var index = e.target.id.replace(/[^0-9]/ig, ""); 
    wx.request({
-     url: Url.Url()+'user/confirm',
+     url: Url.Url() +'bookdeal/confirm',
      data: {
-      bookid:booklist[index].bookid
+      bookid:parseInt(that.data.booklist_renteds[index].id)
      },
      header: {
-       'Content-Type': 'application/json'
+       'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
 },
      method:"POST",
      success: function(res) {that.setData({
-       confirm_hidden:false
+       comfirm_hidden:false
      })},
      fail: function(res) {},
      complete: function(res) {},
@@ -61,17 +61,61 @@ Page({
    var index = e.target.id.replace(/[^0-9]/ig, "");
    var that=this
    wx.request({
-     url: Url.Url()+'user/cancel',
+     url: Url.Url() +'bookdeal/cancel',
      data: {
-       bookid: booklist[index].bookid
+       bookid: that.data.booklist_renteds[index].id
      },
      header: {
-       'Content-Type': 'application/json'
+       'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
      },
      method: "POST",
-     success: function (res) {that.setData({
+     success: function (res) {
+       that.setData({
        cancel_hidden:false
      })},
+     fail: function (res) { },
+     complete: function (res) { },
+   })
+ },
+
+ comfirm2: function (e) {
+   var that = this;
+   var index = e.target.id.replace(/[^0-9]/ig, "");
+   wx.request({
+     url: Url.Url() + 'bookdeal/confirm',
+     data: {
+       bookid: that.data.booklist_sales[index].id
+     },
+     header: {
+       'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
+     },
+     method: "POST",
+     success: function (res) {
+       that.setData({
+         comfirm_hidden: false
+       })
+     },
+     fail: function (res) { },
+     complete: function (res) { },
+   })
+ },
+ cancel2: function (e) {
+   var index = e.target.id.replace(/[^0-9]/ig, "");
+   var that = this
+   wx.request({
+     url: Url.Url() + 'bookdeal/cancel',
+     data: {
+       bookid: that.data.booklist_sales[index].id
+     },
+     header: {
+       'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
+     },
+     method: "POST",
+     success: function (res) {
+       that.setData({
+         cancel_hidden: false
+       })
+     },
      fail: function (res) { },
      complete: function (res) { },
    })
@@ -80,13 +124,13 @@ Page({
    this.setData({
      confirm_hidden:true
    })
-   wx.navigateTo({ url: '../needconfirm/needconfirm' })
+   wx.redirectTo({ url: '../needconfirm/needconfirm' })
 
  },
  toastChange2:function(){
    this.setData({
      cancel_hidden:true
    })
-   wx.navigateTo({ url: '../needconfirm/needconfirm' })
+   wx.redirectTo({ url: '../needconfirm/needconfirm' })
  }
 })

@@ -78,20 +78,24 @@ Page({
   //续命表单提交
   renewFormSubmit: function (e) {
     var index = e.target.id.replace(/[^0-9]/ig, "");
-    var that=this
+    var that=this;
+    var date = new Date() //9+4
+    var request_id = date.getTime() * 10000 + Math.floor(Math.random() * (9999 - 1000 + 1) + 1000)
     wx.request({
       url: Url.Url() + 'bookdeal/reRent',
       data: {
         userid: app.globalData.openId,
-        bookid: that.data.borrowing_list[index].id,
-        period: e.detail.value.period,
-        onlycode:that.data.borrowing_list[index].onlycode
+        bookid: parseInt(that.data.borrowing_list[index].id),
+        period: parseInt(e.detail.value.period),
+        onlycode: parseInt(request_id)
+
       },
       header: {
-        'Content-Type': 'application/json'
+        'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
       },
       method: "POST",
       success: function (res) {
+        
         wx.uploadFile({
           url: Url.Url() + 'upload/image',
           filePath: that.data.img[0],
@@ -100,7 +104,7 @@ Page({
             'content-type': 'multipart/form-data'
           },
           formData: {
-            onlycode:that.data.borrowing_list[index].onlycode
+            onlycode:request_id
           },
         })
 
@@ -149,7 +153,7 @@ Page({
         bookid: neverborrow_list[index].bookid
       },
       header: {
-        'Content-Type': 'application/json'
+        'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
       },
       method: "POST",
       success: function (res) { wx.navigateTo({ url: '../mybook/mybook' }) },

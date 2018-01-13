@@ -17,7 +17,7 @@
     "navigationBarTitleText": "书--遇见",
     "navigationBarTextStyle": "black",
     "backgroundColor": "#f1f1f1",
-    "enablePullDownRefresh": "false"
+    "enablePullDownRefresh": false
   },
   "tabBar":{
   "list":
