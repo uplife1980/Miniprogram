@@ -6,9 +6,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-  confirm_hidden:true,
+  comfirm_hidden:true,
   cancel_hidden:true,
-  booklist:[]
+  booklist_renteds:[],
+  booklist_sales:[]
   },
 
   /**
@@ -17,7 +18,7 @@ Page({
   onLoad: function (options) {
     var that=this
   wx.request({
-    url: Url.Url()+'/bookdeal/viewnotconfirm',
+    url: Url.Url()+'bookdeal/viewnotconfirm',
     data: {
       userid:app.globalData.openId
     },
@@ -28,7 +29,8 @@ Page({
     success: function(res) {
       console.log(res)
       that.setData({
-        booklist:res.data.sale
+        booklist_renteds:res.data.renteds,
+        booklist_sales:res.data.sales
       })
     },
     fail: function(res) {},
@@ -40,7 +42,7 @@ Page({
    var that=this;
    var index = e.target.id.replace(/[^0-9]/ig, ""); 
    wx.request({
-     url: 'http://localhost:8082/BookShare/user/confirm',
+     url: Url.Url()+'user/confirm',
      data: {
       bookid:booklist[index].bookid
      },
@@ -59,7 +61,7 @@ Page({
    var index = e.target.id.replace(/[^0-9]/ig, "");
    var that=this
    wx.request({
-     url: 'http://localhost:8082/BookShare/user/cancel',
+     url: Url.Url()+'user/cancel',
      data: {
        bookid: booklist[index].bookid
      },

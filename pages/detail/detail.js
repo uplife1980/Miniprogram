@@ -146,7 +146,6 @@ Page({
     that.setData({
       hidden: false
     })
-    console.log(e.detail.value.way)
     wx.request({
       url: Url.Url()+'bookdeal/trade',
       data: {
@@ -157,7 +156,9 @@ Page({
       },
       header: { 'content-type': 'application/x-www-form-urlencoded;charset=UTF-8' },
       method: "POST",
-      success: function (res) { },
+      success: function (res) { 
+        console.log(res.data)
+      },
       fail: function (res) { },
       complete: function (res) { },
     })
