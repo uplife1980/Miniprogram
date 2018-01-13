@@ -1,4 +1,6 @@
 var app = getApp();
+var Url = require('../../url.js');
+
 Page({
   data: {
     upload_list: [],
@@ -11,7 +13,7 @@ Page({
 
   onLoad: function (options) {
     wx.request({
-      url: 'http://1921681107:8082/BookShare/user/viewsharelog',
+      url: Url.Url()+'user/viewsharelog',
       data: {
         userId: app.globalData.openId
       },
@@ -55,7 +57,7 @@ Page({
     var that = this;
     if (that.data.upload_list[index].status === 3) {
       wx.request({
-        url: 'http://localhost:8082/BookShare/user/stopshare',
+        url: Url.Url()+'user/stopshare',
         data: {
           bookid: upload_list[index].bookid,
           
@@ -66,11 +68,13 @@ Page({
         method: "POST",
         success: function (res) {
           var data=that.data.upload_list;
+          if(res.data.status==1){
           data[index].phone=res.data.phone
          that.setData({
               upload_list:data,
               phone_hidden:false
          })
+         }
           // wx.navigateTo({ url: '../myshare/myshare' })
         },
         fail: function (res) { },

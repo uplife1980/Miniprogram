@@ -1,5 +1,5 @@
 function Url(){
-  var url ="http://192.168.1.107:8082/BookShare/"
+  var url ="http://115.159.24.14/"
   return  url;
 }
 
