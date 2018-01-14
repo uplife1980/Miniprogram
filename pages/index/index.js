@@ -16,10 +16,16 @@ Page({
     way: ["不可租售", "出租", "出售", "可租可售"]
   },
   onPullDownRefresh:function(){
-    var that=this
+    this.refreshPage()
+  },
+  onShow:function(){
+    this.refreshPage()
+  },
+  refreshPage:function(){
+    var that = this
     that.setData({
-      number:0,
-      postList:[]
+      number: 0,
+      postList: []
     })
     that.lower()
   },
