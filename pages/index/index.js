@@ -27,7 +27,7 @@ Page({
       number: 0,
       postList: []
     })
-    that.lower()
+    that.fetchImgListDate()
   },
   onLoad: function () {
     if (app.globalData.userInfo) {
