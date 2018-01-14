@@ -20,38 +20,6 @@
 	width: 47%;
   margin-top: 5%;
 }
-.search{
-	display: flex;
-  	flex-direction: row;
-  	height: 50rpx;
-	align-items: center;
-}
-
-.search .scan{
-	display: flex;
-  	flex-direction: column;
-	align-items: center;
-	width: 10%;
-}
-
-.search .search-input{
-	padding: 5rpx;
-	background-color: #FFFFFF;
-	display: flex;
-	flex-direction: row;
-	height: 100%;
-	width: 80%;
-	-moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius:5px;
-	align-items: center;
-}
-
-.search-icon{
-	width: 30rpx;
-	height: 30rpx;
-}
-
 .search-text{
 	top:0px;
 	padding:0px;

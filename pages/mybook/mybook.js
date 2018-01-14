@@ -85,7 +85,7 @@ Page({
       url: Url.Url() + 'bookdeal/reRent',
       data: {
         userid: app.globalData.openId,
-        bookid: parseInt(that.data.borrowing_list[index].id),
+        bookid: 4,
         period: parseInt(e.detail.value.period),
         onlycode: parseInt(request_id)
 
