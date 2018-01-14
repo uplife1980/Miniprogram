@@ -104,6 +104,14 @@ Page({
           },
           formData: {
             onlycode: request_id
+          },
+          success:function(){
+            wx.redirectTo({
+              url: '../mybook/mybook',
+              success: function(res) {},
+              fail: function(res) {},
+              complete: function(res) {},
+            })
           }
         })
 
