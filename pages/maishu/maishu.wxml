@@ -1,7 +1,6 @@
 <!--pages/maishu/maishu.wxml-->
 <view class="container">
-  <form bindsubmit='formSubmit'>
-
+  <form bindsubmit='formCheck'>
     <button bindtap='iwantcode'>扫描图书二维码</button>
     <text name="isbn">{{isbn}}</text>
     <button bindtap='iwantpic'>图书真照</button>
@@ -10,29 +9,26 @@
     <input type='digit' name="borrow" maxlength='5' disabled="{{input1}}" />
     <switch bindchange='switch2' name="sellbtn" />出售 图书出售价格:
     <input type="digit" name="buy" maxlength='10000' disabled="{{input2}}" /> 
-    <button bindtap='submitTap'>提交</button>
-
-
-    <!-- </form> -->
-    <view class="modal-box" hidden="{{userinfo_hidden}}">
-      <view class="modal-body">
-        <view class="modal-content">
-          手机号码
-          <input type='number' name="tel" value="{{phone}}" /> 性别
-          <radio-group name="sex">
-            <radio value="man" checked="{{checked_man}}" />男
-            <radio value="woman" checked="{{checked_woman}}" />女
-          </radio-group>
-          <picker name="grade" range='{{array}}' value="{{index}}" bindchange='bindchange'>
-            <view>你的年级：{{array[index]}}</view>
-          </picker>
-          <button form-type='submit' type="primary">提交</button>
-
-        </view>
-      </view>
-
+    <button bindtap='submitTap'>提交订单</button>
+    <view hidden='{{userinfo_hidden}}'>
+      <view>手机号码</view>
+      <input type='number' name="tel" value="{{phone}}" /> 
+      <view>性别</view>
+      <radio-group name="sex">
+      <radio value="man" checked="{{checked_man}}" />男
+      <radio value="woman" checked="{{checked_woman}}" />女
+      </radio-group>
+      <picker name="grade" range='{{array}}' value="{{index}}" bindchange='bindchange'>
+        <view>你的年级：{{array[index]}}</view>
+      </picker>
+      <button form-type='submit' type="primary">确认提交</button>
     </view>
   </form>
-
 </view>
 <toast hidden="{{hidden}}" duration="1000" bindchange="upComplete">提交成功</toast>
+    <!--<view class="modal-box" hidden="{{userinfo_hidden}}">
+      <view class="modal-body">
+        <view class="modal-content">-->
+        <!-- </view>
+      </view>
+    </view>-->

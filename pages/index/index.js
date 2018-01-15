@@ -93,7 +93,6 @@ Page({
           'Content-Type': 'application/json'
         },
         success: function (res) {
-
           if (res.data.result.length == 0)
             self.setData({
               allStuff: false
@@ -115,7 +114,6 @@ Page({
           //   后续图片传递给网页
           setTimeout(function () {
             self.setData({
-
               hidden: true
             });
           }, 300);
@@ -167,11 +165,9 @@ Page({
         //   后续图片传递给网页
         setTimeout(function () {
           self.setData({
-
             hidden: true
           });
         }, 300);
-
       },
       fail: function (res) { },
       complete: function (res) { },

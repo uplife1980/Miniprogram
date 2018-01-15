@@ -168,7 +168,13 @@ Page({
         'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
       },
       method: "POST",
-      success: function (res) { wx.navigateTo({ url: '../mybook/mybook' }) },
+      success: function (res) {
+         //最后一定会有一个button，navigateTo是进入，还需要再退出
+         //改用局部刷新的方式，单独刷新一类图书。
+         //统一加载
+         //图片实物图太大，需要限制大小
+         //wx.navigateTo({ url: '../mybook/mybook' }) 
+         },
       fail: function (res) { },
       complete: function (res) { },
     })
