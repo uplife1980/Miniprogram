@@ -15,6 +15,20 @@ Page({
     allStuff: true,
     way: ["不可租售", "出租", "出售", "可租可售"]
   },
+  onPullDownRefresh:function(){
+    this.refreshPage()
+  },
+  onShow:function(){
+    this.refreshPage()
+  },
+  refreshPage:function(){
+    var that = this
+    that.setData({
+      number: 0,
+      postList: []
+    })
+    that.fetchImgListDate()
+  },
   onLoad: function () {
     if (app.globalData.userInfo) {
       this.setData({
@@ -46,6 +60,7 @@ Page({
     that.fetchImgListDate();
   },
   lower: function (e) {
+    wx.stopPullDownRefresh();
     var self = this;
     self.setData({
       number: self.data.number + self.data.size
