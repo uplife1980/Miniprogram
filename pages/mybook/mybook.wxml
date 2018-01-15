@@ -26,7 +26,6 @@
               <button form-type='submit' type="primary">提交</button>
               <button  bindtap='submitCancel'>取消</button>
             </form>
-
           </view>
         </view>
       </view>
@@ -42,16 +41,11 @@
   <view class="piece">
     <view class="bar">未有被租用和购买过的图书</view>
     <view wx:for="{{neverborrow_list}}" wx:key="unique" wx:for-index="neverborrow_index" wx:for-item="neverborrow">
-      <image src="{{neverborrow.picture}}"></image>
+      <image class="img" src="{{neverborrow.picture}}" mode="scaleToFill"></image>
       {{neverborrow.id}}
       <button bindtap="repeal1" id="repeal{{neverborrow_index}}">撤销此单</button>
-
     </view>
   </view>
 </view>
-
-
-
-
 <toast hidden="{{hidden}}" duration="1000 " bindchange="toastChange ">提交成功</toast>
 <modal hidden="{{comfirm}}" bindconfirm="repeal" bindcancel="repealCancel" title="警告 ">即将停止本图书的分享,您真的要这样做吗?</modal>
