@@ -1,11 +1,10 @@
 var app = getApp()
 var Url = require('../../url.js');
 Page({
-
   data: {
     openId: app.globalData.openId,
     hidden: true,
-    comfirm: true,
+    confirm: true,
     bought_list: [],
     borrowing_list: [],
     notborrow_list: [],
@@ -37,8 +36,6 @@ Page({
           neverborrow_list: res.data.rentable
         })
         var today = new Date;
-        console.log(that.data.neverborrow_list)
-
         var borrowing_list = that.data.borrowing_list;
         for (var i in borrowing_list) {
           // var endDate = Date.parse(borrowing_list[i].period.replace('/-/g', '/'));
@@ -48,6 +45,7 @@ Page({
         that.setData({
           borrowing_list: borrowing_list
         })
+        console.log(that.data)
       },
       fail: function (res) { },
       complete: function (res) { },
@@ -114,7 +112,6 @@ Page({
             })
           }
         })
-
       },
       fail: function (res) { },
       complete: function (res) { },
@@ -136,24 +133,40 @@ Page({
       sourceType: [],
       success: function (res) {
         wx.uploadFile({
-          url: Url.Url() + 'upload/updatepic',
+          url: Url.Url() + 'upload/image',
           filePath: res.tempFilePaths[0],
           name: 'imagefile',
           header: {
             'content-type': 'multipart/form-data'
           },
           formData: {
-            bookid: that.data.notborrowing_list[index].id,
             onlycode:request_id
           }
+        }),
+        wx.request({
+          url: Url.Url() + '/bookdeal/updatepic',
+          data : {
+            bookid: that.data.notborrow_list[index].id
+          },
+          header: {
+            'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
+          },
+          method: "POST",
+          success: function (res) {
+            that.setData({
+              //that.data.notborrow_list[index]
+              //neverborrow_list: res.data.rentable,
+            })
+          },
+          fail: function (res) { },
+          complete: function (res) { },
         })
       }
     })
   },
-
   repeal1: function (e) {      //操作确认提示框
     this.setData({
-      comfirm: false,
+      confirm: false,
       tempIndex: e.currentTarget.id.replace(/[^0-9]/ig, "")
     })
   },
@@ -174,17 +187,21 @@ Page({
          //统一加载
          //图片实物图太大，需要限制大小
          //wx.navigateTo({ url: '../mybook/mybook' }) 
-         },
+        that.setData({
+          neverborrow_list : res.data.rentable,
+          confirm : true
+        })
+      },
       fail: function (res) { },
       complete: function (res) { },
     })
   },
   repealCancel:function(){
     this.setData({
-      comfirm:true
+      confirm:true
     })
   },
-  toastChange: function () {        //信息补全成功并跳转新页面
+  toastChange: function () {        
     this.setData({
       hidden: true
     })

@@ -8,6 +8,7 @@
       </view>
     </block>
   </view>
+
   <view class="piece">
     <view class="bar">正在租用的图书</view>
     <block wx:for="{{borrowing_list}}" wx:key="unique" wx:for-item="borrowing" wx:for-index="borrowing_index">
@@ -31,6 +32,7 @@
       </view>
     </block>
   </view>
+
   <view class="piece">
     <view class="bar">租期已经到且未被别人借走/购买</view>
     <block wx:for="{{notborrow_list}}" wx:key="unique" wx:for-index="notborrow_index" wx:for-item="notborrow">
@@ -38,6 +40,7 @@
       <button bindtap="updatePic" id="update{{notborrow_index}}">更新图片</button>
     </block>
   </view>
+
   <view class="piece">
     <view class="bar">未有被租用和购买过的图书</view>
     <view wx:for="{{neverborrow_list}}" wx:key="unique" wx:for-index="neverborrow_index" wx:for-item="neverborrow">
@@ -48,4 +51,4 @@
   </view>
 </view>
 <toast hidden="{{hidden}}" duration="1000 " bindchange="toastChange ">提交成功</toast>
-<modal hidden="{{comfirm}}" bindconfirm="repeal" bindcancel="repealCancel" title="警告 ">即将停止本图书的分享,您真的要这样做吗?</modal>
+<modal hidden="{{confirm}}" bindconfirm="repeal" bindcancel="repealCancel" title="warning">即将停止本图书的分享,您真的要这样做吗?</modal>

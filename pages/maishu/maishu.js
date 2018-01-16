@@ -99,19 +99,21 @@ Page({
     var date = new Date() //9+4
     var request_id = date.getTime() * 10000 + Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
     //上传用户信息部分
-    var grade;
-    var sex = (e.detail.value.checked_man === 0) ? "man" : "woman";     //0为男生，1为女生
-    switch (e.detail.value.index) {
-      case 0: grade = "大一"; break;
-      case 1: grade = "大二"; break;
-      case 2: grade = "大三"; break;
-      case 3: grade = "大四"; break;
-      case 5: grade = "研一"; break;
-      case 6: grade = "研二"; break;
-      case 7: grade = "研三"; break;
-      case 8: grade = "其他"; break;
-      case 9: grade = "保密"; break;
-    }
+    console.log(e.detail.value.sex + " : " + e.detail.value.grade + " : " + e.detail.value.tel);
+    wx.request({
+      url: Url.Url() + 'user/complementInfo',
+      data: {
+        userid: app.globalData.openId,
+        sex   : (e.detail.value.sex === "man") ? 0 : 1,////0为男生，1为女生
+        phone : e.detail.value.tel,
+        grade : e.detail.value.grade
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      },
+      method: "POST",
+      success: function (res) { },
+    }),
     //上传图片部分
     wx.uploadFile({
       url: Url.Url() + 'upload/image',
@@ -123,27 +125,9 @@ Page({
       formData: {
         "onlycode": request_id,
       },
-      success: function (res) {
-        that.setData({
-          hidden: false
-        })
-      },
+      success: function (res) { },
       fail: function (res) { },
       complete: function (res) { },
-    }),
-    wx.request({
-      url: Url.Url() + 'user/complementInfo',
-      data: {
-        userid : app.globalData.openId,
-        sex    : sex,
-        phone  : e.detail.value.tel,
-        grade  : e.detail.value.grade
-      },
-      header: {
-        'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
-      },
-      method: "POST",
-      success: function (res) { },
     }),
     //上传书籍信息部分
     wx.request({
@@ -207,6 +191,9 @@ Page({
             complete: function (res) { }
           })
         }
+        that.setData({
+          hidden: false
+        })
       },
       fail    : function (res) { },
       complete: function (res) { },
