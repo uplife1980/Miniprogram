@@ -25,7 +25,6 @@ Page({
     var that = this
     that.setData({
       number: 0,
-      postList: []
     })
     that.fetchImgListDate()
   },
@@ -57,7 +56,6 @@ Page({
       })
     }
     var that = this;
-    that.fetchImgListDate();
   },
   lower: function (e) {
     wx.stopPullDownRefresh();
@@ -65,7 +63,7 @@ Page({
     self.setData({
       number: self.data.number + self.data.size
     });
-    self.fetchImgListDate({ number: self.data.number });
+    self.fetchImgListDate();
   },
 
   fetchImgListDate: function () {
@@ -93,22 +91,23 @@ Page({
           'Content-Type': 'application/json'
         },
         success: function (res) {
+          console.log(res.data)
+          console.log(self.data.postsList)
           if (res.data.result.length == 0)
             self.setData({
               allStuff: false
             })
-          console.log(res.data)
           for (var i in res.data.result) {
-          self.data.postsList.push({
-            picture1: res.data.result[i].picture,
-            bookindex: res.data.result[i].id,
-            name: res.data.result[i].title,
+          data.postsList.push({
+            picture: res.data.result[i].picture,
+            id: res.data.result[i].id,
+            title: res.data.result[i].title,
             way: res.data.result[i].way,
-            rentprice: res.data.result[i].rent_price,
-            saleprice: res.data.result[i].sale_price
+            rent_price: res.data.result[i].rent_price,
+            sale_price: res.data.result[i].sale_price
           });}
           self.setData({
-            postsList: res.data.result,
+            postsList: data.postsList,
             allbooks_len: res.data.len
           })
           //   后续图片传递给网页
@@ -152,7 +151,6 @@ Page({
       header: { 'content-type': 'application/x-www-form-urlencoded;charset=UTF-8' },
       method: "POST",
       success: function (res) {
-        console.log(res.data.result);
         if (res.data.result.length == 0)
           self.setData({
             allStuff: false
