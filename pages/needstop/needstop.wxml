@@ -1,11 +1,9 @@
 <view>
 <block wx:for="{{booklist}}" wx:key="unique" wx:for-index="booklist_index" wx:for-item="book">
-{{booklist.title}}
-<button bindtap='comfirm' id="comfirm{{booklist_index}}">确认取回</button>
-<button bindtap="cancel" id="cancel{{booklist_index}}">放弃取回</button>
+  {{book.id}}
+  <button bindtap="comfirm" id="comfirm{{booklist_index}}">确认取回</button>
+  <button bindtap="cancel" id="cancel{{booklist_index}}">放弃取回</button>
 </block>
 </view>
 <toast hidden="{{comfirm_hidden}}" duration="1000" bindchange="toastChange1">确认成功</toast>
 <toast hidden="{{cancel_hidden}}" duration="1000" bindchange="toastChange2">取消成功</toast>
-
-

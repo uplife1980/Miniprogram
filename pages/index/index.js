@@ -12,6 +12,7 @@ Page({
     size: 8,
     postsList: [],
     hidden: false,
+    hidden_warn : true,
     allStuff: true,
     way: ["不可租售", "出租", "出售", "可租可售"]
   },
@@ -56,8 +57,8 @@ Page({
         }
       })
     }
-    var that = this;
-    that.fetchImgListDate();
+    //var that = this;
+    //that.fetchImgListDate();
   },
   lower: function (e) {
     wx.stopPullDownRefresh();
@@ -89,14 +90,8 @@ Page({
           'startlocation': self.data.number,
           'size': self.data.size
         },
-        header: {
-          'Content-Type': 'application/json'
-        },
+        header: {'Content-Type': 'application/json'},
         success: function (res) {
-          if (res.data.result.length == 0)
-            self.setData({
-              allStuff: false
-            })
           console.log(res.data)
           for (var i in res.data.result) {
           self.data.postsList.push({
@@ -111,7 +106,6 @@ Page({
             postsList: res.data.result,
             allbooks_len: res.data.len
           })
-          //   后续图片传递给网页
           setTimeout(function () {
             self.setData({
               hidden: true
@@ -143,34 +137,22 @@ Page({
     })
   },
   search: function (e) {
-    var self=this;
-    wx.request({
-      url: Url.Url() + 'bookinfo/ofsearch',
-      data: {
-        keyword: e.detail.value
-      },
-      header: { 'content-type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-      method: "POST",
-      success: function (res) {
-        console.log(res.data.result);
-        if (res.data.result.length == 0)
-          self.setData({
-            allStuff: false
-          })
-        console.log(res.data)
-        self.setData({
-          postsList: res.data.result,
-          allbooks_len: res.data.len
-        })
-        //   后续图片传递给网页
-        setTimeout(function () {
-          self.setData({
-            hidden: true
-          });
-        }, 300);
-      },
-      fail: function (res) { },
-      complete: function (res) { },
+    var self = this;
+    if(e.detail.value!=''){
+      var link = "../infosearch/infosearch?keyword=" + e.detail.value;
+      wx.navigateTo({
+        url: link
+      })
+    }else{
+      self.setData({
+        hidden_warn: false
+      })
+    }
+  }, 
+  hidden_warning: function () {
+    var that = this;
+    that.setData({
+      hidden_warn: true
     })
-  }
+  },
 })

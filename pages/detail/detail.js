@@ -23,8 +23,7 @@ Page({
   },
 
   onLoad: function (options) {            //抓取网址的物品ID
-    this.fetchData(options.bookid);
-    
+    this.fetchData(options.bookid);  
   },
 
   fetchData: function (bookid) {          //用ID获取全部信息

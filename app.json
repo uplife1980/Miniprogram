@@ -9,7 +9,8 @@
     "pages/myshare/myshare",
     "pages/needconfirm/needconfirm",
     "pages/needstop/needstop",
-    "pages/continueshare/continueshare"
+    "pages/resumeshare/resumeshare",
+    "pages/infosearch/infosearch"
   ],
   "window": {
     "backgroundTextStyle":"dark",

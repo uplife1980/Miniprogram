@@ -1,5 +1,5 @@
 <view class="">
-  <input bindconfirm='search' class="serach-text" placeholder="搜索商品" />
+  <input bindconfirm='pagesearch' class="serach-text" placeholder="搜索商品" />
   <view>
     <scroll-view  style="height:570px" scroll-y="true" bindscrolltolower="lower">
       <block wx:for="{{postsList}}" wx:key="unique">

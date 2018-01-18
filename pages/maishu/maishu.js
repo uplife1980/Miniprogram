@@ -17,6 +17,7 @@ Page({
     hidden   : true,     //信息补全成功
     array    : ['大一', '大二', '大三', '大四', '研一', '研二', '研三', '其他', '保密'],
     index    : 8,       //年级
+    warning_hidden  : true,
   },
 
   //从服务器获取用户信息
@@ -35,8 +36,9 @@ Page({
               index : parseInt(res.data.result.grade),
               phone : res.data.result.phone
           })
-          if(parseInt(res.data.result.sex) == 0) that.setData({ checked_man: true }) 
-          else  that.setData({ checked_woman: true })  
+          if(res.data.result.sex === "man") that.setData({ checked_man: true }) 
+          else if (res.data.result.sex === "woman") that.setData({ checked_woman: true })  
+          else that.setData({ checked_secret: true }) 
         }
       },
     })
@@ -84,14 +86,46 @@ Page({
   },
   formCheck:function(e){
     var that=this;
-    if (that.data.img[0] != null && e.detail.value.isbn != '' && e.detail.value.tel != '' &&(e.detail.value.borrow||e.detail.value.buy)!=0){
-      that.formSubmit(e);
-    }
-    else{
-      console.log("信息没有填写完整,请检查!")
+    var isbn = e.detail.value.isbn;
+    var phone = e.detail.value.tel;
+    if(that.data.img[0] == null){
+      console.log("图片没有填写,请检查!")
       that.setData({
-        error: "信息没有填写完整,请检查!"
+        warning_hidden:false,
+        promptText:"请上传图片"
       })
+    }else if(isbn === null||isbn === ''){
+      console.log("没有扫码,请检查!")
+      that.setData({
+        warning_hidden: false,
+        promptText: "请扫描书后二维码"
+      })
+    }else if (phone == null || phone.length == 0) {
+      console.log("没有输入电话号码,请检查!")
+      that.setData({
+        warning_hidden: false,
+        promptText: "请输入电话号码"
+      })
+    }else if (e.detail.value.rentbtn == false && e.detail.value.sellbtn == false){
+      console.log("没有选择分享方式,请检查!")
+      that.setData({
+        warning_hidden: false,
+        promptText: "请选择出租或者出售或者皆可"
+      })
+    }else if ((e.detail.value.rentbtn == true && e.detail.value.borrow==0)) {
+      console.log("没有输入出租价格,请检查!")
+      that.setData({
+        warning_hidden: false,
+        promptText: "请输入出租价格"
+      })
+    }else if ((e.detail.value.sellbtn == true && e.detail.value.buy == 0)) {
+      console.log("没有输入出售价格,请检查!")
+      that.setData({
+        warning_hidden: false,
+        promptText: "请输入出售价格"
+      })
+    }else{
+      that.formSubmit(e);
     }  
   },
   formSubmit: function (e) {
@@ -99,12 +133,11 @@ Page({
     var date = new Date() //9+4
     var request_id = date.getTime() * 10000 + Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
     //上传用户信息部分
-    console.log(e.detail.value.sex + " : " + e.detail.value.grade + " : " + e.detail.value.tel);
     wx.request({
       url: Url.Url() + 'user/complementInfo',
       data: {
         userid: app.globalData.openId,
-        sex   : (e.detail.value.sex === "man") ? 0 : 1,////0为男生，1为女生
+        sex   : e.detail.value.sex,
         phone : e.detail.value.tel,
         grade : e.detail.value.grade
       },
@@ -216,6 +249,11 @@ Page({
     })
     wx.switchTab({
       url: '../users/users'
+    })
+  },
+  remain : function () {        //隐藏警告框
+    this.setData({
+      warning_hidden: true
     })
   }
 })
