@@ -20,6 +20,7 @@ Page({
     var that = this
     that.setData({
       number: 0,
+      allbooks_len: 1
     })
     that.fetchImgListDate()
   },
@@ -94,6 +95,7 @@ Page({
   fetchImgListDate: function () {       //get data from server
     var self = this;
     var data = self.data;
+    wx.stopPullDownRefresh()
     wx.showLoading({
       title: '加载中...',
       mask: true,
@@ -117,7 +119,7 @@ Page({
           console.log(res.data)
           if (res.data.result.length == 0)
             wx.showToast({
-              title: '您已浏览全部商品',
+              title: '已浏览全部商品',
               mask: true,
               success: function (res) { setTimeout(function () { wx.hideToast() }, 1500) },
             })
@@ -125,7 +127,7 @@ Page({
             data.postsList.push({
               picture: res.data.result[i].picture,
               id: res.data.result[i].id,
-              title: res.data.result[i].title,
+              title: res.data.result[i].title.slice(0,15),
               way: res.data.result[i].way,
               rent_price: res.data.result[i].rent_price,
               sale_price: res.data.result[i].sale_price
@@ -142,7 +144,7 @@ Page({
     }
     else {
       wx.showToast({
-        title: '您已浏览全部商品',
+        title: '已浏览全部商品',
         mask: true,
         success: function (res) { setTimeout(function () { wx.hideToast() }, 1500) },
       })
