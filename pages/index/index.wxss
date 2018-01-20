@@ -1,8 +1,13 @@
 /**index.wxss**/
+.container{
+  display: flex;
+  flex-direction: row;
+}
 .stuff{
   background: yellow;
   height:400rpx;
   margin-top:20rpx;
+  
    
 }
 .img{
