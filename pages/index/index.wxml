@@ -1,25 +1,19 @@
-<view class="">
-  <input bindconfirm='search' class="serach-text" placeholder="搜索商品" />
-  <view>
-    <scroll-view  class="container" style="height:570px" scroll-y="true" bindscrolltolower="lower">
-      <block wx:for="{{postsList}}" wx:key="unique">
-        <view class="stuff">
-          <view index="{{index}}" data-suitid="{{item.id}}" catchtap="redictDetail">
-            <view class="wenzi">
-              <text>图书名称:{{item.title}}</text>
-              <text>图书ID:{{item.id}}</text>
-              <text>交易方式:{{way[item.way]}}</text>
-              <text>出租价格:{{item.rent_price}}</text>
-              <text>出售价格:{{item.sale_price}}</text>
-            </view>
-            <image class="img" src="{{item.picture}}" mode="scaleToFill"></image>
-          </view>
+<view class="search">
+  <input bindconfirm='search' placeholder="搜索商品" maxlength='30'/>
+</view>
+<view class="container">
+  <scroll-view style="height:1100rpx" scroll-y="true" bindscrolltolower="lower">
+    <block wx:for="{{postsList}}" wx:key="unique">
+      <view class="stuff" index="{{index}}" data-bookid="{{item.id}}" catchtap="redictDetail">
+        <view class="wenzi">
+          <text>{{item.title}}</text>
+          <text>图书ID:{{item.id}}</text>
+          <text>状态:{{way[item.way]}}</text>
+          <text hidden="{{(item.way===2)?true:false}}">出租价格:{{item.rent_price}}元/天</text>
+          <text hidden="{{(item.way===1)?true:false}}">出售价格:{{item.sale_price}}元</text>
         </view>
-      </block>
-    </scroll-view>
-    <loading hidden="{{hidden}}">
-      加载中...
-    </loading>
-    <toast hidden="{{allStuff}}" duration="1000" bindchange="hiddenAllStuff">您已浏览全部商品</toast>
-  </view>
+        <image class="img" src="{{item.picture}}" mode="scaleToFill"></image>
+      </view>
+    </block>
+  </scroll-view>
 </view>

@@ -3,32 +3,27 @@ var Url = require('../../url.js');
 
 Page({
   data: {
-    indicatorDots: true,
-    autoplay: true,
-    interval: 3000,
-    duration: 1000,
     number: 0,
     allbooks_len: 1,
     size: 8,
     postsList: [],
-    hidden: false,
-    allStuff: true,
     way: ["不可租售", "出租", "出售", "可租可售"]
   },
-  onPullDownRefresh:function(){
+
+  onPullDownRefresh: function () {          //下拉动作 
     this.refreshPage()
   },
-  onShow:function(){
+  onShow: function () {                     //tab切换动作
     this.refreshPage()
   },
-  refreshPage:function(){
+  refreshPage: function () {                //刷新postsList
     var that = this
     that.setData({
       number: 0,
     })
     that.fetchImgListDate()
   },
-  onLoad: function () {
+  onLoad: function () {                     //为"我的"tab获取用户信息,原理不明
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -55,94 +50,9 @@ Page({
         }
       })
     }
+  },
+  search: function (e) {                                  //search 的toast最好使用自定义图片
     var that = this;
-  },
-  lower: function (e) {
-    wx.stopPullDownRefresh();
-    var self = this;
-    self.setData({
-      number: self.data.number + self.data.size
-    });
-    self.fetchImgListDate();
-  },
-
-  fetchImgListDate: function () {
-    var self = this;
-    var data = self.data;
-    self.setData({
-      hidden: false
-    });
-    if (!data) data = {};
-    if (!data.number) data.page = 1;
-    if (data.number === 0) {
-      self.setData({
-        postsList: []
-      });
-    }
-    if (self.data.number <= self.data.allbooks_len) {
-      wx.request({
-        method: "GET",
-        url: Url.Url()+'bookinfo/ofindex',
-        data: {
-          'startlocation': self.data.number,
-          'size': self.data.size
-        },
-        header: {
-          'Content-Type': 'application/json'
-        },
-        success: function (res) {
-          console.log(res.data)
-          console.log(self.data.postsList)
-          if (res.data.result.length == 0)
-            self.setData({
-              allStuff: false
-            })
-          for (var i in res.data.result) {
-          data.postsList.push({
-            picture: res.data.result[i].picture,
-            id: res.data.result[i].id,
-            title: res.data.result[i].title,
-            way: res.data.result[i].way,
-            rent_price: res.data.result[i].rent_price,
-            sale_price: res.data.result[i].sale_price
-          });}
-          self.setData({
-            postsList: data.postsList,
-            allbooks_len: res.data.len
-          })
-          //   后续图片传递给网页
-          setTimeout(function () {
-            self.setData({
-              hidden: true
-            });
-          }, 300);
-        }
-      })
-    }
-    else {
-      self.setData({
-        hidden: true,
-        allStuff: false
-      })
-    }
-  },
-
-  //跳转至详情页
-  redictDetail: function (e) {
-    var number = e.currentTarget.dataset.suitid;
-    var link = "../detail/detail?bookid=" + number
-    wx.navigateTo({
-      url: link
-    })
-  },
-  hiddenAllStuff: function () {
-    var that = this;
-    that.setData({
-      allStuff: true
-    })
-  },
-  search: function (e) {
-    var self=this;
     wx.request({
       url: Url.Url() + 'bookinfo/ofsearch',
       data: {
@@ -151,24 +61,101 @@ Page({
       header: { 'content-type': 'application/x-www-form-urlencoded;charset=UTF-8' },
       method: "POST",
       success: function (res) {
-        if (res.data.result.length == 0)
-          self.setData({
-            allStuff: false
+        console.log(res.data.result.length)
+        if (res.data.result.length === 0) {
+          wx.showToast({
+            image: '',
+            title: '暂无此书籍!',
+            mask: true,
+            success: function (res) { setTimeout(function () { wx.hideToast() }, 5000) },
+            fail: function (res) { },
+            complete: function (res) { },
           })
-        console.log(res.data)
-        self.setData({
-          postsList: res.data.result,
-          allbooks_len: res.data.len
-        })
-        //   后续图片传递给网页
-        setTimeout(function () {
-          self.setData({
-            hidden: true
-          });
-        }, 300);
+        }
+        else {
+          that.setData({
+            postsList: res.data.result,
+            allbooks_len: res.data.len
+          })
+        }
       },
       fail: function (res) { },
       complete: function (res) { },
     })
+  },
+  lower: function (e) {               //下拉时触发
+    var that = this;
+    that.setData({
+      number: that.data.number + that.data.size
+    });
+    that.fetchImgListDate();
+  },
+
+  fetchImgListDate: function () {       //get data from server
+    var self = this;
+    var data = self.data;
+    wx.showLoading({
+      title: '加载中...',
+      mask: true,
+      success: function (res) { setTimeout(function () { wx.hideLoading() }, 1000) },
+    })
+    if (data.number === 0) {
+      self.setData({
+        postsList: []
+      });
+    }
+    if (self.data.number <= self.data.allbooks_len) {
+      wx.request({
+        method: "GET",
+        url: Url.Url() + 'bookinfo/ofindex',
+        data: {
+          'startlocation': self.data.number,
+          'size': self.data.size
+        },
+        header: { 'Content-Type': 'application/json' },
+        success: function (res) {
+          console.log(res.data)
+          if (res.data.result.length == 0)
+            wx.showToast({
+              title: '您已浏览全部商品',
+              mask: true,
+              success: function (res) { setTimeout(function () { wx.hideToast() }, 1500) },
+            })
+          for (var i in res.data.result) {
+            data.postsList.push({
+              picture: res.data.result[i].picture,
+              id: res.data.result[i].id,
+              title: res.data.result[i].title,
+              way: res.data.result[i].way,
+              rent_price: res.data.result[i].rent_price,
+              sale_price: res.data.result[i].sale_price
+            });
+          }
+          self.setData({
+            postsList: data.postsList,
+            allbooks_len: res.data.len
+          })
+          //   后续图片传递给网页
+
+        }
+      })
+    }
+    else {
+      wx.showToast({
+        title: '您已浏览全部商品',
+        mask: true,
+        success: function (res) { setTimeout(function () { wx.hideToast() }, 1500) },
+      })
+    }
+  },
+
+  //跳转至详情页
+  redictDetail: function (e) {
+    var number = e.currentTarget.dataset.bookid;
+    var link = "../detail/detail?bookid=" + number
+    wx.navigateTo({
+      url: link
+    })
   }
+
 })
