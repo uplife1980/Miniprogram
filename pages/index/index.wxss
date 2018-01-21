@@ -2,8 +2,8 @@
 .search{
     border:1px solid #ccc;
     border-radius:20px;
-    text-align: center
-
+    text-align: center;
+    margin-top: 5rpx;
 }
 .container{
   margin-top: 30rpx;

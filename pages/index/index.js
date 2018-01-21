@@ -3,6 +3,7 @@ var Url = require('../../url.js');
 
 Page({
   data: {
+    search_input_default:"",
     number: 0,
     allbooks_len: 1,
     size: 8,
@@ -19,6 +20,7 @@ Page({
   refreshPage: function () {                //刷新postsList
     var that = this
     that.setData({
+      search_input_default:"",
       number: 0,
       allbooks_len: 1
     })
