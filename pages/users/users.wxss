@@ -1,9 +1,12 @@
 /**index.wxss**/
+.bg{
+    min-height: 1000rpx;
+
+}
 .userinfo {
   display: flex;
   height:150rpx;
-  margin-top: 5rpx;
-  background: yellow;
+  background: #ffba84;
   width:100%;
   align-items: center;
   padding:50rpx;
@@ -17,17 +20,14 @@
 }
 
 .userinfo-nickname {
-  color: #aaa;
-  background: white;
-margin-left:40%;
+margin-left:35%;
 font-size: 1.5em;
+color:#4e4a4a;
 }
 .option{
-  background:pink;
-  margin:3%;
+  border: solid #FFE1C5 1rpx;
+  background: #FFF1CA;
   height:150rpx;
-  align-items: center;
-}
-.option-text{
-  color:cornflowerblue;
+  text-align: center;
+  line-height: 150rpx;
 }

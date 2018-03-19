@@ -85,6 +85,7 @@ Page({
       fail: function (res) { },
       complete: function (res) { },
     })
+
   },
   lower: function (e) {               //下拉时触发
     var that = this;
@@ -126,6 +127,8 @@ Page({
               success: function (res) { setTimeout(function () { wx.hideToast() }, 1500) },
             })
           for (var i in res.data.result) {
+            if(res.data.result[i].picture=="")
+            res.data.result[i].picture="../../images/nobook.jpg"
             data.postsList.push({
               picture: res.data.result[i].picture,
               id: res.data.result[i].id,
@@ -139,8 +142,6 @@ Page({
             postsList: data.postsList,
             allbooks_len: res.data.len
           })
-          //   后续图片传递给网页
-
         }
       })
     }
@@ -160,6 +161,31 @@ Page({
     wx.navigateTo({
       url: link
     })
-  }
 
+  },
+  hiddenAllStuff: function () {
+    var that = this;
+    that.setData({
+      allStuff: true
+    })
+  },
+  search: function (e) {
+    var self = this;
+    if(e.detail.value!=''){
+      var link = "../infosearch/infosearch?keyword=" + e.detail.value;
+      wx.navigateTo({
+        url: link
+      })
+    }else{
+      self.setData({
+        hidden_warn: false
+      })
+    }
+  }, 
+  hidden_warning: function () {
+    var that = this;
+    that.setData({
+      hidden_warn: true
+    })
+  },
 })

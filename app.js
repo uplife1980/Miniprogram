@@ -35,7 +35,6 @@ App({
                   },
                   header: {},
                   success: function (res) {
-                    console.log(res.data.status);
                   }
                 })
               }else{

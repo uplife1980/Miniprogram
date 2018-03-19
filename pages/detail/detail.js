@@ -3,7 +3,7 @@ var app = getApp();
 Page({
   data: {
     name: '',
-    way: 2,
+    way:0,
     picture1: "",
     picture2: "",
     information: "",
@@ -19,12 +19,13 @@ Page({
     canIChange: "1", //默认是租
     userinfo_hidden: true,    //补全个人信息表
     hidden: true    ,  //信息补全成功
-    peroid_hidden:true
+    peroid_hidden:true,
+    rentpriceHidden:false,
+    salepriceHidden:false
   },
 
   onLoad: function (options) {            //抓取网址的物品ID
-    this.fetchData(options.bookid);
-    
+    this.fetchData(options.bookid)
   },
 
   fetchData: function (bookid) {          //用ID获取全部信息
@@ -52,8 +53,8 @@ Page({
           bookid:res.data.rentable.id
         })
         switch (that.data.way) {
-          case 1: { that.setData({ canIChange: true, disabled: true, peroid_hidden: false }); break; }
-          case 2: { that.setData({ canIChange: false, disabled: true }); break; }
+          case 1: { that.setData({ canIChange: true, disabled: true, peroid_hidden: false,salepriceHidden:true }); break; }
+          case 2: { that.setData({ canIChange: false, disabled: true,rentpriceHidden:true }); break; }
           case 3: { that.setData({ canIChange: true, disabled: false,peroid_hidden:false }); break; }
         }
       }
@@ -135,12 +136,7 @@ Page({
     that.setData({ peroid_hidden: false })
   }
   },
-  toastChange: function () {        //信息补全成功并跳转新页面
-    this.setData({
-      hidden: true
-    })
-    wx.navigateTo({ url: '../buysuccess/buysuccess' })
-  },
+  
   formSubmit: function (e) {    //购买
     var that = this
     that.setData({
@@ -157,7 +153,22 @@ Page({
       header: { 'content-type': 'application/x-www-form-urlencoded;charset=UTF-8' },
       method: "POST",
       success: function (res) { 
-        console.log(res.data)
+        console.log(res)
+        wx.showToast({
+          title: '提交成功!',
+          mask: true,
+          success: function () {
+            setTimeout(function () {
+              wx.navigateTo({
+                url: '../buysuccess/buysuccess?phone='+res.data.phone
+              }, 1500)
+            })
+          },
+        })
+
+
+
+        
       },
       fail: function (res) { },
       complete: function (res) { },

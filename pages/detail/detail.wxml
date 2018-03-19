@@ -2,16 +2,16 @@
   <image src="{{picture1}}" class="top-img" mode="aspectFill"></image>
   <image src="{{picture2}}" class="top-img" mode="aspectFill"></image>
   <view>{{name}}</view>
-  <view>{{information}}</view>
+  <view>书后ISBN号：:{{information}}</view>
   <view class="clearfix">
-    <view class="tag fl">租价:{{rentprice}}</view>
-    <view class="tag fl">售价:{{saleprice}}</view>
+    <view class="tag" hidden="{{rentpriceHidden}}">租价:{{rentprice}}元/天</view>
+    <view class="tag" hidden="salepriceHidden">售价:{{saleprice}}元</view>
   </view>
   <view class='container'>
     <form bindsubmit='userCheck'>买
-    <switch name="way" checked="{{canIChange}}" disabled="{{disabled}}" bindchange="rorChange"></switch>租
-      <!-- <slider name="way" value="{{canIChange}}" step="1"max="1"show-value="false" min="0" disabled="{{disabled}}" bindchange='peroid_check'/>  -->
-      <text hidden="{{peroid_hidden}}">我要租多久</text><input type="number" name="peroid" hidden="{{peroid_hidden}}" value="0"/>
+      <switch name="way" checked="{{canIChange}}" disabled="{{disabled}}" bindchange="rorChange"></switch>租
+      <text hidden="{{peroid_hidden}}">我要租多久</text>
+      <input type="number" style="width:30%" name="peroid" hidden="{{peroid_hidden}}" value="0"/>
       <button form-type='submit' type="primary">下单!</button>
     </form>
   </view>
@@ -28,7 +28,7 @@
           <picker name="grade" range='{{array}}' value="{{index}}" bindchange='bindchange'>
             <view>你的年级：{{array[index]}}</view>
           </picker>
-          <button form-type='submit' type="primary">提交</button>
+          <button form-type='submit' style="margin-left:auto" type="primary">提交</button>
         </form>
       </view>
     </view>

@@ -1,0 +1,29 @@
+/* pages/search/search.wxss */
+.stuff{
+  background: yellow;
+  height:400rpx;
+  margin-top:20rpx;
+   
+}
+.img{
+  height:300rpx;
+  width:350rpx;
+  margin-top:7%;
+  margin-left:2%;
+
+}
+.wenzi{
+ display: flex;
+ float:right;
+  	flex-direction: column;
+	align-items: center;
+	width: 47%;
+  margin-top: 5%;
+}
+.search-text{
+	top:0px;
+	padding:0px;
+	left: 0rpx;
+	right: 0rpx;
+}
+

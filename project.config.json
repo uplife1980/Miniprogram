@@ -38,6 +38,12 @@
 					"name": "maishu",
 					"pathName": "pages/maishu/maishu",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "users",
+					"pathName": "pages/users/users",
+					"query": ""
 				}
 			]
 		}

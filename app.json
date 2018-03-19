@@ -9,14 +9,15 @@
     "pages/myshare/myshare",
     "pages/needconfirm/needconfirm",
     "pages/needstop/needstop",
-    "pages/continueshare/continueshare"
+    "pages/resumeshare/resumeshare",
+    "pages/infosearch/infosearch"
   ],
   "window": {
     "backgroundTextStyle":"dark",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#e79460",
     "navigationBarTitleText": "书--遇见",
     "navigationBarTextStyle": "black",
-    "backgroundColor": "#f1f1f1",
+    "backgroundColor": "#e79460",
     "enablePullDownRefresh": false
   },
   "tabBar":{
