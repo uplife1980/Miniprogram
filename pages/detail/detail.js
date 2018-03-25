@@ -110,14 +110,18 @@ Page({
       userinfo_hidden: true,
       hidden: false
     })
-    var grade;
-    grade=(e.detail.value.checked_man===1)?0:1;
+    var sex;
+    sex=(e.detail.value.sex==="man")?"man":"woman";
+    console.warn(app.globalData.openId)
+    console.warn(e.detail.value)
+    console.warn(sex)
     wx.request({
-      url: Url.Url()+'user/complementInfo',
+      url: Url.Url() + 'user/complementInfo',
       data: {
-        "sex": e.detail.value.sex,
-        "phone": e.detail.value.tel,
-        "grade": grade,
+        userid: app.globalData.openId,
+        // sex: sex,
+        phone: e.detail.value.tel,
+        grade: e.detail.value.grade
       },
       header: {
         'Content-Type': 'application/json'
@@ -128,7 +132,7 @@ Page({
   },
   peroid_check:function(e){
     var that=this;
-  console.log(e)
+  console.log(that.data.picture2)
   if (e.detail.value == 0) {
     that.setData({ peroid_hidden: true })
   }
@@ -161,7 +165,7 @@ Page({
             setTimeout(function () {
               wx.navigateTo({
                 url: '../buysuccess/buysuccess?phone='+res.data.phone
-              }, 1500)
+              }, 150)
             })
           },
         })

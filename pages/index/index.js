@@ -163,12 +163,12 @@ Page({
     })
 
   },
-  hiddenAllStuff: function () {
-    var that = this;
-    that.setData({
-      allStuff: true
-    })
-  },
+  // hiddenAllStuff: function () {
+  //   var that = this;
+  //   that.setData({
+  //     allStuff: true
+  //   })
+  // },
   search: function (e) {
     var self = this;
     if(e.detail.value!=''){
@@ -182,6 +182,7 @@ Page({
       })
     }
   }, 
+  
   hidden_warning: function () {
     var that = this;
     that.setData({

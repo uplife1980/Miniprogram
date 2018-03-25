@@ -3,9 +3,9 @@ var Url = require('../../url.js');
 Page({
   data: {
     upload_list: [],
-    status: ['已经售出','已经停止分享','正被租用','处于空闲状态'],
-    stopshare: ['false', 'true', 'false', 'false'],
-    continueshare: ['false', 'false', 'false', 'true'],
+    status: ['已经售出', '已经停止分享', '处于空闲状态', '正被租用'],
+    stopshare: [false, false, true, false],
+    continueshare: [false, true, false, false],
     phone_hidden:true,
   },
   onLoad: function (options) {
@@ -62,6 +62,7 @@ Page({
         },
         method: "POST",
         success: function (res) {
+          console.log(res)
           var tempdata=that.data.upload_list;
           if(res.data.status==1){
             tempdata[index].phone = res.data.result;

@@ -1,5 +1,5 @@
 <view class="bg"><view class="search">
-  <input bindconfirm='search' value="{{search_input_default}}"placeholder="搜索书籍" maxlength='30'/>
+  <input bindconfirm='search'  value="{{search_input_default}}"placeholder="搜索书籍" maxlength='30'/>
 </view>
 <view class="container">
   <scroll-view style="height:1080rpx" scroll-y="true" bindscrolltolower="lower">
@@ -7,7 +7,7 @@
       <view class="stuff" index="{{index}}" data-bookid="{{item.id}}" catchtap="redictDetail">
         <view class="wenzi">
           <text>{{item.title}}</text>
-          <!-- <text>图书ID:{{item.id}}</text> -->
+           <text>图书ID:{{item.id}}</text> 
           <text>状态:{{way[item.way]}}</text>
           <text hidden="{{(item.way===2)?true:false}}">出租价格:{{item.rent_price}}元/天</text>
           <text hidden="{{(item.way===1)?true:false}}">出售价格:{{item.sale_price}}元</text>

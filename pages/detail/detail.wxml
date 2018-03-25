@@ -5,7 +5,7 @@
   <view>书后ISBN号：:{{information}}</view>
   <view class="clearfix">
     <view class="tag" hidden="{{rentpriceHidden}}">租价:{{rentprice}}元/天</view>
-    <view class="tag" hidden="salepriceHidden">售价:{{saleprice}}元</view>
+    <view class="tag" hidden="{{salepriceHidden}}">售价:{{saleprice}}元</view>
   </view>
   <view class='container'>
     <form bindsubmit='userCheck'>买

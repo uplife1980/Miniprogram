@@ -8,8 +8,8 @@
   </view>
 
 <navigator url="../maishu/maishu" class="option">上传图书</navigator>
-<navigator url="../mybook/mybook" class="option">我租到的书</navigator>
-<navigator url="../needconfirm/needconfirm" class="option">待确认的交易</navigator>
+<navigator url="../mybook/mybook" class="option">在我手里的书</navigator>
+<navigator url="../needconfirm/needconfirm" class="option">待确认的购买/租入</navigator>
 <navigator url="../needstop/needstop" class="option">待确认的停止分享</navigator>
-<navigator url="../myshare/myshare" class="option">我的分享</navigator>
+<navigator url="../myshare/myshare" class="option">我已经出手的书</navigator>
 </view>

@@ -12,9 +12,11 @@ Page({
     userinfo_hidden: true,    //补全个人信息表
     checked_man: false,
     checked_woman: true,
-    array: ['大一', '大二', '大三', '大四', '研一', '研二', '研三', '其他', '保密'],
-    index: 8,       //年级
-    warning_hidden: true
+    array: ['预科','大一', '大二', '大三', '大四','大五', '研一', '研二', '研三', '保密'],
+    index: 9,       //年级
+    warning_hidden: true,
+    getcode:"#ECECEC",
+    getpic:"#ECECEC"
   },
 
   //从服务器获取用户信息
@@ -53,10 +55,15 @@ Page({
       success: function (res) {
         that.setData({
           display1: "block",
-          img: res.tempFilePaths
+          img: res.tempFilePaths,
+          getpic: "#98FB98"
         })
       },
-      fail: function (res) { },
+      fail: function (res) { 
+        that.setData({
+          getpic:"#FF8000"
+        })
+      },
       complete: function (res) { },
     })
   },
@@ -65,13 +72,17 @@ Page({
     wx.scanCode({
       onlyFromCamera: false,
       success: function (res) {
-        if ((/977|978+[0-9]{10}/.test(res.result)))
+        if ((/977|978+[0-9]{10}/.test(res.result))){
           that.setData({
-            isbn: res.result
+            isbn: res.result,
+            getcode:"#98FB98"
           })
+
+        }
         else {
           that.setData({
-            isbn: '扫描了非图书商品,或本书过老'
+            isbn: '扫描了非图书商品,或本书过老',
+            getcode: "#FF8000"
           })
         }
       },
@@ -247,51 +258,53 @@ Page({
                   },
                   method: "POST",
                   success: function () { //上传图片部分
-                    wx.uploadFile({
-                      url: Url.Url() + 'upload/image',
-                      filePath: that.data.img[0],
-                      name: 'imagefile',
-                      header: {
-                        'content-type': 'multipart/form-data'
-                      },
-                      formData: {
-                        "onlycode": request_id,
-                      },
-                      success: function (res) { //上传用户信息部分
-                        wx.request({
-                          url: Url.Url() + 'user/complementInfo',
-                          data: {
-                            userid: app.globalData.openId,
-                            sex: e.detail.value.sex,
-                            phone: e.detail.value.tel,
-                            grade: e.detail.value.grade
-                          },
-                          header: {
-                            'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
-                          },
-                          method: "POST",
-                          success: function (res) {
-                            wx.showToast({
-                              title: '提交成功！',
-                              success: function () {
-                                setTimeout(function () {
-                                  wx.switchTab({
-                                    url: '../index/index'
-                                  }, 1500)
-                                })}
-                            })
-                          },
-                        })
-                      },
-                      fail: function (res) { },
-                      complete: function (res) { },
-                    })}
+                    }
                 })
               },
               fail: function (res) { },
               complete: function (res) { }
             })
           }
+          wx.uploadFile({
+            url: Url.Url() + 'upload/image',
+            filePath: that.data.img[0],
+            name: 'imagefile',
+            header: {
+              'content-type': 'multipart/form-data'
+            },
+            formData: {
+              "onlycode": request_id,
+            },
+            success: function (res) { //上传用户信息部分
+              wx.request({
+                url: Url.Url() + 'user/complementInfo',
+                data: {
+                  userid: app.globalData.openId,
+                  sex: e.detail.value.sex,
+                  phone: e.detail.value.tel,
+                  grade: e.detail.value.grade
+                },
+                header: {
+                  'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                },
+                method: "POST",
+                success: function (res) {
+                  wx.showToast({
+                    title: '提交成功！',
+                    success: function () {
+                      setTimeout(function () {
+                        wx.switchTab({
+                          url: '../index/index'
+                        }, 1500)
+                      })
+                    }
+                  })
+                },
+              })
+            },
+            fail: function (res) { },
+            complete: function (res) { },
+          })
         },
         fail: function (res) { },
         complete: function (res) { },

@@ -17,7 +17,6 @@ Page({
   /*加载*/
   onLoad: function (e) {
     var that = this;
-    console.log(e.keyword)
     that.setData({
       keyword : e.keyword
     })
@@ -67,7 +66,8 @@ Page({
   },
   //跳转至详情页
   redictDetail: function (e) {
-    var number = e.currentTarget.dataset.suitid;
+    console.log(e)
+    var number = e.currentTarget.dataset.bookid;
     var link = "../detail/detail?bookid=" + number
     wx.navigateTo({
       url: link

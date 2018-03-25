@@ -12,14 +12,14 @@ Page({
     xuming_hidden: true,
     img: '',
     display1: "none",
-    bookid : 0,
+    bookid: 0,
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     var that = this;
-    wx.request({          
+    wx.request({
       url: Url.Url() + 'user/viewBookinhand',
       data: {
         userid: app.globalData.openId
@@ -44,7 +44,7 @@ Page({
         that.setData({
           borrowing_list: borrowing_list
         })
-        console.log(that.data)
+        console.log(res.data)
       },
       fail: function (res) { },
       complete: function (res) { },
@@ -56,7 +56,7 @@ Page({
     console.log(index);
     var that = this
     that.setData({
-      bookid:index,
+      bookid: index,
       xuming_hidden: false
     })
   },
@@ -85,50 +85,58 @@ Page({
     wx.request({
       url: Url.Url() + 'bookdeal/reRentintime',
       data: {
-        userid  : app.globalData.openId,
-        bookid  : that.data.borrowing_list[index].id,
-        period  : e.detail.value.period,
+        userid: app.globalData.openId,
+        bookid: that.data.borrowing_list[index].id,
+        period: e.detail.value.period,
         onlycode: request_id
       },
       header: {
         'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
       },
       method: "POST",
-      success: function (res) { 
-        console.log(res.data)
-        var days = (res.data.rented.end_time - date.getTime()) / (1 * 24 * 60 * 60 * 1000);
-        console.log(days)
-        that.data.borrowing_list[index] = res.data.rented;
-        console.log(that.data.borrowing_list[index])
-        that.data.borrowing_list[index].days = parseInt(days)
-        console.log(that.data.borrowing_list[index])
-        that.setData({
-          borrowing_list: that.data.borrowing_list
+      success: function (res) {
+        wx.uploadFile({
+          url: Url.Url() + 'upload/image',
+          filePath: that.data.img[0],
+          name: 'imagefile',
+          header: {
+            'content-type': 'multipart/form-data'
+          },
+          formData: {
+            onlycode: request_id
+          },
+          success: function () {
+            wx.showToast({
+              title: '提交成功！',
+              success: function () {
+                setTimeout(function () {
+                  wx.redirectTo({
+                    url: '../mybook/mybook'
+                  }, 15000)
+                })
+              }
+            })
+          }
         })
-       },
+        // console.log(res.data)
+        // var days = (res.data.rented.end_time - date.getTime()) / (1 * 24 * 60 * 60 * 1000);
+        // console.log(days)
+        // that.data.borrowing_list[index] = res.data.rented;
+        // console.log(that.data.borrowing_list[index])
+        // that.data.borrowing_list[index].days = parseInt(days)
+        // console.log(that.data.borrowing_list[index])
+        // that.setData({
+        //   borrowing_list: that.data.borrowing_list
+        // })
+      },
       fail: function (res) { },
       complete: function (res) { },
     })
-    wx.uploadFile({
-      url: Url.Url() + 'upload/image',
-      filePath: that.data.img[0],
-      name: 'imagefile',
-      header: {
-        'content-type': 'multipart/form-data'
-      },
-      formData: {
-        onlycode: request_id
-      },
-      success: function () {
-        that.setData({
-          xuming_hidden: true
-        })
-      }
-    })
+
   },
-  submitCancel:function(){
+  submitCancel: function () {
     this.setData({
-      xuming_hidden:true
+      xuming_hidden: true
     })
   },
   updatePic: function (e) {          //上传新图片
@@ -149,29 +157,29 @@ Page({
             'content-type': 'multipart/form-data'
           },
           formData: {
-            onlycode:request_id
+            onlycode: request_id
           }
         }),
-        wx.request({
-          url: Url.Url() + '/bookdeal/updatepic',
-          data : {
-            onlycode: request_id,
-            bookid: that.data.notborrow_list[index].id,
-            //userid: app.globalData.openId
-          },
-          header: {
-            'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
-          },
-          method: "POST",
-          success: function (res) {
-            that.data.notborrow_list[index] = res.data.rentable;
-            that.setData({
+          wx.request({
+            url: Url.Url() + '/bookdeal/updatepic',
+            data: {
+              onlycode: request_id,
+              bookid: that.data.notborrow_list[index].id,
+              //userid: app.globalData.openId
+            },
+            header: {
+              'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            },
+            method: "POST",
+            success: function (res) {
+              that.data.notborrow_list[index] = res.data.rentable;
+              that.setData({
                 notborrow_list: that.data.notborrow_list
-            })
-          },
-          fail: function (res) { },
-          complete: function (res) { },
-        })
+              })
+            },
+            fail: function (res) { },
+            complete: function (res) { },
+          })
       }
     })
   },
@@ -182,12 +190,12 @@ Page({
     })
   },
   repeal: function (e) {       //撤销此单
-    var that=this
+    var that = this
     wx.request({
       url: Url.Url() + 'rentable/cancel',
       data: {
-        bookid : that.data.neverborrow_list[that.data.tempIndex].id,
-        userid : app.globalData.openId
+        bookid: that.data.neverborrow_list[that.data.tempIndex].id,
+        userid: app.globalData.openId
       },
       header: {
         'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -196,20 +204,20 @@ Page({
       success: function (res) {
         console.log(res.data)
         that.setData({
-          neverborrow_list : res.data.rentable,
-          confirm : true
+          neverborrow_list: res.data.rentable,
+          confirm: true
         })
       },
       fail: function (res) { },
       complete: function (res) { },
     })
   },
-  repealCancel:function(){
+  repealCancel: function () {
     this.setData({
-      confirm:true
+      confirm: true
     })
   },
-  toastChange: function () {        
+  toastChange: function () {
     this.setData({
       hidden: true
     })
