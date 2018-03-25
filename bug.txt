@@ -1,0 +1,8 @@
+bug:正序输出图书列表
+提交交易之后，没有返回res.data.卖书人的phone（打印res.data）
+needcomfirm的返回包里应该包括联系人的手机
+处在空闲中的书不会出现在myshare里
+图书没有自己的图片
+bookid=1的书状态码500:
+
+搜索页面没有返回array的长度len
