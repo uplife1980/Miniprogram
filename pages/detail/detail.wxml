@@ -1,17 +1,23 @@
 <view>
   <image src="{{picture1}}" class="top-img" mode="aspectFill"></image>
   <image src="{{picture2}}" class="top-img" mode="aspectFill"></image>
-  <view>{{name}}</view>
-  <view>书后ISBN号：:{{information}}</view>
-  <view class="clearfix">
+  <view>图书名称:{{name}}</view>
+         <view class="line"></view>
+  <view>书后ISBN号:{{information}}</view>
+          <view class="line"></view>
+  <view class="price">
     <view class="tag" hidden="{{rentpriceHidden}}">租价:{{rentprice}}元/天</view>
     <view class="tag" hidden="{{salepriceHidden}}">售价:{{saleprice}}元</view>
+    
   </view>
+        
   <view class='container'>
-    <form bindsubmit='userCheck'>买
-      <switch name="way" checked="{{canIChange}}" disabled="{{disabled}}" bindchange="rorChange"></switch>租
-      <text hidden="{{peroid_hidden}}">我要租多久</text>
-      <input type="number" style="width:30%" name="peroid" hidden="{{peroid_hidden}}" value="0"/>
+    <form bindsubmit='userCheck'>
+    <view class="buyrent">买书
+      <switch name="way" checked="{{canIChange}}" disabled="{{disabled}}" bindchange="rorChange"></switch>租书
+      </view>
+      <text hidden="{{peroid_hidden}}">租书时长</text>
+      <input type="number"  name="peroid" hidden="{{peroid_hidden}}" class="input"placeholder="单位/天"/>
       <button form-type='submit' type="primary">下单!</button>
     </form>
   </view>

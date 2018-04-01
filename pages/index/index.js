@@ -79,6 +79,7 @@ Page({
           that.setData({
             postsList: res.data.result,
             allbooks_len: res.data.len
+            
           })
         }
       },

@@ -1,1 +1,5 @@
 /* pages/needcomfirm/needcomfirm.wxss */
+.tltle{
+  font-weight: bold;
+  
+}

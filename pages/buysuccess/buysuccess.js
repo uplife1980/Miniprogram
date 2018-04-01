@@ -15,6 +15,7 @@ Page({
   this.setData({
     phone:options.phone
   })
+  console.log(options)
   },
 
   backToIndex:function(){

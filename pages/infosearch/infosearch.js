@@ -53,6 +53,7 @@ Page({
         self.setData({
           postsList: res.data.result,
           allbooks_len: res.data.len
+          
         })
         setTimeout(function () {
           self.setData({

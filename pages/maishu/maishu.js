@@ -15,8 +15,9 @@ Page({
     array: ['预科','大一', '大二', '大三', '大四','大五', '研一', '研二', '研三', '保密'],
     index: 9,       //年级
     warning_hidden: true,
-    getcode:"#ECECEC",
-    getpic:"#ECECEC"
+    getcode:"default",
+    getpic:"default",
+    showwarn:''
   },
 
   //从服务器获取用户信息
@@ -56,13 +57,11 @@ Page({
         that.setData({
           display1: "block",
           img: res.tempFilePaths,
-          getpic: "#98FB98"
+          getpic: "primary"
         })
       },
       fail: function (res) { 
-        that.setData({
-          getpic:"#FF8000"
-        })
+       
       },
       complete: function (res) { },
     })
@@ -75,18 +74,24 @@ Page({
         if ((/977|978+[0-9]{10}/.test(res.result))){
           that.setData({
             isbn: res.result,
-            getcode:"#98FB98"
+            getcode:"primary",
+            showwarn:''
           })
-
+        
         }
         else {
           that.setData({
-            isbn: '扫描了非图书商品,或本书过老',
-            getcode: "#FF8000"
+            getcode: "warn",
+            showwarn:"扫描了非图书商品,或本书过老"
           })
+          wx
         }
       },
-      fail: function (res) { },
+      fail: function (res) {
+        that.setData({
+          showwarn: '扫描了非图书商品,或本书过老',
+          getcode: "warn"
+        })},
       complete: function (res) { },
     })
   },
@@ -106,7 +111,8 @@ Page({
   // <<<<<<< HEAD
   submitTap: function () {        //按下提交订单之后
     this.setData({
-      userinfo_hidden: false
+      userinfo_hidden: false,
+      continue_input:true
     })
   },
   formCheck: function (e) {

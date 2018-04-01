@@ -11,5 +11,6 @@
 <navigator url="../mybook/mybook" class="option">在我手里的书</navigator>
 <navigator url="../needconfirm/needconfirm" class="option">待确认的购买/租入</navigator>
 <navigator url="../needstop/needstop" class="option">待确认的停止分享</navigator>
-<navigator url="../myshare/myshare" class="option">我已经出手的书</navigator>
+<navigator url="../myshare/myshare" class="option">已经不在我手里的书</navigator>
+<text>@ECHO V0.1</text>
 </view>

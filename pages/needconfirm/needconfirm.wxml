@@ -1,4 +1,4 @@
-<view>租用
+<view><text class="title">租用</text>
 <block wx:for="{{booklist_renteds}}" wx:key="unique" wx:for-index="booklist_renteds_index" wx:for-item="book">
     {{book.information}}
     图书到期时间{{book.begin_time}}
