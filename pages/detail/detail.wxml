@@ -1,6 +1,6 @@
 <view>
-  <image src="{{picture1}}" class="top-img" mode="aspectFill"></image>
-  <image src="{{picture2}}" class="top-img" mode="aspectFill"></image>
+  <image src="{{picture1}}" class="top-img" mode="aspectFit"></image>
+  <image src="{{picture2}}" class="top-img" mode="aspectFit"></image>
   <view>图书名称:{{name}}</view>
          <view class="line"></view>
   <view>书后ISBN号:{{information}}</view>
@@ -13,8 +13,8 @@
         
   <view class='container'>
     <form bindsubmit='userCheck'>
-    <view class="buyrent">买书
-      <switch name="way" checked="{{canIChange}}" disabled="{{disabled}}" bindchange="rorChange"></switch>租书
+    <view class="buyrent"><text style="font-weight:bold">买书</text>
+      <switch name="way" checked="{{canIChange}}" disabled="{{disabled}}" bindchange="rorChange"></switch><text style="font-weight:bold">租书</text>
       </view>
       <text hidden="{{peroid_hidden}}">租书时长</text>
       <input type="number"  name="peroid" hidden="{{peroid_hidden}}" class="input"placeholder="单位/天"/>

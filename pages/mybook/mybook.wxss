@@ -1,8 +1,27 @@
-.bar{
+.title{
+  font-weight: bold;
+  font-size: 1.5em;
   width:100%;
-  background-color: #FFF1CA;
-  height:30px;
-  text-align: center
+  text-align: center;
+  background: #FFF1CA;
+  height:100rpx;
+  padding-top:4%;
+  margin-bottom:4%;
+}
+.stuff{
+  border:2px rgb(120,120,120) solid;
+  margin-top:2.5%;
+  margin-bottom:4%;
+  padding:20rpx;
+}
+.wenzi{
+  line-height: 80rpx;
+}
+.xuming_button{
+  background: rgb(165,222,228);
+}
+.no{
+  background: #f67a72
 }
 .line{
 width:100%;
@@ -43,4 +62,8 @@ margin-bottom:20rpx;
 .renew_time{
   margin-top:50px;
    text-align:center;
+   font-weight: bold;
+}
+.input{
+  text-align: center;
 }

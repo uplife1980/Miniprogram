@@ -19,7 +19,7 @@
             <text class="price"hidden="{{(item.way===1)?true:false}}">出售价格:{{item.sale_price}}元</text>
           </view>
           <!-- <<<<<<< HEAD -->
-          <image class="img" src="{{item.picture}}" mode="scaleToFill"></image>
+          <image class="img" src="{{item.picture}}" mode="aspectFit"></image>
         </view>
       </block>
     </scroll-view>

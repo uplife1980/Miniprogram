@@ -1,61 +1,64 @@
 <!--pages/mybook/mybook.wxml-->
 <view>
 
-  <view class="piece">
-    <view class="bar">正在租用的图书</view>
+  <view>
+    <view class="title">正在租用的图书</view>
     <block wx:for="{{borrowing_list}}" wx:key="unique" wx:for-item="borrowing" wx:for-index="borrowing_index">
-      <view>
-        第{{borrowing_index+1}}本 图书名称:大连理工大学 ISBN:{{borrowing.information}} 剩余天数 {{borrowing.days}}天
+      <view class="stuff">
+        <view class="wenzi">图书名称:大连理工大学</view>
+        <view class="wenzi">ISBN:{{borrowing.information}}</view>
+        <view class="wenzi">剩余天数 {{borrowing.days}}天</view>
         <image src="{{borrowing.picture}}" style="width:100%" />
-        <button bindtap='renew' id="xuming{{borrowing_index}}">我要续命</button>
+        <button bindtap='renew' class="xuming_button" id="xuming{{borrowing_index}}">我要续命</button>
       </view>
     </block>
   </view>
-  <view class="line"></view>
 
   <!--续命  -->
   <view class="modal-box" hidden="{{xuming_hidden}}">
     <view class="modal-body">
       <view class="modal-content">
         <form bindsubmit='renewFormSubmit'>
-        <view class="renew_title">图书续租</view>
+          <view class="renew_title">图书续租</view>
           <button bindtap='iwantpic'>图书照片更新</button>
           <image src=" {{img}} " style="display:{{display1}}" mode="scaleToFill"></image>
           <view class="renew_time">我要再租</view>
           <input type="number" name="period" class="input" placeholder='单位/天' />
           <button form-type='submit' type="primary">提交</button>
-          <button bindtap='submitCancel'>取消</button>
+          <button bindtap='submitCancel' type="warn">取消</button>
         </form>
       </view>
     </view>
   </view>
-  <view class="piece">
-    <view class="bar">租期已经到且未被别人借走/购买</view>
+  <view>
+    <view class="title">租期已到的图书</view>
     <block wx:for="{{notborrow_list}}" wx:key="unique" wx:for-index="notborrow_index" wx:for-item="notborrow">
-      <image src="{{notborrow.picture}}"></image>{{notborrow.id}}
-      <button bindtap="updatePic" id="update{{notborrow_index}}">更新图片</button>
+      <view class="stuff">
+        <image src="{{notborrow.picture}}"></image>
+        <view class="wenzi">图书名称:{{notborrow.id}}</view>
+        <button bindtap="updatePic" id="update{{notborrow_index}}">更新图片</button>
+      </view>
     </block>
   </view>
-  <view class="line"></view>
 
-
-  <view class="piece">
-    <view class="bar">未有被租用和购买过的图书</view>
+  <view>
+    <view class="title">您发布的图书</view>
     <view wx:for="{{neverborrow_list}}" wx:key="unique" wx:for-index="neverborrow_index" wx:for-item="neverborrow">
-      {{neverborrow_index+1}} 图书名称:大连理工大学
-      <image class="img" src="{{neverborrow.picture}}" style="width:100%" mode="scaleToFill"></image>
+      <view class="stuff">
+        <view class="wenzi"> 图书名称:大连理工大学</view>
+        <image class="img" src="{{neverborrow.picture}}" style="width:100%" mode="scaleToFill"></image>
 
-      <button bindtap="repeal1" id="repeal{{neverborrow_index}}">撤销此单</button>
-      <modal hidden="{{confirm}}" bindconfirm="repeal" bindcancel="repealCancel" title="warning">即将停止本图书的分享,您真的要这样做吗?</modal>
+        <button bindtap="repeal1" id="repeal{{neverborrow_index}}">撤销此单</button>
+        <modal hidden="{{confirm}}" bindconfirm="repeal" bindcancel="repealCancel" title="提示">即将停止本图书的分享,您真的要这样做吗?</modal>
+      </view>
     </view>
   </view>
-  <view class="line"></view>
 
 
-  <view class="piece">
-    <view class="bar">已经购买的图书</view>
+  <view>
+    <view class="title">已经购买的图书</view>
     <block wx:for="{{bought_list}}" wx:key="unique" wx:for-index="bought_index" wx:for-item="bought">
-      <view>
+      <view class="stuff">
         <image src="{{bought.picture}}" /> {{bought.name}}
       </view>
     </block>

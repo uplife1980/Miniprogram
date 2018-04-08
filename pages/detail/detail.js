@@ -52,6 +52,10 @@ Page({
           "saleprice": res.data.rentable.sale_price,
           bookid:res.data.rentable.id
         })
+        if(that.data.picture1=='')
+          that.setData({
+            picture1: "../../images/nobook.jpg"
+          })
         switch (that.data.way) {
           case 1: { that.setData({ canIChange: true, disabled: true, peroid_hidden: false,salepriceHidden:true }); break; }
           case 2: { that.setData({ canIChange: false, disabled: true,rentpriceHidden:true }); break; }

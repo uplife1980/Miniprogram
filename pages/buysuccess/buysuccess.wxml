@@ -1,5 +1,6 @@
 <!--pages/buysuccess/buysuccess.wxml-->
-<text>订单已提交</text>
-此书当前持有人手机号码：{{phone}}
-请主动联系！
+<view class="title">订单已提交</view>
+<view class="wenzi">此书持有人手机号码：</view>
+<view class="wenzi">{{phone}}</view>
+<view class="wenzi">请主动联系！</view>
 <button bindtap='backToIndex'>返回主页</button>

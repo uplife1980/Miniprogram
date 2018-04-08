@@ -1,5 +1,36 @@
 /* pages/needcomfirm/needcomfirm.wxss */
-.tltle{
+.title{
   font-weight: bold;
-  
+  font-size: 1.5em;
+  width:100%;
+  text-align: center;
+  background: #FFF1CA;
+  height:100rpx;
+  padding-top:4%;
+  margin-bottom:4%;
+}
+.stuff{
+  border:2px rgb(120,120,120) solid;
+  margin-top:2.5%;
+  margin-bottom:4%;
+  padding-bottom:20rpx;
+}
+.wenzi{
+  width:100%;
+  text-align: center;
+  padding-top:20rpx;
+}
+.book{
+  font-weight: bold;
+  color: rgb(83,61,91);
+  font-size:1.1em;
+}
+.price{
+  font-weight: bold;
+}
+.yes{
+  background: rgb(165,222,228);
+}
+.no{
+  background: #f67a72
 }

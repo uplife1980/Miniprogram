@@ -37,6 +37,7 @@ Page({
   },
   search: function () {
     var self = this;
+    var data=self.data;
     wx.request({
       url: Url.Url() + 'bookinfo/ofsearch',
       data: {
@@ -46,10 +47,30 @@ Page({
       method: "POST",
       success: function (res) {
         if (res.data.result.length == 0)
-          self.setData({
-            allStuff: false
+          wx.showLoading({
+            title: '加载中...',
+            mask: true,
+            success: function (res) { setTimeout(function () { wx.hideLoading() }, 1000) },
           })
         console.log(res.data)
+        if (res.data.result.length == 0)
+          wx.showToast({
+            title: '已浏览全部商品',
+            mask: true,
+            success: function (res) { setTimeout(function () { wx.hideToast() }, 1500) },
+          })
+        for (var i in res.data.result) {
+          if (res.data.result[i].picture == "")
+            res.data.result[i].picture = "../../images/nobook.jpg"
+          data.postsList.push({
+            picture: res.data.result[i].picture,
+            id: res.data.result[i].id,
+            title: res.data.result[i].title.slice(0, 15),
+            way: res.data.result[i].way,
+            rent_price: res.data.result[i].rent_price,
+            sale_price: res.data.result[i].sale_price
+          });
+        }
         self.setData({
           postsList: res.data.result,
           allbooks_len: res.data.len

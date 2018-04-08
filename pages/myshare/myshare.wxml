@@ -1,11 +1,11 @@
 <view>
-<view class="piece">
+<view >
   <block wx:for="{{upload_list}}" wx:key="unique" wx:for-item="upload" wx:for-index="upload_index">
-    {{upload.info.title}}
-    {{upload.bookid}}
+    
+    <view class="stuff">{{upload.info.title}}
     {{status[upload.bookstatus]}}
     <view wx:if="{{stopshare[upload.bookstatus]}}">
-      <button bindtap='stopshare' id="stop{{upload_index}}">停止分享</button>   
+      <!-- <button bindtap='stopshare' id="stop{{upload_index}}">停止分享</button>    -->
     </view>
     <view hidden="{{phone_hidden}}">当前借阅人的手机号为：{{upload.phone}}</view>
     <view wx:if="{{continueshare[upload.bookstatus]}}">
@@ -13,9 +13,9 @@
     </view>
     <view>流通记录</view>
     <block wx:for="{{upload.logmap}}" wx:key="unique" wx:for-item="recording" wx:for-index="recording_index">
-      <view>{{recording.id}}</view>
-      <view>{{recording.deal_time}}</view>
+      <view>交易时间:{{recording.time}}天前</view>
     </block>
+    </view>
   </block>
 </view>
 </view>

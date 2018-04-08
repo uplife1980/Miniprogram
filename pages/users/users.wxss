@@ -7,7 +7,6 @@
   display: flex;
   height:150rpx;
   background: #ffba84;
-  width:100%;
   align-items: center;
   padding:50rpx;
 }
@@ -30,4 +29,9 @@ color:#4e4a4a;
   height:150rpx;
   text-align: center;
   line-height: 150rpx;
+}
+.footer{
+  margin-top: 30rpx;
+  text-align: center;
+  font-style: italic;
 }

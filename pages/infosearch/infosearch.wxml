@@ -1,5 +1,5 @@
 <view class="bg"><view class="search">
-  <input bindconfirm='search'  value="{{search_input_default}}"placeholder="搜索书籍" maxlength='30'/>
+  <input bindconfirm='search'  value="{{keyword}}"placeholder="搜索书籍" maxlength='30'/>
 </view>
 <view class="container">
   <scroll-view style="height:1080rpx" scroll-y="true" bindscrolltolower="lower">
