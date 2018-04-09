@@ -10,7 +10,7 @@ Page({
     postsList: [],
     hidden: false,
     allStuff: true,
-    keyword : '',
+    keyword: '',
     hidden_warn: true,
     way: ["不可租售", "出租", "出售", "可租可售"]
   },
@@ -18,26 +18,29 @@ Page({
   onLoad: function (e) {
     var that = this;
     that.setData({
-      keyword : e.keyword
+      keyword: e.keyword
     })
     that.search();
   },
   lower: function (e) {
     wx.stopPullDownRefresh();
   },
-  pagesearch : function(e){
+  pagesearch: function (e) {
     var that = this;
     var key = e.detail.value;
-    if(key!=""){
-      that.setData({keyword: key})
+    if (key != '') {
+      that.setData({ keyword: key })
       that.search();
-    }else{
-      that.setData({hidden_warn: false})
+    } 
+    else {
+      wx.switchTab({
+        url: '../index/index'
+      })
     }
   },
   search: function () {
     var self = this;
-    var data=self.data;
+    var data = self.data;
     wx.request({
       url: Url.Url() + 'bookinfo/ofsearch',
       data: {
@@ -74,7 +77,7 @@ Page({
         self.setData({
           postsList: res.data.result,
           allbooks_len: res.data.len
-          
+
         })
         setTimeout(function () {
           self.setData({

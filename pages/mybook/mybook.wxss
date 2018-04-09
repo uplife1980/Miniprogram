@@ -17,6 +17,7 @@
 .wenzi{
   line-height: 80rpx;
 }
+
 .xuming_button{
   background: rgb(165,222,228);
 }

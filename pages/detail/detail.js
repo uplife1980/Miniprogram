@@ -108,7 +108,7 @@ Page({
       },
     })
   },
-  userSubmit: function (e) {      //提交个人信息
+  userSubmit: function (e) {      //提交个人信息 
     var that = this
     that.setData({
       userinfo_hidden: true,
@@ -116,8 +116,6 @@ Page({
     })
     var sex;
     sex=(e.detail.value.sex==="man")?"man":"woman";
-    console.warn(app.globalData.openId)
-    console.warn(e.detail.value)
     console.warn(sex)
     wx.request({
       url: Url.Url() + 'user/complementInfo',
@@ -128,7 +126,7 @@ Page({
         grade: e.detail.value.grade
       },
       header: {
-        'Content-Type': 'application/json'
+        'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
       },
       method: "POST",
       success: function (res) { },

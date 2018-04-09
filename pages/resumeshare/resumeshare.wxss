@@ -1,1 +1,18 @@
 /* pages/resumeshare/resumeshare.wxss */
+/* pages/maishu/maishu.wxss */
+.container{
+  display: flex;
+  flex-direction: column;
+  padding-top:1000rpm;
+}
+.juzhong{
+margin:auto}
+.menu{
+text-align: center
+ }
+.input{
+  border:1px grey solid;
+  width:700rpx;
+  height:1.8em;
+  margin:auto;
+}

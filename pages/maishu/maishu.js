@@ -14,7 +14,7 @@ Page({
     checked_woman: true,
     array: ['预科','大一', '大二', '大三', '大四','大五', '研一', '研二', '研三', '保密'],
     index: 9,       //年级
-    warning_hidden: true,
+    // warning_hidden: true,
     getcode:"default",
     getpic:"default",
     showwarn:''
@@ -75,21 +75,21 @@ Page({
           that.setData({
             isbn: res.result,
             getcode:"primary",
-            showwarn:''
+            showwarn:"ISBN为:"+res.result
           })
         
         }
         else {
           that.setData({
             getcode: "warn",
-            showwarn:"扫描了非图书商品,或本书过老"
+            showwarn:"扫描了非法条形码,或本书过老!"
           })
           wx
         }
       },
       fail: function (res) {
         that.setData({
-          showwarn: '扫描了非图书商品,或本书过老',
+          showwarn: '扫描了非法条形码,或本书过老!',
           getcode: "warn"
         })},
       complete: function (res) { },
@@ -118,7 +118,7 @@ Page({
   formCheck: function (e) {
     var that = this;
     if (
-      // typeof (that.data.isbn) == 'number'       //isbn存在
+      that.data.getcode=="primary"&&       //isbn存在
       that.data.img[0] != null &&             //图片存在
       e.detail.value.tel != '' &&             //电话不为空
       /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/.test(e.detail.value.tel) &&  //电话合法性
@@ -193,20 +193,6 @@ Page({
 
 
 
-    wx.request({
-      url: Url.Url() + 'user/complementInfo',
-      data: {
-        userid: app.globalData.openId,
-        // sex: sex,
-        phone: e.detail.value.tel,
-        grade: e.detail.value.grade
-      },
-      header: {
-        'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
-      },
-      method: "POST",
-      success: function (res) { },
-    }),
       //上传书籍信息部分
       wx.request({
         url: Url.Url() + 'rentable/bookapplication',
@@ -394,24 +380,24 @@ Page({
     })
   },
 
-  upComplete: function () {        //跳转新页面
-    wx.showToast({
-      title: '提交成功!',
-      icon: '',
-      image: '',
-      mask: true,
-      success: function (res) {
-        setTimeout(function () {
-          wx.switchTab({
-            url: '../users/users'
-          }, 1500)
-        })
-      },
-    })
-  },
-  remain: function () {        //隐藏警告框
-    this.setData({
-      warning_hidden: true
-    })
-  }
+  // upComplete: function () {        //跳转新页面
+  //   wx.showToast({
+  //     title: '提交成功!',
+  //     icon: '',
+  //     image: '',
+  //     mask: true,
+  //     success: function (res) {
+  //       setTimeout(function () {
+  //         wx.switchTab({
+  //           url: '../users/users'
+  //         }, 1500)
+  //       })
+  //     },
+  //   })
+  // }
+  // remain: function () {        //隐藏警告框
+  //   this.setData({
+  //     warning_hidden: true
+  //   })
+  // }
 })

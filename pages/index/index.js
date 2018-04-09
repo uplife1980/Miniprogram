@@ -10,7 +10,9 @@ Page({
     postsList: [],
     way: ["不可租售", "出租", "出售", "可租可售"]
   },
-
+  onReady:function(){                       //由卖书转过来
+    this.refreshPage()
+  },
   onPullDownRefresh: function () {          //下拉动作 
     this.refreshPage()
   },

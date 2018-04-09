@@ -13,6 +13,7 @@ Page({
     img: '',
     display1: "none",
     bookid: 0,
+    day_color:"black"
   },
   /**
    * 生命周期函数--监听页面加载

@@ -27,7 +27,6 @@ App({
             success: function (res) {
               if(res.data.openid!=null){
                 that.globalData.openId = res.data.openid;
-                console.log(res.data.openid);
                 wx.request({
                   url: Url.Url() +'user/register',
                   data: {
