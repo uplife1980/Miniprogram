@@ -19,7 +19,7 @@
 }
 
 .xuming_button{
-  background: rgb(165,222,228);
+  background: rgb(245,150,170);
 }
 .no{
   background: #f67a72

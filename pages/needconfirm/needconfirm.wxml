@@ -1,23 +1,31 @@
-<view><view class="title">租用</view>
-<block  wx:for="{{booklist_renteds}}" wx:key="unique" wx:for-index="booklist_renteds_index" wx:for-item="book">
-<view class="stuff">
-    <view class="book wenzi">ISBN号:{{book.information}}</view>
-    <image src="{{book.picture}}" style="width:100%" />
-   <view class="wenzi">图书租价<text class="price">{{book.rent_price}}元</text></view>
-    <button bindtap='comfirm' class="yes" id="comfirm{{booklist_renteds_index}}">确认</button>
-    <button bindtap="cancel" class="no" id="cancel{{booklist_renteds_index}}">取消</button></view>
+<view>
+  <view class="title">租用</view>
+  <block wx:for="{{booklist_renteds}}" wx:key="unique" wx:for-index="booklist_renteds_index" wx:for-item="book">
+    <view class="stuff">
+      <view class="book wenzi">ISBN号:{{book.information}}</view>
+      <image src="{{book.picture}}" style="width:100%" />
+       <view class="wenzi">联系人手机:{{book.phone}}
+      </view>
+      <view class="wenzi">图书租价
+        <text class="price">{{book.rent_price}}元</text>
+      </view>
+      <button bindtap='comfirm' class="yes" id="comfirm{{booklist_renteds_index}}">确认</button>
+      <button bindtap="cancel" class="no" id="cancel{{booklist_renteds_index}}">取消</button>
+    </view>
 
-</block>
-<view class="title">购买</view>
-<block class="stuff" wx:for="{{booklist_sales}}" wx:key="unique" wx:for-index="booklist_sales_index" wx:for-item="book">
-{{book.information}}
-图片地址{{book.picture}}
-图书售价{{book.sale_price}}元
-<button bindtap='comfirm2' id="comfirm{{booklist_sales_index}}">确认</button>
-<button bindtap="cancel2" id="cancel{{booklist_sales_index}}">取消</button>
-</block>
+  </block>
+  <view class="title">购买</view>
+  <block class="stuff" wx:for="{{booklist_sales}}" wx:key="unique" wx:for-index="booklist_sales_index" wx:for-item="book">
+    <view class="stuff">
+      <view class="book wenzi">ISBN号:{{book.information}}</view>
+      <image src="{{book.picture}}" style="width:100%" />
+      <view class="wenzi">图书售价
+        <text class="price">{{book.sale_price}}元</text>
+      </view>
+      <button bindtap='comfirm2' class="yes" id="comfirm{{booklist_sales_index}}">确认</button>
+      <button bindtap="cancel2" class="no" id="cancel{{booklist_sales_index}}">取消</button>
+    </view>
+  </block>
 </view>
 <toast hidden="{{comfirm_hidden}}" duration="1000" bindchange="toastChange1">确认成功</toast>
 <toast hidden="{{cancel_hidden}}" duration="1000" bindchange="toastChange2">取消成功</toast>
-
-

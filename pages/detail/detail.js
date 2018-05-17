@@ -145,16 +145,21 @@ Page({
   
   formSubmit: function (e) {    //购买
     var that = this
+    var period = e.detail.value.peroid;
     that.setData({
       hidden: false
     })
+    if(e.detail.value.way==0)
+    {
+      period=1024;
+    }
     wx.request({
       url: Url.Url()+'bookdeal/trade',
       data: {
         userid: app.globalData.openId,
         bookid: that.data.bookid,
         rorbtn: e.detail.value.way,
-        period: e.detail.value.peroid
+        period: period
       },
       header: { 'content-type': 'application/x-www-form-urlencoded;charset=UTF-8' },
       method: "POST",

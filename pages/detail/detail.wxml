@@ -23,8 +23,8 @@
   </view>
   <view class="modal-box" hidden="{{userinfo_hidden}}">
     <view class="modal-body">
-      <view class="modal-content">
-        <form bindsubmit='userSubmit'>
+      <view class="menu">
+        <form bindsubmit='userSubmit' >
           手机号码
           <input type='number' name="tel" value="{{tel}}" /> 性别
           <radio-group name="sex">

@@ -28,10 +28,34 @@ Page({
     method:"GET",
     success: function(res) {
       console.log(res)
+      var renteds=res.data.renteds;
+      var sales=res.data.sales;
+      
+      //2018.5.17
+      for (var i in res.data.phones)    //需要更改查找性能
+      {
+        for(var j in renteds)
+        {
+          if(res.data.phones[i].bookid==renteds[i].id)
+            {
+              renteds[i].phone=res.data.phones[i].originphone
+              break;
+            }
+        }
+        for(var j in sales)
+        {
+          if(res.data.phones[i].bookid==sales[i].id)
+          {
+            sales[i].phone=res.data.phones[i].originphone
+            break;
+          }
+        }
+      }
       that.setData({
-        booklist_renteds:res.data.renteds,
-        booklist_sales:res.data.sales
+        booklist_renteds: renteds,
+        booklist_sales: sales
       })
+      //
     },
     fail: function(res) {},
     complete: function(res) {},

@@ -2,19 +2,19 @@
 <view class="container">
   <form bindsubmit='formSubmit'>
     <button bindtap='iwantcode' type="{{getcode}}" style="width:700rpx;">扫描书后条形码</button>
-     <view style="text-align:center">{{showwarn}}</view> 
+    <view style="text-align:center">{{showwarn}}</view>
     <button bindtap='iwantpic' type="{{getpic}}" style="width:700rpx;">图书真照</button>
-    <image src="{{img}}" style="display:{{display1}}" mode="aspectFit"class="juzhong"></image>
+    <image src="{{img}}" style="display:{{display1}}" mode="aspectFit" class="juzhong"></image>
     <view class="menu">
-    <switch checked bindchange='switch1' name="rentbtn" />出租
-    <input class="input" type='digit' name="borrow" maxlength='5' hidden="{{input1}}" placeholder=' 图书每日租价:      元/每日'/>
-    <switch bindchange='switch2' name="sellbtn" />出售
-    <input class="input" type="digit" name="buy" maxlength='10000' hidden="{{input2}}"placeholder=" 图书出售价格:    元" />
+      <switch checked bindchange='switch1' name="rentbtn" />出租
+      <input class="input" type='digit' name="borrow" maxlength='5' hidden="{{input1}}" placeholder=' 图书每日租价:      元/每日' />
+      <switch bindchange='switch2' name="sellbtn" />出售
+      <input class="input" type="digit" name="buy" maxlength='10000' hidden="{{input2}}" placeholder=" 图书出售价格:    元" />
     </view>
     <button bindtap='submitTap' style="width:700rpx;" hidden="{{continue_input}}">继续提交订单↓</button>
     <view hidden='{{userinfo_hidden}}' class="menu">
       <view>手机号码</view>
-      <input class="input" type='number' name="tel" value="{{phone}}" placeholder='认真填写以便买家联系'/>
+      <input class="input" type='number' name="tel" value="{{phone}}" placeholder='认真填写以便买家联系' />
       <view>性别</view>
       <radio-group name="sex">
         <radio value="man" checked="{{checked_man}}" />男
@@ -22,7 +22,7 @@
         <!-- <radio value="secret" checked="{{checked_secret}}" />保密 -->
       </radio-group>
       <picker name="grade" range='{{array}}' value="{{index}}" bindchange='bindchange'>
-        <button  style="width:700rpx;">你的年级：{{array[index]}}</button>
+        <button style="width:700rpx;">你的年级：{{array[index]}}</button>
       </picker>
       <button style="width:700rpx;" form-type='submit' type="primary">确认提交</button>
     </view>
