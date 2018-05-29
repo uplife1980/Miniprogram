@@ -28,33 +28,13 @@ Page({
     })
     that.fetchImgListDate()
   },
-  onLoad: function () {                     //为"我的"tab获取用户信息,原理不明
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse) {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      })
-    }
+  onLoad: function () {                   //2018.5.29增加开屏提示
+  wx.showModal({
+    title: '欢迎使用租书平台',
+    content: '测试期间不收取任何手续费,欢迎使用.',
+    showCancel:false,
+    confirmText:"我已知晓",
+  })
   },
   search: function (e) {                                  //search 的toast最好使用自定义图片
     var that = this;

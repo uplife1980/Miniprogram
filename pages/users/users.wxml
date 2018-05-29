@@ -2,8 +2,9 @@
 
   <view class="userinfo">
     <block>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+<open-data type="userAvatarUrl"  class="userinfo-avatar" ></open-data>
+
+      <text class="userinfo-nickname"><open-data type="userNicekName"></open-data></text>
     </block>
   </view>
 
