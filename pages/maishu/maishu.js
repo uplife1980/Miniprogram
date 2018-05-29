@@ -4,7 +4,7 @@ var app = getApp();
 Page({
   data: {
     input1: false,
-    input2: true,
+    input2: false,
     isbn: '',
     img: '',
     display1: "none",

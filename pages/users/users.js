@@ -5,22 +5,16 @@ function jump(link){
   
 }
 Page({
-  data: {
-    userInfo: {},
-    hasUserInfo: false
-  },
-  //事件处理函数
-  // bindViewTap: function () {
-  //   wx.navigateTo({
-  //     url: '../detail/detail'
-  //   })
-  // },
-  onLoad: function () {
-  },
-  getUserInfo: function (e) {
-    console.log(e)
-    this.setData({
-      userInfo: e.detail.userInfo,
+  showList:function() {
+    wx.showActionSheet({
+      // itemList: ['正在租用的书','租期已到的书','您发布的图书','购买的图书'],
+      itemList: ['您发布的图书', '购买的图书'],
+      success:function(res){
+        wx.navigateTo({
+          url: '../mybook/mybook?hidelist='+res.tapIndex,
+        })
+      }
     })
   }
+  
 })

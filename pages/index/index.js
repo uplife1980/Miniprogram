@@ -29,12 +29,14 @@ Page({
     that.fetchImgListDate()
   },
   onLoad: function () {                   //2018.5.29增加开屏提示
+  setTimeout(function(){
   wx.showModal({
-    title: '欢迎使用租书平台',
-    content: '测试期间不收取任何手续费,欢迎使用.',
+    title: '测试期间0费用!!',
+    content: '租书功能即将上线,敬请期待',
     showCancel:false,
     confirmText:"我已知晓",
-  })
+  })},1000
+  )
   },
   search: function (e) {                                  //search 的toast最好使用自定义图片
     var that = this;

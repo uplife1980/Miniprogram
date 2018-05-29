@@ -13,13 +13,20 @@ Page({
     img: '',
     display1: "none",
     bookid: 0,
-    day_color:"black"
+    day_color:"black",
+    hidelist:[],
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     var that = this;
+    var hidelist=new Array();
+    hidelist=[true,true,true,true]
+    hidelist[parseInt(options.hidelist)+2]=false,       //5-29这里也有更改+2
+   that.setData({
+     hidelist:hidelist
+   })
     wx.request({
       url: Url.Url() + 'user/viewBookinhand',
       data: {
