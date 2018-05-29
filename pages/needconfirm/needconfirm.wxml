@@ -19,6 +19,8 @@
     <view class="stuff">
       <view class="book wenzi">ISBN号:{{book.information}}</view>
       <image src="{{book.picture}}" style="width:100%" />
+      <view class="wenzi">联系人手机:{{book.phone}}
+      </view>
       <view class="wenzi">图书售价
         <text class="price">{{book.sale_price}}元</text>
       </view>

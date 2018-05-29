@@ -5,7 +5,7 @@
     <view class="stuff">{{upload.info.title}}
     {{status[upload.bookstatus]}}
     <view wx:if="{{stopshare[upload.bookstatus]}}">
-      <!-- <button bindtap='stopshare' id="stop{{upload_index}}">停止分享</button>    -->
+       <button bindtap='stopshare' id="stop{{upload_index}}">停止分享</button>    
     </view>
     <view hidden="{{phone_hidden}}">当前借阅人的手机号为：{{upload.phone}}</view>
     <view wx:if="{{continueshare[upload.bookstatus]}}">

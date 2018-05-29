@@ -32,7 +32,7 @@ Page({
       var sales=res.data.sales;
       
       //2018.5.17
-      for (var i in res.data.phones)    //需要更改查找性能
+      for (var i in res.data.phones)    //需要更改查找性能  phones 指代租书的电话
       {
         for(var j in renteds)
         {
@@ -42,11 +42,14 @@ Page({
               break;
             }
         }
+      }
+      for(i in res.data.salephones)
+      {
         for(var j in sales)
         {
-          if(res.data.phones[i].bookid==sales[i].id)
+          if(res.data.salephones[i].bookid==sales[i].id)
           {
-            sales[i].phone=res.data.phones[i].originphone
+            sales[i].phone=res.data.salephones[i].originphone
             break;
           }
         }
