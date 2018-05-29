@@ -2,9 +2,9 @@
 
   <view class="userinfo">
     <block>
-<open-data type="userAvatarUrl"  class="userinfo-avatar" ></open-data>
+<image class="userinfo-avatar" src="{{userInfo.avatarUrl}}"></image>
 
-      <text class="userinfo-nickname"><open-data type="userNicekName"></open-data></text>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </block>
   </view>
 

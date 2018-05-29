@@ -3,7 +3,8 @@
 var Url = require('url.js');
 App({
   globalData: {
-    userid : ""
+    userid : "",
+    userInfo: null
   },
   onLaunch: function () {
     var Url = require('url.js');
@@ -47,8 +48,8 @@ App({
    
   },
   globalData: {
-    openId:null
-  
+    openId:null,
+    
   }
   
 })
