@@ -118,19 +118,20 @@ Page({
   formCheck: function (e) {
     var that = this;
     if (
-      that.data.getcode=="primary"&&       //isbn存在
-      that.data.img[0] != null &&             //图片存在
-      e.detail.value.tel != '' &&             //电话不为空
-      /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/.test(e.detail.value.tel) &&  //电话合法性
-      e.detail.value.rentbtn || e.detail.value.sellbtn &&          //出租或者出售的按钮
-      (parseFloat(e.detail.value.borrow) || parseFloat(e.detail.value.buy)) != null //出租或者出售的价格 .
+      (that.data.getcode=="primary")&&       //isbn存在
+      (that.data.img[0] != null) &&             //图片存在
+     (e.detail.value.tel != '') &&             //电话不为空
+      (/^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/.test(e.detail.value.tel) )&&  //电话合法性
+      (e.detail.value.rentbtn || e.detail.value.sellbtn) &&          //出租或者出售的按钮
+      ((parseFloat(e.detail.value.borrow) || parseFloat(e.detail.value.buy)) != null )//出租或者出售的价格 .
     ) {
-      return 1;
+      that.formSubmit(e)
     }
     else {
       wx.showToast({
         title: '信息未正确填写',
         image: '',
+        icon:'none',
         mask: true,
         success: function (res) { setTimeout(function () { wx.hideToast() }, 5000) },
         fail: function (res) { },
@@ -189,7 +190,6 @@ Page({
     var that = this;
     var date = new Date() //9+4
     var request_id = date.getTime() * 10000 + Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
-    if (that.formCheck(e) == 0) { return 0 }
 
 
 
@@ -222,6 +222,40 @@ Page({
               method: "POST",
               //把服务器没有的信息补全给服务器
               success: function (res) {
+                console.log(res.data)
+                if(res.data.result.title==null){
+               
+                  wx.request({
+                    url: Url.Url() + 'rentable/saveisbn',
+                    data: {
+                      title: "自定义书籍",
+                      subtitle: "123",
+                      author: "2",
+                      summary: "3",
+                      isbn: that.data.isbn,
+                      publisher: "4",
+                      pubplace: "5",
+                      pubdate: "6",
+                      page: "7",
+                      price: "8",
+                      binding: "9",
+                      isbn10: "10",
+                      keyword: "11",
+                      edition: "12",
+                      impression: "13",
+                      language: "14",
+                      format: "15",
+                      category: "16"
+                    },
+                    header: {
+                      'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                    },
+                    method: "POST",
+                    success: function () { //上传图片部分
+                    }
+                  })
+                }
+                else(
                 wx.request({
                   url: Url.Url() + 'rentable/saveisbn',
                   data: {
@@ -252,6 +286,7 @@ Page({
                   success: function () { //上传图片部分
                     }
                 })
+                )
               },
               fail: function (res) { },
               complete: function (res) { }
@@ -372,6 +407,7 @@ Page({
     //       complete: function (res) { },
     //     })
     // // >>>>>>> tuandui/master
+    
   },
 
   bindchange: function (e) {      //更改年级显示出来

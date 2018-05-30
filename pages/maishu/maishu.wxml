@@ -1,13 +1,14 @@
 <!--pages/maishu/maishu.wxml-->
 <view class="container">
-  <form bindsubmit='formSubmit'>
+  <form bindsubmit='formCheck'>
     <button bindtap='iwantcode' type="{{getcode}}" style="width:700rpx;margin-bottom:40rpx;">扫描书后条形码</button>
     <view style="text-align:center">{{showwarn}}</view>
     <button bindtap='iwantpic' type="{{getpic}}" style="width:700rpx;margin-bottom:40rpx;">图书实拍</button>
     <image src="{{img}}" style="display:{{display1}}" mode="aspectFit" class="juzhong"></image>
     <view class="menu">
-      <!-- <switch bindchange='switch1' name="rentbtn" />出租
-      <input class="input" type='digit' name="borrow" maxlength='5' hidden="{{input1}}" placeholder=' 图书每日租价:      元/每日' /> -->
+       <switch bindchange='switch1' name="rentbtn" hidden="true"/>
+       <!-- 出租 -->
+      <input class="input" type='digit' name="borrow" maxlength='5' hidden="true" placeholder=' 图书每日租价:      元/每日' /> 
       <switch checked hidden="true" bindchange='switch2' name="sellbtn" />
       <!-- 出售 -->
       <input class="input" type="digit" name="buy" maxlength='10000' hidden="{{input2}}" placeholder=" 图书出售价格:    元" />

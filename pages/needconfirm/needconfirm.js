@@ -31,28 +31,18 @@ Page({
       var renteds=res.data.renteds;
       var sales=res.data.sales;
       
-      //2018.5.17
-      for (var i in res.data.phones)    //需要更改查找性能  phones 指代租书的电话
+      //2018.5.30
+      var i=0
+      if(renteds&&renteds.length!=0)
+      for (;i<renteds.length;i++)    //两个表的顺序完全一致,可以省去匹配的过程
       {
-        for(var j in renteds)
-        {
-          if(res.data.phones[i].bookid==renteds[i].id)
-            {
-              renteds[i].phone=res.data.phones[i].originphone
-              break;
-            }
-        }
+              renteds[i].phone=res.data.salephones[i].originphone
       }
-      for(i in res.data.salephones)
+      if(sales)
+      for(;i<res.data.salephones.length;i++)
       {
-        for(var j in sales)
-        {
-          if(res.data.salephones[i].bookid==sales[i].id)
-          {
-            sales[i].phone=res.data.salephones[i].originphone
-            break;
-          }
-        }
+        var j=i-renteds.length
+            sales[j].phone=res.data.salephones[i].originphone
       }
       that.setData({
         booklist_renteds: renteds,

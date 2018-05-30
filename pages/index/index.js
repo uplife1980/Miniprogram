@@ -3,7 +3,7 @@ var Url = require('../../url.js');
 
 Page({
   data: {
-    welcomeText:"测试期间0费用!测试期间暂时开通卖书功能。 租书功能即将上线, 敬请期待",
+    welcomeText:"测试期间暂时仅开通卖书功能。 租书功能即将上线, 敬请期待",
     welcomeTitle:"欢迎使用租书平台",
     search_input_default:"",
     number: 0,
@@ -32,7 +32,7 @@ Page({
     })
     that.fetchImgListDate()
   },
-  onLoad: function () {                   //2018.5.29增加开屏提示
+  onLaunch: function () {                   //2018.5.29增加开屏提示
   var that=this
   setTimeout(function(){
   that.powerDrawer("open");

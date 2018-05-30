@@ -1,15 +1,15 @@
 <!--pages/mybook/mybook.wxml-->
 <view>
 
-  <view>
-    <view class="title" hidden="{{hidelist[0]}}">正在租用的图书</view>
+  <view hidden="{{hidelist[0]}}">
+    <view class="title"  >正在租用的图书</view>
     <block wx:for="{{borrowing_list}}" wx:key="unique" wx:for-item="borrowing" wx:for-index="borrowing_index">
       <view class="stuff">
-        <view class="wenzi">图书名称:大连理工大学</view>
+        <!-- <view class="wenzi">图书名称:大连理工大学</view> -->
         <view class="wenzi">ISBN:{{borrowing.information}}</view>
-        <view class="wenzi" wx:if="{{borrowing.days>=3}}"style="color:black">剩余天数 {{borrowing.days}}天</view>
-        <view class="wenzi" wx:if="{{borrowing.days<3}}"style="color:red">剩余天数 {{borrowing.days}}天</view>
-        <image src="{{borrowing.picture}}" style="width:100%" mode="aspectFit"/>
+        <view class="wenzi" wx:if="{{borrowing.days>=3}}" style="color:black">剩余天数 {{borrowing.days}}天</view>
+        <view class="wenzi" wx:if="{{borrowing.days<3}}" style="color:red">剩余天数 {{borrowing.days}}天</view>
+        <image src="{{borrowing.picture}}" style="width:100%" mode="aspectFit" />
         <button bindtap='renew' class="xuming_button" id="xuming{{borrowing_index}}">我要续命</button>
       </view>
     </block>
@@ -31,8 +31,8 @@
       </view>
     </view>
   </view>
-  <view>
-    <view class="title" hidden="{{hidelist[1]}}">租期已到的图书</view>
+  <view hidden="{{hidelist[1]}}">
+    <view class="title" >租期已到的图书</view>
     <block wx:for="{{notborrow_list}}" wx:key="unique" wx:for-index="notborrow_index" wx:for-item="notborrow">
       <view class="stuff">
         <image src="{{notborrow.picture}}" mode="aspectFit"></image>
@@ -42,11 +42,12 @@
     </block>
   </view>
 
-  <view>
-    <view class="title" hidden="{{hidelist[2]}}">您发布的图书</view>
+  <view hidden="{{hidelist[2]}}">
+    <view class="title" >您发布的图书</view>
     <view wx:for="{{neverborrow_list}}" wx:key="unique" wx:for-index="neverborrow_index" wx:for-item="neverborrow">
       <view class="stuff">
-        <view class="wenzi"> 图书名称:大连理工大学</view>
+          <view class="wenzi"> 图书名称:{{neverborrow.title}}</view>  
+        <view class="wenzi">ISBN:{{neverborrow.information}}</view>        
         <image class="img" src="{{neverborrow.picture}}" style="width:100%" mode="aspectFit"></image>
 
         <button bindtap="repeal1" id="repeal{{neverborrow_index}}">撤销此单</button>
@@ -56,11 +57,13 @@
   </view>
 
 
-  <view>
-    <view class="title" hidden="{{hidelist[3]}}">已经购买的图书</view>
+  <view hidden="{{hidelist[3]}}">
+    <view class="title" >已经购买的图书</view>
     <block wx:for="{{bought_list}}" wx:key="unique" wx:for-index="bought_index" wx:for-item="bought">
       <view class="stuff">
-        <image src="{{bought.picture}}"  mode="aspectFit"/> {{bought.name}}
+        <view class="wenzi"> 图书名称:{{bought.title}}</view> 
+       <view class="wenzi">ISBN:{{bought.information}}</view>   
+        <image src="{{bought.picture}}" mode="aspectFit" /> {{bought.name}}
       </view>
     </block>
   </view>

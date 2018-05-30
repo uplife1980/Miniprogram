@@ -2,29 +2,31 @@
   <image src="{{picture1}}" class="top-img" mode="aspectFit"></image>
   <image src="{{picture2}}" class="top-img" mode="aspectFit"></image>
   <view>图书名称:{{name}}</view>
-         <view class="line"></view>
+  <view class="line"></view>
   <view>书后ISBN号:{{information}}</view>
-          <view class="line"></view>
+  <view class="line"></view>
   <view class="price">
     <view class="tag" hidden="{{rentpriceHidden}}">租价:{{rentprice}}元/天</view>
     <view class="tag" hidden="{{salepriceHidden}}">售价:{{saleprice}}元</view>
-    
+
   </view>
-        
+
   <view class='container'>
     <form bindsubmit='userCheck'>
-    <view class="buyrent"><text style="font-weight:bold">买书</text>
-      <switch name="way" checked="{{canIChange}}" disabled="{{disabled}}" bindchange="rorChange"></switch><text style="font-weight:bold" style="color:grey">租书</text>
+      <view class="buyrent">
+        <text style="font-weight:bold">买书</text>
+        <switch name="way" checked="{{canIChange}}" disabled="{{disabled}}" bindchange="rorChange"></switch>
+        <text style="font-weight:bold" style="color:grey">租书</text>
       </view>
       <text hidden="{{peroid_hidden}}">租书时长</text>
-      <input type="number"  name="peroid" hidden="{{peroid_hidden}}" class="input"placeholder="单位/天"/>
+      <input type="number" name="peroid" hidden="{{peroid_hidden}}" class="input" placeholder="单位/天" />
       <button form-type='submit' type="primary">下单!</button>
     </form>
   </view>
-  <view class="modal-box" hidden="{{userinfo_hidden}}">
-    <view class="modal-body">
+  <!-- <view class="modal-box">
+    <view class="modal-body" hidden="{{userinfo_hidden}}">
       <view class="menu">
-        <form bindsubmit='userSubmit' >
+        <form bindsubmit='userSubmit'>
           手机号码
           <input type='number' name="tel" value="{{tel}}" /> 性别
           <radio-group name="sex">
@@ -38,6 +40,45 @@
         </form>
       </view>
     </view>
-  </view>
+  </view> -->
   <toast hidden="{{hidden}}" duration="1000" bindchange="toastChange">提交成功</toast>
 </view>
+
+
+<!--自定义的模态弹窗套件  -->
+
+
+<!--mask-->
+<view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view>
+<!--content-->
+<!--使用animation属性指定需要执行的动画-->
+<form bindsubmit='userSubmit'>
+
+  <view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}">
+
+    <!--drawer content-->
+    <view class="drawer_title">补全个人信息</view>
+    <view class="drawer_content">
+      <view class="top grid">
+        <label class="title col-0">手机号码</label>
+        <input type='number' name="tel" value="{{tel}}" class="input_base input_h30 col-1"></input>
+      </view>
+      <view class="top grid">
+        <label class="title col-0">性别</label>
+        <radio-group name="sex">
+          <radio value="man" checked="{{checked_man}}" />男
+          <radio value="woman" checked="{{checked_woman}}" />女
+        </radio-group>
+      </view>
+
+      <view class="top grid">
+        <label class="title col-0">你的年级：</label>
+         <view class="input_base input_h30 col-1">
+        <picker name="grade" range='{{array}}' value="{{index}}" bindchange='bindchange' style="text-align:center">       {{array[index]}}
+</picker>
+</view>
+      </view>
+    </view>
+    <button form-type='submit' style="margin-left:auto" type="primary">提交</button>
+  </view>
+</form>

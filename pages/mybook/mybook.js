@@ -13,20 +13,20 @@ Page({
     img: '',
     display1: "none",
     bookid: 0,
-    day_color:"black",
-    hidelist:[],
+    day_color: "black",
+    hidelist: [],
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     var that = this;
-    var hidelist=new Array();
-    hidelist=[true,true,true,true]
-    hidelist[parseInt(options.hidelist)+2]=false,       //5-29这里也有更改+2
-   that.setData({
-     hidelist:hidelist
-   })
+    var hidelist = new Array();
+    hidelist = [true, true, true, true]
+    hidelist[parseInt(options.hidelist) + 2] = false,       //5-29这里也有更改+2
+      that.setData({
+        hidelist: hidelist
+      })
     wx.request({
       url: Url.Url() + 'user/viewBookinhand',
       data: {
@@ -37,22 +37,42 @@ Page({
       },
       method: "GET",
       success: function (res) {
-        that.setData({
-          bought_list: res.data.bought,
-          borrowing_list: res.data.renting,
-          notborrow_list: res.data.outdate,
-          neverborrow_list: res.data.rentable
-        })
-        var today = new Date;
-        var borrowing_list = that.data.borrowing_list;
-        for (var i in borrowing_list) {
-          var days = (borrowing_list[i].end_time - today.getTime()) / (1 * 24 * 60 * 60 * 1000);
-          borrowing_list[i].days = parseInt(days)
-        }
-        that.setData({
-          borrowing_list: borrowing_list
-        })
         console.log(res.data)
+        var data = res.data                             //低效率加入剩余时间,图书名称
+        var today = new Date;
+        for (var i in data.renting) {
+          var days = (data.renting[i].end_time - today.getTime()) / (1 * 24 * 60 * 60 * 1000);
+          data.renting[i].days = parseInt(days)
+        }
+
+
+        //字段匹配给包加入phone,由于顺序一致,不需要遍历
+        for (var i = 0; i < data.bought.length; i++) {
+          data.bought[i].title = data.booktitle[i]
+        }
+        for (var i = data.bought.length, j = 0; j < data.renting.length; i++ , j++) {
+          data.renting[j].title = data.booktitle[i]
+        }
+        for (var i = data.bought.length + data.renting.length, j = 0; j < data.outdate.length; i++ , j++) {
+          data.outdate[j].title = data.booktitle[i]
+        }
+        for (var i = data.bought.length + data.renting.length + data.outdate.length, j = 0; j < data.rentable.length; i++ , j++) {
+          data.rentable[j].title = data.booktitle[i]
+        }
+
+
+
+
+
+        that.setData({
+          bought_list: data.bought,
+          borrowing_list: data.renting,
+          notborrow_list: data.outdate,
+          neverborrow_list: data.rentable
+        })
+
+
+
       },
       fail: function (res) { },
       complete: function (res) { },
@@ -61,7 +81,6 @@ Page({
 
   renew: function (e) {        //续命
     var index = e.target.id.replace(/[^0-9]/ig, "");
-    console.log(index);
     var that = this
     that.setData({
       bookid: index,
@@ -115,12 +134,12 @@ Page({
           },
           success: function () {
             wx.showToast({
-              title: '提交成功！',
+              title: '',
               success: function () {
                 setTimeout(function () {
                   wx.redirectTo({
                     url: '../mybook/mybook'
-                  }, 15000)
+                  }, 1200)
                 })
               }
             })
@@ -210,14 +229,20 @@ Page({
       },
       method: "POST",
       success: function (res) {
-        console.log(res.data)
-        that.setData({
-          neverborrow_list: res.data.rentable,
-          confirm: true
+        wx.showToast({
+          title: '提交成功！',
+          success: function () {
+            setTimeout(function () {
+              wx.switchTab({
+                url: '../users/users'
+              }, 1500)
+            })
+          }
         })
-      },
-      fail: function (res) { },
-      complete: function (res) { },
+      }
+        
+      
+       
     })
   },
   repealCancel: function () {

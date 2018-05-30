@@ -25,8 +25,8 @@
       <view class="wenzi">图书售价
         <text class="price">{{book.sale_price}}元</text>
       </view>
-      <button bindtap='comfirm2' class="yes" id="comfirm{{booklist_sales_index}}">确认</button>
-      <button bindtap="cancel2" class="no" id="cancel{{booklist_sales_index}}">取消</button>
+      <button bindtap='comfirm2' class="yes" id="comfirm{{booklist_sales_index}}">确认收货</button>
+      <button bindtap="cancel2" class="no" id="cancel{{booklist_sales_index}}">取消购买</button>
     </view>
   </block>
 </view>
