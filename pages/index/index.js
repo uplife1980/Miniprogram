@@ -32,7 +32,7 @@ Page({
     })
     that.fetchImgListDate()
   },
-  onLaunch: function () {                   //2018.5.29增加开屏提示
+  onLoad: function () {                   //2018.5.29增加开屏提示
   var that=this
   setTimeout(function(){
   that.powerDrawer("open");

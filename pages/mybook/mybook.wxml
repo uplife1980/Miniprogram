@@ -50,7 +50,7 @@
         <view class="wenzi">ISBN:{{neverborrow.information}}</view>        
         <image class="img" src="{{neverborrow.picture}}" style="width:100%" mode="aspectFit"></image>
 
-        <button bindtap="repeal1" id="repeal{{neverborrow_index}}">撤销此单</button>
+        <button bindtap="repeal1" id="repeal{{neverborrow_index}}">取消分享</button>
         <modal hidden="{{confirm}}" bindconfirm="repeal" bindcancel="repealCancel" title="提示">即将停止本图书的分享,您真的要这样做吗?</modal>
       </view>
     </view>

@@ -37,12 +37,14 @@ Page({
       for (;i<renteds.length;i++)    //两个表的顺序完全一致,可以省去匹配的过程
       {
               renteds[i].phone=res.data.salephones[i].originphone
+              renteds[i].title=res.data.salephones[i].booktitle
       }
       if(sales)
       for(;i<res.data.salephones.length;i++)
       {
         var j=i-renteds.length
             sales[j].phone=res.data.salephones[i].originphone
+            sales[j].title=res.data.salephones[i].booktitle
       }
       that.setData({
         booklist_renteds: renteds,

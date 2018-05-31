@@ -50,7 +50,7 @@ Page({
   iwantpic: function () {
     var that = this
     wx.chooseImage({
-      count: 0,
+      count: 1,
       sizeType: ["compressed"],
       sourceType: [],
       success: function (res) {
