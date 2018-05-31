@@ -52,7 +52,7 @@ Page({
     wx.chooseImage({
       count: 1,
       sizeType: ["compressed"],
-      sourceType: [],
+      sourceType: ['album', 'camera'],
       success: function (res) {
         that.setData({
           display1: "block",
@@ -61,7 +61,9 @@ Page({
         })
       },
       fail: function (res) { 
-       
+       wx.showToast({
+         title: '失败!',
+       })
       },
       complete: function (res) { },
     })
@@ -121,13 +123,14 @@ Page({
       (that.data.getcode=="primary")&&       //isbn存在
       (that.data.img[0] != null) &&             //图片存在
      (e.detail.value.tel != '') &&             //电话不为空
-      (/^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/.test(e.detail.value.tel) )&&  //电话合法性
+      (/^((1[3,5,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/.test(e.detail.value.tel) )&&  //电话合法性
       (e.detail.value.rentbtn || e.detail.value.sellbtn) &&          //出租或者出售的按钮
       ((parseFloat(e.detail.value.borrow) || parseFloat(e.detail.value.buy)) != null )//出租或者出售的价格 .
     ) {
       that.formSubmit(e)
     }
     else {
+      console.log(e.detail.value)
       wx.showToast({
         title: '信息未正确填写',
         image: '',
