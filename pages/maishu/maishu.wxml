@@ -8,7 +8,7 @@
     <view class="menu">
        <switch bindchange='switch1' name="rentbtn" hidden="true"/>
        <!-- 出租 -->
-      <input class="input" type='digit' name="borrow" maxlength='5' hidden="true" placeholder=' 图书每日租价:      元/每日' /> 
+      <input class="input" type='digit' name="borrow" maxlength='5' hidden="true" placeholder=' 图书每日租价:      元/每日' value=''/> 
       <switch checked hidden="true" bindchange='switch2' name="sellbtn" />
       <!-- 出售 -->
       <input class="input" type="digit" name="buy" maxlength='10000' hidden="{{input2}}" placeholder=" 图书出售价格:    元" />

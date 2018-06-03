@@ -125,14 +125,13 @@ Page({
      (e.detail.value.tel != '') &&             //电话不为空
       (/^((1[3,5,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/.test(e.detail.value.tel) )&&  //电话合法性
       (e.detail.value.rentbtn || e.detail.value.sellbtn) &&          //出租或者出售的按钮
-      ((parseFloat(e.detail.value.borrow) || parseFloat(e.detail.value.buy)) != null )//出租或者出售的价格 .
+      (/^[0-9]+.?[0-9]*$/.test(e.detail.value.buy) )//出租或者出售的价格 .
     ) {
       that.formSubmit(e)
     }
     else {
-      console.log(e.detail.value)
       wx.showToast({
-        title: '信息未正确填写',
+        title: '有信息填写不正确!',
         image: '',
         icon:'none',
         mask: true,
@@ -142,6 +141,7 @@ Page({
       });
       return 0;
     }
+    
     // =======
     //   formCheck:function(e){
     //     var that=this;
@@ -204,8 +204,8 @@ Page({
           isbn: that.data.isbn,//isbn号 
           rentbtn: e.detail.value.rentbtn,//出租的开关，同卖书
           sellbtn: e.detail.value.sellbtn,//卖书的开关，1是卖，0是不卖
-          rent_price: (e.detail.value.rentbtn == false) ? 0 : e.detail.value.borrow,//出租的价格
-          sale_price: (e.detail.value.sellbtn == false) ? 0 : e.detail.value.buy,//买书的价格
+          rent_price: (e.detail.value.rentbtn == false) ? 0 : parseFloat(e.detail.value.borrow),//出租的价格
+          sale_price: (e.detail.value.sellbtn == false) ? 0 : parseFloat(e.detail.value.buy),//买书的价格
           onlycode: request_id,//上传的图片名关键部分
         },
         header: {

@@ -1,6 +1,9 @@
 <view>
-  <image src="{{picture1}}" class="top-img" mode="aspectFit"></image>
-  <image src="{{picture2}}" class="top-img" mode="aspectFit"></image>
+<scroll-view scroll-x >
+ <view><image src="{{picture1}}" class="top-img" mode="aspectFit"></image></view>
+  <view><image src="{{picture2}}" class="top-img" mode="aspectFit"></image></view>
+  </scroll-view>
+
   <view>图书名称:{{name}}</view>
   <view class="line"></view>
   <view>书后ISBN号:{{information}}</view>
@@ -41,7 +44,7 @@
       </view>
     </view>
   </view> -->
-  <toast hidden="{{hidden}}" duration="1000" bindchange="toastChange">提交成功</toast>
+  <toast hidden="{{hidden}}" duration="1000" bindchange="toastChange">提交成功了!</toast>
 </view>
 
 

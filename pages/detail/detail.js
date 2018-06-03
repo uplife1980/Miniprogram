@@ -147,9 +147,7 @@ Page({
   formSubmit: function (e) {    //购买
     var that = this
     var period = e.detail.value.peroid;
-    that.setData({
-      hidden: false
-    })
+    
     if(e.detail.value.way==0)
     {
       period=1024;
@@ -165,22 +163,23 @@ Page({
       header: { 'content-type': 'application/x-www-form-urlencoded;charset=UTF-8' },
       method: "POST",
       success: function (res) { 
-        console.log(res)
-        wx.showToast({
-          title: '提交成功!',
-          mask: true,
-          success: function () {
-            setTimeout(function () {
+        if(res.data.result=='badrequest')
+        {
+          wx.showToast({
+            title: '图书已经被别人借走啦',
+            icon:"none",
+          })
+          return 
+        }
+        that.setData({
+          hidden: false
+        })
+        setTimeout(function () {
+         
               wx.navigateTo({
                 url: '../buysuccess/buysuccess?phone='+res.data.phone
-              }, 150)
-            })
-          },
-        })
-
-
-
-        
+              })
+            },760)        
       },
       fail: function (res) { },
       complete: function (res) { },

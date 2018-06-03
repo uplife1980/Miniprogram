@@ -5,7 +5,7 @@
     <view class="stuff">
       <view class="book wenzi">ISBN号:{{book.information}}</view>
       <view class="book wenzi">图书名称:{{book.title}}</view>
-      <image src="{{book.picture}}" style="width:100%" />
+      <image src="{{book.picture}}" style="width:100%" mode="aspectFit"/>
        <view class="wenzi">联系人手机:{{book.phone}}
       </view>
       <view class="wenzi">图书租价
@@ -21,7 +21,7 @@
     <view class="stuff">
       <view class="book wenzi">ISBN号:{{book.information}}</view>
       <view class="book wenzi">图书名称:{{book.title}}</view>
-      <image src="{{book.picture}}" style="width:100%" />
+      <image src="{{book.picture}}" style="width:100%" mode="aspectFit"/>
       <view class="wenzi">联系人手机:{{book.phone}}
       </view>
       <view class="wenzi">图书售价
