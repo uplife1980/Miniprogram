@@ -73,7 +73,7 @@ Page({
     wx.scanCode({
       onlyFromCamera: false,
       success: function (res) {
-        if ((/977|978+[0-9]{10}/.test(res.result))){
+        if (/(977|978|979)+[0-9]{10}/.test(res.result)){
           that.setData({
             isbn: res.result,
             getcode:"primary",
@@ -213,6 +213,7 @@ Page({
         },
         method: "POST",
         success: function (res) {
+          console.log(res)
           //图书不存在时去爬图书信息
           if (res.data.result != "exist") {
             that.setData({
@@ -225,7 +226,7 @@ Page({
               method: "POST",
               //把服务器没有的信息补全给服务器
               success: function (res) {
-                console.log(res.data)
+                console.log(res)
                 if(res.data.result.title==null){
                
                   wx.request({
@@ -263,7 +264,7 @@ Page({
                   url: Url.Url() + 'rentable/saveisbn',
                   data: {
                     title: res.data.result.title,
-                    subtitle: res.data.result.subtitle,
+                    subtitle: res.data.result.subtitle.slice(0, 32),
                     picture: res.data.result.pic,
                     author: res.data.result.author,
                     summary: res.data.result.summary,
@@ -275,7 +276,7 @@ Page({
                     price: res.data.result.price,
                     binding: res.data.result.binding,
                     isbn10: res.data.result.isbn10,
-                    keyword: res.data.result.keyword,
+                    keyword: res.data.result.keyword.slice(0, 32),
                     edition: res.data.result.edition,
                     impression: res.data.result.impression,
                     language: res.data.result.language,
@@ -286,7 +287,8 @@ Page({
                     'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
                   },
                   method: "POST",
-                  success: function () { //上传图片部分
+                  success: function (res) { //上传图片部分
+                  console.log(res)
                     }
                 })
                 )

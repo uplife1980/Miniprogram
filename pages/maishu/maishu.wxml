@@ -11,7 +11,8 @@
       <input class="input" type='digit' name="borrow" maxlength='5' hidden="true" placeholder=' 图书每日租价:      元/每日' value=''/> 
       <switch checked hidden="true" bindchange='switch2' name="sellbtn" />
       <!-- 出售 -->
-      <input class="input" type="digit" name="buy" maxlength='10000' hidden="{{input2}}" placeholder=" 图书出售价格:    元" />
+      <view>图书出售价格:    元</view>
+      <input class="input" type="digit" name="buy" maxlength='5' hidden="{{input2}}"/>
     </view>
     <button bindtap='submitTap' style="width:700rpx;margin-bottom:40rpx;" hidden="{{continue_input}}">继续提交订单↓</button>
     <view hidden='{{userinfo_hidden}}' class="menu">

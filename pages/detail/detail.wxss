@@ -1,5 +1,8 @@
-.top-img {
- 
+.bookname {
+ font-size:1.3em;
+ font-weight:bold;
+ text-align: center;
+ margin-bottom: 70rpx;
 }
 
 .tag {
@@ -16,10 +19,12 @@
 
 .price {
   margin-top: 20rpx;
+  text-align: center;
 }
 
 .container {
   margin-top: 20px;
+
 }
 
 .buyrent {

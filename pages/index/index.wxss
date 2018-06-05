@@ -21,6 +21,7 @@
 .price{
    font-weight: bold;
   color:orange;
+  margin-top:30rpx;
 }
 .img{
   height:300rpx;
@@ -32,6 +33,8 @@
 .line{
 width:100%;
 height:2rpx;
+margin-top:5px;
+margin-bottom:5rpx;
 background:#aaa;
 }
 .wenzi{

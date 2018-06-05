@@ -12,7 +12,7 @@ Page({
     tel: '',
     checked_man: false,
     checked_woman: true,
-    array: ['大一', '大二', '大三', '大四', '研一', '研二', '研三', '其他'],
+    array: ['预科', '大一', '大二', '大三', '大四', '大五', '研一', '研二', '研三', '保密'],
     index: 0,       //年级
     bookid: '',
     disabled: false,      //不可更改的选项
@@ -101,38 +101,24 @@ Page({
       },
       method: "GET",
       success: function (res) {
-       console.log(res.data)
-        if (res.data.status === 0) { 
-          that.setData({showModalStatus:true })      }
-        else{
-          that.formSubmit(e)
+        if(res.data.status==1)
+        {
+          that.setData({
+            tel:parseInt(res.data.result.phone),
+            index:parseInt(res.data.result.grade)
+          })
+          if (res.data.result.sex === "man") that.setData({ checked_man: true,checked_woman:false })
+          else if (res.data.result.sex === "woman") that.setData({ checked_woman: true,checked_man:false })
+          else that.setData({ checked_secret: true })
         }
+       console.log(res.data)
+          that.setData({showModalStatus:true })      
+        
+        
       },
     })
   },
-  userSubmit: function (e) {      //提交个人信息 
-    var that = this
-    that.setData({
-      userinfo_hidden: true,
-    })
-    var sex;
-    sex=(e.detail.value.sex==="man")?"man":"woman";
-    console.warn(sex)
-    wx.request({
-      url: Url.Url() + 'user/complementInfo',
-      data: {
-        userid: app.globalData.openId,
-        sex: e.detail.value.sex,
-        phone: e.detail.value.tel,
-        grade: e.detail.value.grade
-      },
-      header: {
-        'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
-      },
-      method: "POST",
-      success: function (res) { that.setData({ showModalStatus: false }) },
-    })
-  },
+
   peroid_check:function(e){
     var that=this;
   console.log(that.data.picture2)
@@ -148,6 +134,31 @@ Page({
     var that = this
     var period = e.detail.value.peroid;
     
+
+
+
+    var sex;
+    sex = (e.detail.value.sex === "man") ? "man" : "woman";
+    wx.request({
+      url: Url.Url() + 'user/complementInfo',
+      data: {
+        userid: app.globalData.openId,
+        sex: e.detail.value.sex,
+        phone: e.detail.value.tel,
+        grade: e.detail.value.grade
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      },
+      method: "POST",
+      success: function (res) { that.setData({ showModalStatus: false }) },
+    })
+
+
+
+
+
+
     if(e.detail.value.way==0)
     {
       period=1024;

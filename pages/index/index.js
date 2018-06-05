@@ -3,9 +3,9 @@ var Url = require('../../url.js');
 
 Page({
   data: {
-    welcomeText:"测试期间暂时仅开通卖书功能。 租书功能即将上线, 敬请期待",
-    welcomeTitle:"欢迎使用租书平台",
-    search_input_default:"",
+    welcomeText: "测试期间暂时仅开通卖书功能。 租书功能即将上线, 敬请期待",
+    welcomeTitle: "欢迎使用租书平台",
+    search_input_default: "",
     number: 0,
     allbooks_len: 1,
     size: 8,
@@ -14,7 +14,7 @@ Page({
     showModalStatus: false            //自定义模态弹窗
 
   },
-  onReady:function(){                       //由卖书转过来
+  onReady: function () {                       //由卖书转过来
     this.refreshPage()
   },
   onPullDownRefresh: function () {          //下拉动作 
@@ -26,18 +26,18 @@ Page({
   refreshPage: function () {                //刷新postsList
     var that = this
     that.setData({
-      search_input_default:"",
+      search_input_default: "",
       number: 0,
       allbooks_len: 1
     })
     that.fetchImgListDate()
   },
   onLoad: function () {                   //2018.5.29增加开屏提示
-  var that=this
-  setTimeout(function(){
-  that.powerDrawer("open");
-  },1000
-  )
+    var that = this
+    setTimeout(function () {
+      that.powerDrawer("open");
+    }, 1000
+    )
   },
   search: function (e) {                                  //search 的toast最好使用自定义图片
     var that = this;
@@ -63,7 +63,7 @@ Page({
           that.setData({
             postsList: res.data.result,
             allbooks_len: res.data.len
-            
+
           })
         }
       },
@@ -72,8 +72,8 @@ Page({
     })
 
   },
-  getUserInfo:function(e){
-    app.globalData.userInfo=e.detail.userInfo
+  getUserInfo: function (e) {
+    app.globalData.userInfo = e.detail.userInfo
   },
   lower: function (e) {               //下拉时触发
     var that = this;
@@ -110,26 +110,47 @@ Page({
           console.log(res.data)
           if (res.data.result.length == 0)
             wx.showToast({
-              title: '已浏览全部商品',
+              title: '没有更多啦',
               mask: true,
               success: function (res) { setTimeout(function () { wx.hideToast() }, 1500) },
             })
-          for (var i in res.data.result) {
-            if(res.data.result[i].picture=="")
-            res.data.result[i].picture="../../images/nobook.jpg"
-            data.postsList.push({
-              picture: res.data.result[i].picture,
-              id: res.data.result[i].id,
-              title: res.data.result[i].title.slice(0,15),
-              way: res.data.result[i].way,
-              rent_price: res.data.result[i].rent_price,
-              sale_price: res.data.result[i].sale_price
-            });
-          }
+
           self.setData({
-            postsList: data.postsList,
+            postsList: res.data.result,
             allbooks_len: res.data.len
           })
+          data=self.data
+          for (var i in data.postsList) {            //给每个没有图片的书返回个人图片
+            if (data.postsList[i].picture == '') {
+              // res.data.result[i].picture = "../../images/nobook.jpg"
+              wx.request({
+                method: "GET",
+                url: Url.Url() + 'bookinfo/nopicture',
+                data: {
+                  bookid: data.postsList[i].id
+                },
+                header: { 'Content-Type': 'application/json' },
+                success: function (back) {
+                  data.postsList[i].picture=back.data.personalPicture
+                  self.setData({
+                    postsList :data.postsList
+                  })
+
+                }
+              })
+            }
+          
+              // data.postsList.push({
+              //   picture: res.data.result[i].picture,
+              //   id: res.data.result[i].id,
+              //   title: res.data.result[i].title,      //.slice(0,15)
+              //   way: res.data.result[i].way,
+              //   rent_price: res.data.result[i].rent_price,
+              //   sale_price: res.data.result[i].sale_price
+              // });
+            
+          }
+          
         }
       })
     }
@@ -159,18 +180,18 @@ Page({
   // },
   search: function (e) {
     var self = this;
-    if(e.detail.value!=''){
+    if (e.detail.value != '') {
       var link = "../infosearch/infosearch?keyword=" + e.detail.value;
       wx.navigateTo({
         url: link
       })
-    }else{
+    } else {
       self.setData({
         hidden_warn: false
       })
     }
-  }, 
-  
+  },
+
   hidden_warning: function () {
     var that = this;
     that.setData({
@@ -180,11 +201,11 @@ Page({
 
 
   //自定义模态弹窗套件
-  powerClose:function(e){           //因为需要开平显示,所以只能手动导入变量
+  powerClose: function (e) {           //因为需要开平显示,所以只能手动导入变量
     this.powerDrawer("close")
   },
   powerDrawer: function (e) {
-    var currentStatu =e;
+    var currentStatu = e;
     this.util(currentStatu)
   },
   util: function (currentStatu) {
@@ -234,5 +255,5 @@ Page({
         }
       );
     }
-  } 
+  }
 })

@@ -9,6 +9,13 @@ App({
   onLaunch: function () {
     var Url = require('url.js');
     var that=this
+    wx.getUserInfo({
+      success:function(res){
+        
+        that.globalData.userInfo=res.userInfo
+        
+      }
+    })    
   
     // 登录
     wx.login({

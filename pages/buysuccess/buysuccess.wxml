@@ -3,4 +3,5 @@
 <view class="wenzi">此书持有人手机号码：</view>
 <view class="wenzi">{{phone}}</view>
 <view class="wenzi">请主动联系！</view>
+<view class="wenzi">完成交易后请及时点击"确认购买"</view>
 <button bindtap='backToIndex'>返回主页</button>
