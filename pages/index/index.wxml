@@ -9,7 +9,7 @@
           <view class="wenzi">
             <text style="text-align:center">{{item.title}}</text>
             <!-- <view class="line"></view> -->
-            <!-- <text>图书ID:{{item.id}}</text> -->
+             <text>图书ID:{{item.id}}</text> 
             <view class="line"></view>
 
             <text>状态:{{way[item.way]}}</text>

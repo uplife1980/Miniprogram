@@ -17,7 +17,8 @@ Page({
     // warning_hidden: true,
     getcode:"default",
     getpic:"default",
-    showwarn:''
+    showwarn:'',
+    showModalStatus:"false"
   },
 
   //从服务器获取用户信息
@@ -37,12 +38,10 @@ Page({
             phone: res.data.result.phone
           })
 
-          //  if (parseInt(res.data.result.sex) == 0) that.setData({ checked_man: true })
-          // else that.setData({ checked_woman: true })
+
           if (res.data.result.sex === "man") that.setData({ checked_man: true })
           else if (res.data.result.sex === "woman") that.setData({ checked_woman: true })
           else that.setData({ checked_secret: true })
-          //>>>>>>> tuandui/master
         }
       },
     })
@@ -119,76 +118,52 @@ Page({
   },
   formCheck: function (e) {
     var that = this;
-    if (
-      (that.data.getcode=="primary")&&       //isbn存在
-      (that.data.img[0] != null) &&             //图片存在
-     (e.detail.value.tel != '') &&             //电话不为空
-      (/^((1[3,5,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/.test(e.detail.value.tel) )&&  //电话合法性
-      (e.detail.value.rentbtn || e.detail.value.sellbtn) &&          //出租或者出售的按钮
-      (/^[0-9]+.?[0-9]*$/.test(e.detail.value.buy) )//出租或者出售的价格 .
-    ) {
+    if (that.data.getcode != "primary")
+      that.showWarn("isbn没有正确扫描")
+    else if (that.data.img[0] == null)
+      that.showWarn("没有上传图片!")
+    else if (e.detail.value.tel == '')
+      that.showWarn("没有填写手机号码")
+    else if (/^((1[3,5,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/.test(e.detail.value.tel)!=1)
+      that.showWarn("手机号码格式不正确")
+    else if (!(e.detail.value.rentbtn || e.detail.value.sellbtn))
+      that.showWarn("没有选择出租出售")
+    else if (/^[0-9]+.?[0-9]*$/.test(e.detail.value.buy)!=1)
+      that.showWarn("没有填写价格")
+    else 
       that.formSubmit(e)
-    }
-    else {
-      wx.showToast({
-        title: '有信息填写不正确!',
-        image: '',
-        icon:'none',
-        mask: true,
-        success: function (res) { setTimeout(function () { wx.hideToast() }, 5000) },
-        fail: function (res) { },
-        complete: function (res) { },
-      });
-      return 0;
-    }
-    
-    // =======
-    //   formCheck:function(e){
-    //     var that=this;
-    //     var isbn = e.detail.value.isbn;
-    //     var phone = e.detail.value.tel;
-    //     if(that.data.img[0] == null){
-    //       console.log("图片没有填写,请检查!")
-    //       that.setData({
-    //         warning_hidden:false,
-    //         promptText:"请上传图片"
-    //       })
-    //     }else if(isbn === null||isbn === ''){
-    //       console.log("没有扫码,请检查!")
-    //       that.setData({
-    //         warning_hidden: false,
-    //         promptText: "请扫描书后二维码"
-    //       })
-    //     }else if (phone == null || phone.length == 0) {
-    //       console.log("没有输入电话号码,请检查!")
-    //       that.setData({
-    //         warning_hidden: false,
-    //         promptText: "请输入电话号码"
-    //       })
-    //     }else if (e.detail.value.rentbtn == false && e.detail.value.sellbtn == false){
-    //       console.log("没有选择分享方式,请检查!")
-    //       that.setData({
-    //         warning_hidden: false,
-    //         promptText: "请选择出租或者出售或者皆可"
-    //       })
-    //     }else if ((e.detail.value.rentbtn == true && e.detail.value.borrow==0)) {
-    //       console.log("没有输入出租价格,请检查!")
-    //       that.setData({
-    //         warning_hidden: false,
-    //         promptText: "请输入出租价格"
-    //       })
-    //     }else if ((e.detail.value.sellbtn == true && e.detail.value.buy == 0)) {
-    //       console.log("没有输入出售价格,请检查!")
-    //       that.setData({
-    //         warning_hidden: false,
-    //         promptText: "请输入出售价格"
-    //       })
-    //     }else{
-    //       that.formSubmit(e);
-    //     }  
-    // // >>>>>>> tuandui/master
+    // if (
+    //   (that.data.getcode=="primary")&&       //isbn存在
+    //   (that.data.img[0] != null) &&             //图片存在
+    //  (e.detail.value.tel != '') &&             //电话不为空
+    //   (/^((1[3,5,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/.test(e.detail.value.tel) )&&  //电话合法性
+    //   (e.detail.value.rentbtn || e.detail.value.sellbtn) &&          //出租或者出售的按钮
+    //   (/^[0-9]+.?[0-9]*$/.test(e.detail.value.buy) )//出租或者出售的价格 .
+    // ) {
+    //   that.formSubmit(e)
+    // }
+    // else {
+    //   wx.showToast({
+    //     title: '有信息填写不正确!',
+    //     image: '',
+    //     icon:'none',
+    //     mask: true,
+    //     success: function (res) { setTimeout(function () { wx.hideToast() }, 5000) },
+    //     fail: function (res) { },
+    //     complete: function (res) { },
+    //   });
+    //   return 0;
+    // }
   },
-
+  showWarn: function (str) {        //具体显示哪里填写不正确
+    wx.showToast({
+      title: str,
+      image: '',
+      icon: 'none',
+      mask: true,
+      success: function (res) { setTimeout(function () { wx.hideToast() }, 5000) }
+    })
+  },
   formSubmit: function (e) {
     var that = this;
     var date = new Date() //9+4
@@ -213,7 +188,6 @@ Page({
         },
         method: "POST",
         success: function (res) {
-          console.log(res)
           //图书不存在时去爬图书信息
           if (res.data.result != "exist") {
             that.setData({
@@ -228,11 +202,12 @@ Page({
               success: function (res) {
                 console.log(res)
                 if(res.data.result.title==null){
-               
+                    that.setData({showModatStatus:true})
                   wx.request({
                     url: Url.Url() + 'rentable/saveisbn',
                     data: {
                       title: "自定义书籍",
+                      picture:"",
                       subtitle: "123",
                       author: "2",
                       summary: "3",
@@ -341,77 +316,6 @@ Page({
         fail: function (res) { },
         complete: function (res) { },
       })
-    // =======
-    //     //上传书籍信息部分
-    //     wx.request({
-    //       url: Url.Url() + 'rentable/bookapplication',
-    //       data: {
-    //         userid: app.globalData.openId,
-    //         isbn: that.data.isbn,//isbn号 
-    //         rentbtn: e.detail.value.rentbtn,//出租的开关，同卖书
-    //         sellbtn: e.detail.value.sellbtn,//卖书的开关，1是卖，0是不卖
-    //         rent_price: (e.detail.value.rentbtn == false) ? 0 : e.detail.value.borrow,//出租的价格
-    //         sale_price: (e.detail.value.sellbtn == false) ? 0 : e.detail.value.buy,//买书的价格
-    //         onlycode: request_id,//上传的图片名关键部分
-    //       },
-    //       header: {
-    //         'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
-    //       },
-    //       method: "POST",
-    //       success: function (res) {
-    //         //图书不存在时去爬图书信息
-    //         if (res.data.result != "exist") {
-    //           that.setData({
-    //             isbn: res.data.isbn
-    //           })
-    //           wx.request({
-    //             url: "http://api.jisuapi.com/isbn/query?appkey=85c75335fa427fe4&isbn=" + that.data.isbn,
-    //             data: {},
-    //             header: {},
-    //             method: "POST",
-    //             //把服务器没有的信息补全给服务器
-    //             success: function (res) {
-    //               wx.request({
-    //                 url: Url.Url() + 'rentable/saveisbn',
-    //                 data: {
-    //                   title: res.data.result.title,
-    //                   subtitle: res.data.result.subtitle,
-    //                   picture: res.data.result.pic,
-    //                   author: res.data.result.author,
-    //                   summary: res.data.result.summary,
-    //                   isbn: res.data.result.isbn,
-    //                   publisher: res.data.result.publisher,
-    //                   pubplace: res.data.result.pubplace,
-    //                   pubdate: res.data.result.pubdate,
-    //                   page: res.data.result.pagestring,
-    //                   price: res.data.result.price,
-    //                   binding: res.data.result.binding,
-    //                   isbn10: res.data.result.isbn10,
-    //                   keyword: res.data.result.keyword,
-    //                   edition: res.data.result.edition,
-    //                   impression: res.data.result.impression,
-    //                   language: res.data.result.language,
-    //                   format: res.data.result.format,
-    //                   category: res.data.result.class
-    //                 },
-    //                 header: {
-    //                   'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
-    //                 },
-    //                 method: "POST"
-    //               })
-    //             },
-    //             fail    : function (res) { },
-    //             complete: function (res) { }
-    //           })
-    //         }
-    //         that.setData({
-    //           hidden: false
-    //         })
-    //       },
-    //       fail    : function (res) { },
-    //       complete: function (res) { },
-    //     })
-    // // >>>>>>> tuandui/master
     
   },
 
@@ -420,25 +324,4 @@ Page({
       index: e.detail.value
     })
   },
-
-  // upComplete: function () {        //跳转新页面
-  //   wx.showToast({
-  //     title: '提交成功!',
-  //     icon: '',
-  //     image: '',
-  //     mask: true,
-  //     success: function (res) {
-  //       setTimeout(function () {
-  //         wx.switchTab({
-  //           url: '../users/users'
-  //         }, 1500)
-  //       })
-  //     },
-  //   })
-  // }
-  // remain: function () {        //隐藏警告框
-  //   this.setData({
-  //     warning_hidden: true
-  //   })
-  // }
 })

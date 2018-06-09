@@ -6,16 +6,16 @@ Page({
     welcomeText: "测试期间暂时仅开通卖书功能。 租书功能即将上线, 敬请期待",
     welcomeTitle: "欢迎使用租书平台",
     search_input_default: "",
-    number: 0,
-    allbooks_len: 1,
-    size: 8,
+    number: 0,        //已有图书书目
+    allbooks_len: 1,    //数据库所有图书
+    size: 8,            //每次请求图书数量,可改
     postsList: [],
     way: ["不可租售", "出租", "出售", "可租可售"],
     showModalStatus: false            //自定义模态弹窗
 
   },
   onReady: function () {                       //由卖书转过来
-    this.refreshPage()
+
   },
   onPullDownRefresh: function () {          //下拉动作 
     this.refreshPage()
@@ -52,6 +52,7 @@ Page({
         if (res.data.result.length === 0) {
           wx.showToast({
             image: '',
+            icon: 'none',
             title: '暂无此书籍!',
             mask: true,
             success: function (res) { setTimeout(function () { wx.hideToast() }, 5000) },
@@ -78,7 +79,7 @@ Page({
   lower: function (e) {               //下拉时触发
     var that = this;
     that.setData({
-      number: that.data.number + that.data.size
+      number: that.data.number + that.data.size   //现有图书+新
     });
     that.fetchImgListDate();
   },
@@ -92,7 +93,7 @@ Page({
       mask: true,
       success: function (res) { setTimeout(function () { wx.hideLoading() }, 1000) },
     })
-    if (data.number === 0) {
+    if (data.number === 0) {      //前面利用number置0来刷新
       self.setData({
         postsList: []
       });
@@ -108,49 +109,60 @@ Page({
         header: { 'Content-Type': 'application/json' },
         success: function (res) {
           console.log(res.data)
-          if (res.data.result.length == 0)
+          if (res.data.result.length == 0) {
             wx.showToast({
               title: '没有更多啦',
               mask: true,
-              success: function (res) { setTimeout(function () { wx.hideToast() }, 1500) },
+              success: function (res) { setTimeout(function () { wx.hideToast() }, 1500) }
             })
+            return
+          }
 
-          self.setData({
-            postsList: res.data.result,
-            allbooks_len: res.data.len
-          })
-          data=self.data
-          for (var i in data.postsList) {            //给每个没有图片的书返回个人图片
-            if (data.postsList[i].picture == '') {
-              // res.data.result[i].picture = "../../images/nobook.jpg"
+          for (var i in res.data.result) {            //给每个没有图片的书返回个人图片
+            if (res.data.result[i].picture === "") {    //由于异步循环,所以会在没有赋值完成时i已经发生改变,所以需要保存变量i
+              var j=i;
               wx.request({
                 method: "GET",
                 url: Url.Url() + 'bookinfo/nopicture',
                 data: {
-                  bookid: data.postsList[i].id
+                  bookid: res.data.result[j].id
                 },
                 header: { 'Content-Type': 'application/json' },
                 success: function (back) {
-                  data.postsList[i].picture=back.data.personalPicture
+                  res.data.result[j].picture = back.data.personalPicture
+                  data.postsList.push({
+                    picture: res.data.result[j].picture,
+                    id: res.data.result[j].id,
+                    title: res.data.result[j].title,      //.slice(0,15)
+                    way: res.data.result[j].way,
+                    rent_price: res.data.result[j].rent_price,
+                    sale_price: res.data.result[j].sale_price
+                  });
+                  console.log(j)
                   self.setData({
-                    postsList :data.postsList
+                    postsList: data.postsList,
+                    allbooks_len: res.data.len
                   })
-
                 }
               })
             }
-          
-              // data.postsList.push({
-              //   picture: res.data.result[i].picture,
-              //   id: res.data.result[i].id,
-              //   title: res.data.result[i].title,      //.slice(0,15)
-              //   way: res.data.result[i].way,
-              //   rent_price: res.data.result[i].rent_price,
-              //   sale_price: res.data.result[i].sale_price
-              // });
-            
+            else {                              //没有想到更好的异步处理方法,除非使request为同步请求
+              data.postsList.push({
+                picture: res.data.result[i].picture,
+                id: res.data.result[i].id,
+                title: res.data.result[i].title,      //.slice(0,15)
+                way: res.data.result[i].way,
+                rent_price: res.data.result[i].rent_price,
+                sale_price: res.data.result[i].sale_price
+              });
+              self.setData({
+                postsList: data.postsList,
+                allbooks_len: res.data.len
+              })
+            }
+
           }
-          
+
         }
       })
     }
@@ -172,25 +184,8 @@ Page({
     })
 
   },
-  // hiddenAllStuff: function () {
-  //   var that = this;
-  //   that.setData({
-  //     allStuff: true
-  //   })
-  // },
-  search: function (e) {
-    var self = this;
-    if (e.detail.value != '') {
-      var link = "../infosearch/infosearch?keyword=" + e.detail.value;
-      wx.navigateTo({
-        url: link
-      })
-    } else {
-      self.setData({
-        hidden_warn: false
-      })
-    }
-  },
+
+
 
   hidden_warning: function () {
     var that = this;

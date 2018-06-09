@@ -4,7 +4,7 @@
     border-radius:20px;
     text-align: center;
     margin-top: 5rpx;
-    height:50rpx;
+    height:70rpx;
 }
 .bg{
   background: #ffFfF1
