@@ -1,22 +1,29 @@
 <form bindsubmit='formSubmit'>
-<view>
-  <view class="bookname">{{name}}</view>
+  <view>
+    <view class="bookname">{{name}}</view>
+    <view style="text-align:right">{{author}}</view>
+    <view style="text-align:right">{{publisher}}</view>
+    <button bindtap='seeDetail' data-statu="open">↓ 显示更多信息 ↓</button>
 
-<scroll-view scroll-x >
- <view><image src="{{picture1}}" class="top-img" mode="aspectFit"></image></view>
-  <view><image src="{{picture2}}" class="top-img" mode="aspectFit"></image></view>
-  </scroll-view>
+    <scroll-view scroll-x>
+      <view>
+        <image src="{{picture1}}" class="top-img" mode="aspectFit"></image>
+      </view>
+      <view>
+        <image src="{{picture2}}" class="top-img" mode="aspectFit"></image>
+      </view>
+    </scroll-view>
 
-  <view class="line"></view>
-  <!-- <view>书后ISBN号:{{information}}</view> -->
-  <view class="line"></view>
-  <view class="price">
-    <view class="tag" hidden="{{rentpriceHidden}}">租价:{{rentprice}}元/天</view>
-    <view class="tag" hidden="{{salepriceHidden}}">售价:{{saleprice}}元</view>
+    <view class="line"></view>
+    <!-- <view>书后ISBN号:{{information}}</view>  -->
+    <view class="line"></view>
+    <view class="price">
+      <view class="tag" hidden="{{rentpriceHidden}}">租价:{{rentprice}}元/天</view>
+      <view class="tag" hidden="{{salepriceHidden}}">售价:{{saleprice}}元</view>
 
-  </view>
+    </view>
 
-  <view class='container'>
+    <view class='container'>
       <view class="buyrent" hidden="true">
         <text style="font-weight:bold">买书</text>
         <switch name="way" checked="{{canIChange}}" disabled="{{disabled}}" bindchange="rorChange"></switch>
@@ -24,37 +31,46 @@
       </view>
       <text hidden="{{peroid_hidden}}">租书时长</text>
       <input type="number" name="peroid" hidden="{{peroid_hidden}}" class="input" placeholder="单位/天" />
-      <button  type="primary" size="default" style="width:100%" bindtap='userCheck'>下单!</button>
-  </view>
-  <!-- <view class="modal-box">
-    <view class="modal-body" hidden="{{userinfo_hidden}}">
-      <view class="menu">
-        <form bindsubmit='userSubmit'>
-          手机号码
-          <input type='number' name="tel" value="{{tel}}" /> 性别
-          <radio-group name="sex">
-            <radio value="man" checked="{{checked_man}}" />男
-            <radio value="woman" checked="{{checked_woman}}" />女
-          </radio-group>
-          <picker name="grade" range='{{array}}' value="{{index}}" bindchange='bindchange'>
-            <view>你的年级：{{array[index]}}</view>
-          </picker>
-          <button form-type='submit' style="margin-left:auto" type="primary">提交</button>
-        </form>
-      </view>
+      <button type="primary" size="default" style="width:100%" bindtap='userCheck'>下单!</button>
     </view>
-  </view> -->
-  <toast hidden="{{hidden}}" duration="1000" bindchange="toastChange">提交成功了!</toast>
-</view>
+    <toast hidden="{{hidden}}" duration="1000" bindchange="toastChange">提交成功了!</toast>
+  </view>
 
 
-<!--自定义的模态弹窗套件  -->
+  <!--自定义的模态弹窗套件  显示图书详情,参考https://www.jb51.net/article/111467.htm-->
 
 
-<!--mask-->
-<view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view>
-<!--content-->
-<!--使用animation属性指定需要执行的动画-->
+  <!--mask-->
+  <!--content-->
+  <!--使用animation属性指定需要执行的动画-->
+
+  <view animation="{{animationData}}" class="drawer_box" wx:if="{{showDetail}}">
+
+    <!--drawer content-->
+    <view class="drawer_title">详细信息</view>
+    <view class="drawer_content">
+      <view class="top grid">
+        <label class="title col-0">版本号</label>
+        <input class="input_base input_h30 col-1" name="rName" value="{{edition}}" disabled></input>
+      </view>
+     {{summary}}
+    </view>
+
+
+
+    <button class="btn_ok" bindtap='seeDetail' data-statu="close">关闭</button>
+
+  </view>
+
+
+
+  <!--自定义的模态弹窗套件 ,补全个人信息 -->
+
+
+  <!--mask-->
+  <view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view>
+  <!--content-->
+  <!--使用animation属性指定需要执行的动画-->
 
   <view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}">
 
@@ -75,10 +91,10 @@
 
       <view class="top grid">
         <label class="title col-0">你的年级：</label>
-         <view class="input_base input_h30 col-1">
-        <picker name="grade" range='{{array}}' value="{{index}}" bindchange='bindchange' style="text-align:center">       {{array[index]}}
-</picker>
-</view>
+        <view class="input_base input_h30 col-1">
+          <picker name="grade" range='{{array}}' value="{{index}}" bindchange='bindchange' style="text-align:center"> {{array[index]}}
+          </picker>
+        </view>
       </view>
     </view>
     <button form-type='submit' style="margin-left:auto" type="primary">提交</button>

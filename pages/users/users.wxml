@@ -11,8 +11,8 @@
 <navigator url="../maishu/maishu" class="option">上传图书</navigator>
  <view bindtap="showList" class="option">在我手里的书</view>
 <navigator url="../needconfirm/needconfirm" class="option">待确认的购买<text style="color:grey">/租入</text></navigator>
- <view  class="option continue">在我手里的书</view>
- <view  class="option continue">在我手里的书</view>
+ <view  class="option continue">暂未开放</view>
+ <view  class="option continue">暂未开放</view>
 <!-- <navigator url="../needstop/needstop" class="option">待确认的停止分享</navigator>
 <navigator url="../myshare/myshare" class="option">已经不在我手里的书</navigator> -->
 <view class="footer">@ECHO V0.2</view>

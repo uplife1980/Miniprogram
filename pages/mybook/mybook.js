@@ -15,11 +15,19 @@ Page({
     bookid: 0,
     day_color: "black",
     hidelist: [],
+    showModalStatus: false 
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
+    wx.showLoading({
+      title: '加载中...',
+      mask: true,
+      success: function (res) { setTimeout(function () { wx.hideLoading() }, 1000) },
+    })
+
     var that = this;
     var hidelist = new Array();
     hidelist = [true, true, true, true]
@@ -245,6 +253,44 @@ Page({
        
     })
   },
+  fillContent:function(e){
+   if(!e.detail.value.title)
+     that.showWarn("至少填写图书名称!")
+    else
+    wx.request({
+      url: Url.Url() + 'rentable/alternobook',
+      data:{
+        isbn:e.target.id,
+        title:e.detail.value.title,
+        publisher:e.detail.value.publisher,
+        author:e.detail.value.author
+      },
+       header: {
+        'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      },
+      method: "POST",
+      success: function (res) {
+        wx.showToast({
+          title: '提交成功！',
+          success: function () {
+            setTimeout(function () {
+              wx.switchTab({
+                url: '../users/users'
+              })
+            },1500)
+          }
+        })}
+    })
+  },
+  showWarn: function (str) {        //具体显示哪里填写不正确
+    wx.showToast({
+      title: str,
+      image: '',
+      icon: 'none',
+      mask: true,
+      success: function (res) { setTimeout(function () { wx.hideToast() }, 5000) }
+    })
+  },
   repealCancel: function () {
     this.setData({
       confirm: true
@@ -254,5 +300,60 @@ Page({
     this.setData({
       hidden: true
     })
+  },
+
+  // 模态弹窗
+  powerDrawer: function (e) {
+    var currentStatu = e.currentTarget.dataset.statu;
+    this.util(currentStatu)
+  },
+  util: function (currentStatu) {
+    /* 动画部分 */
+    // 第1步：创建动画实例 
+    var animation = wx.createAnimation({
+      duration: 200, //动画时长 
+      timingFunction: "linear", //线性 
+      delay: 0 //0则不延迟 
+    });
+
+    // 第2步：这个动画实例赋给当前的动画实例 
+    this.animation = animation;
+
+    // 第3步：执行第一组动画 
+    animation.opacity(0).rotateX(-100).step();
+
+    // 第4步：导出动画对象赋给数据对象储存 
+    this.setData({
+      animationData: animation.export()
+    })
+
+    // 第5步：设置定时器到指定时候后，执行第二组动画 
+    setTimeout(function () {
+      // 执行第二组动画 
+      animation.opacity(1).rotateX(0).step();
+      // 给数据对象储存的第一组动画，更替为执行完第二组动画的动画对象 
+      this.setData({
+        animationData: animation
+      })
+
+      //关闭 
+      if (currentStatu == "close") {
+        this.setData(
+          {
+            showModalStatus: false
+          }
+        );
+      }
+    }.bind(this), 200)
+
+    // 显示 
+    if (currentStatu == "open") {
+      this.setData(
+        {
+          showModalStatus: true
+        }
+      );
+    }
   }
+
 })

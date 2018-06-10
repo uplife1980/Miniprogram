@@ -12,8 +12,8 @@ Page({
     userinfo_hidden: true,    //补全个人信息表
     checked_man: false,
     checked_woman: true,
-    array: ['预科','大一', '大二', '大三', '大四','大五', '研一', '研二', '研三', '保密'],
-    index: 9,       //年级
+    array: ['预科','大一', '大二', '大三', '大四','大五', '研一', '研二', '研三', '博士','保密'],
+    index: 10,       //年级
     // warning_hidden: true,
     getcode:"default",
     getpic:"default",
@@ -208,18 +208,18 @@ Page({
                     data: {
                       title: "自定义书籍",
                       picture:"",
-                      subtitle: "123",
-                      author: "2",
-                      summary: "3",
+                      subtitle: "nosubtitle",
+                      author: "noauthor",
+                      summary: "nosummary",
                       isbn: that.data.isbn,
-                      publisher: "4",
+                      publisher: "nopublisher",
                       pubplace: "5",
                       pubdate: "6",
                       page: "7",
                       price: "8",
                       binding: "9",
                       isbn10: "10",
-                      keyword: "11",
+                      keyword: "nokeyword",
                       edition: "12",
                       impression: "13",
                       language: "14",
@@ -234,6 +234,7 @@ Page({
                     }
                   })
                 }
+                
                 else(
                 wx.request({
                   url: Url.Url() + 'rentable/saveisbn',
@@ -302,8 +303,8 @@ Page({
                       setTimeout(function () {
                         wx.switchTab({
                           url: '../index/index'
-                        }, 1500)
-                      })
+                        })
+                      },1500)
                     }
                   })
                 },

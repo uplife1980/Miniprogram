@@ -2,11 +2,11 @@
 <view>
 
   <view hidden="{{hidelist[0]}}">
-    <view class="title"  >正在租用的图书</view>
+    <view class="fronttitle">正在租用的图书</view>
     <block wx:for="{{borrowing_list}}" wx:key="unique" wx:for-item="borrowing" wx:for-index="borrowing_index">
       <view class="stuff">
         <!-- <view class="wenzi">图书名称:大连理工大学</view> -->
-        <view class="wenzi">ISBN:{{borrowing.information}}</view>
+        <!-- <view class="wenzi">ISBN:{{borrowing.information}}</view> -->
         <view class="wenzi" wx:if="{{borrowing.days>=3}}" style="color:black">剩余天数 {{borrowing.days}}天</view>
         <view class="wenzi" wx:if="{{borrowing.days<3}}" style="color:red">剩余天数 {{borrowing.days}}天</view>
         <image src="{{borrowing.picture}}" style="width:100%" mode="aspectFit" />
@@ -32,7 +32,7 @@
     </view>
   </view>
   <view hidden="{{hidelist[1]}}">
-    <view class="title" >租期已到的图书</view>
+    <view class="fronttitle">租期已到的图书</view>
     <block wx:for="{{notborrow_list}}" wx:key="unique" wx:for-index="notborrow_index" wx:for-item="notborrow">
       <view class="stuff">
         <image src="{{notborrow.picture}}" mode="aspectFit"></image>
@@ -43,11 +43,41 @@
   </view>
 
   <view hidden="{{hidelist[2]}}">
-    <view class="title" >您发布的图书</view>
+    <view class="fronttitle">您发布的图书</view>
     <view wx:for="{{neverborrow_list}}" wx:key="unique" wx:for-index="neverborrow_index" wx:for-item="neverborrow">
       <view class="stuff">
-          <view class="wenzi"> {{neverborrow.title.originphone}}</view>  
-        <view class="wenzi">ISBN:{{neverborrow.information}}</view>        
+        <view class="wenzi"> {{neverborrow.title.originphone}}</view>
+        <button bindtap="powerDrawer" data-statu="open" wx:if="{{neverborrow.title.originphone=='自定义书籍'}}">补全图书信息</button>
+        <!--模态弹窗  补全图书信息  -->
+        <!--mask-->
+        <view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view>
+        <!--content-->
+        <!--使用animation属性指定需要执行的动画-->
+        <view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}">
+
+          <!--drawer content-->
+          <form bindsubmit='fillContent' id="{{neverborrow.information}}">
+            <view class="drawer_title">补全图书信息</view>
+            <view class="drawer_content">
+              <view class="top grid">
+                <label class="title col-0">图书名称</label>
+                <input class="input_base input_h30 col-1" name="title"></input>
+              </view>
+              <view class="top grid">
+                <label class="title col-0">作者</label>
+                <input class="input_base input_h30 col-1" name="author"></input>
+              </view>
+              <view class="top grid">
+                <label class="title col-0">出版社</label>
+                <input class="input_base input_h30 col-1" name="publisher"></input>
+              </view>
+
+
+            </view>
+            <button form-type='submit'>提交</button>
+          </form>
+        </view>
+        <!-- <view class="wenzi">ISBN:{{neverborrow.information}}</view> -->
         <image class="img" src="{{neverborrow.picture}}" style="width:100%" mode="aspectFit"></image>
 
         <button bindtap="repeal1" id="repeal{{neverborrow_index}}">取消分享</button>
@@ -58,11 +88,11 @@
 
 
   <view hidden="{{hidelist[3]}}">
-    <view class="title" >已经购买的图书</view>
+    <view class="fronttitle">已经购买的图书</view>
     <block wx:for="{{bought_list}}" wx:key="unique" wx:for-index="bought_index" wx:for-item="bought">
       <view class="stuff">
-        <view class="wenzi"> {{bought.title.originphone}}</view> 
-       <view class="wenzi">ISBN:{{bought.information}}</view>   
+        <view class="wenzi"> {{bought.title.originphone}}</view>
+        <!-- <view class="wenzi">ISBN:{{bought.information}}</view> -->
         <image src="{{bought.picture}}" mode="aspectFit" /> {{bought.name}}
       </view>
     </block>

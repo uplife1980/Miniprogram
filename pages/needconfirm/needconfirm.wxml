@@ -19,7 +19,7 @@
   <view class="title">购买</view>
   <block class="stuff" wx:for="{{booklist_sales}}" wx:key="unique" wx:for-index="booklist_sales_index" wx:for-item="book">
     <view class="stuff">
-      <view class="book wenzi">ISBN号:{{book.information}}</view>
+      <!-- <view class="book wenzi">ISBN号:{{book.information}}</view> -->
       <view class="book wenzi">{{book.title}}</view>
       <image src="{{book.picture}}" style="width:100%" mode="aspectFit"/>
       <view class="wenzi">联系人手机:{{book.phone}}

@@ -16,6 +16,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.showLoading({
+      title: '加载中...',
+      mask: true,
+      success: function (res) { setTimeout(function () { wx.hideLoading() }, 1000) },
+    })
     var that=this
   wx.request({
     url: Url.Url()+'bookdeal/viewnotconfirm',
@@ -45,6 +50,7 @@ Page({
         var j=i-renteds.length
             sales[j].phone=res.data.salephones[i].originphone
             sales[j].title=res.data.salephones[i].str2
+
       }
       that.setData({
         booklist_renteds: renteds,
