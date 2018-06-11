@@ -40,7 +40,7 @@ Page({
   },
   search: function(e) { //search 的toast最好使用自定义图片
     var that = this;
-    
+    if(e.detail.value)
     wx.request({
       url: Url.Url() + 'bookinfo/ofsearch',
       data: {
@@ -124,7 +124,8 @@ Page({
       fail: function(res) {},
       complete: function(res) {},
     })
-
+  else
+      that.fetchImgListDate()
   },
   getUserInfo: function(e) {
     app.globalData.userInfo = e.detail.userInfo
