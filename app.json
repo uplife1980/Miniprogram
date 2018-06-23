@@ -15,7 +15,7 @@
   "window": {
     "backgroundTextStyle":"dark",
     "navigationBarBackgroundColor": "#e79460",
-    "navigationBarTitleText": "书--遇见",
+    "navigationBarTitleText": "首页",
     "navigationBarTextStyle": "black",
     "backgroundColor": "#e79460",
     "enablePullDownRefresh": false

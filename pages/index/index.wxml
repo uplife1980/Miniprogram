@@ -54,7 +54,7 @@
       <label class="title col-0">标题</label>
       <input class="input_base input_h30 col-1" name="rName" value="可自行定义内容"></input>
     </view> -->
-  <view class="tip">{{welcomeText}}</view>
+  <view class="tip"><text>{{welcomeText}}\n{{welcomeText2}}</text></view>
     
   </view>
   <button class="btn_ok" bindtap="powerClose" bindgetuserinfo="getUserInfo" open-type="getUserInfo"	>我已知晓</button>

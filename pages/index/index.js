@@ -3,8 +3,9 @@ var Url = require('../../url.js');
 
 Page({
   data: {
-    welcomeText: "测试期间暂时仅开通卖书功能。 租书功能即将上线, 敬请期待",
-    welcomeTitle: "欢迎使用租书平台",
+    welcomeText: "您既可以在[我的]界面留下联系方式并发布图书，也可以在[首页]挑拣心怡的图书（支持搜索哦!）。\n选择图书并点击购买，即可获得卖家的联系方式（通过线下完成交易）。",
+    welcomeText2:"意见反馈:echo_huiyin@163.com",
+    welcomeTitle: "毕业季来啦",
     search_input_default: "",
     number: 0, //已有图书书目
     allbooks_len: 1, //数据库所有图书
