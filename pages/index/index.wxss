@@ -4,7 +4,9 @@
     border-radius:20px;
     text-align: center;
     margin-top: 5rpx;
-    height:70rpx;
+ font-size: 38rpx;
+  line-height: 3.6;
+  height:90rpx;
 }
 .bg{
   background: #ffFfF1

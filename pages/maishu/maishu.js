@@ -132,28 +132,7 @@ Page({
       that.showWarn("没有填写价格")
     else 
       that.formSubmit(e)
-    // if (
-    //   (that.data.getcode=="primary")&&       //isbn存在
-    //   (that.data.img[0] != null) &&             //图片存在
-    //  (e.detail.value.tel != '') &&             //电话不为空
-    //   (/^((1[3,5,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/.test(e.detail.value.tel) )&&  //电话合法性
-    //   (e.detail.value.rentbtn || e.detail.value.sellbtn) &&          //出租或者出售的按钮
-    //   (/^[0-9]+.?[0-9]*$/.test(e.detail.value.buy) )//出租或者出售的价格 .
-    // ) {
-    //   that.formSubmit(e)
-    // }
-    // else {
-    //   wx.showToast({
-    //     title: '有信息填写不正确!',
-    //     image: '',
-    //     icon:'none',
-    //     mask: true,
-    //     success: function (res) { setTimeout(function () { wx.hideToast() }, 5000) },
-    //     fail: function (res) { },
-    //     complete: function (res) { },
-    //   });
-    //   return 0;
-    // }
+
   },
   showWarn: function (str) {        //具体显示哪里填写不正确
     wx.showToast({
@@ -194,7 +173,8 @@ Page({
               isbn: res.data.isbn
             })
             wx.request({
-              url: "http://api.jisuapi.com/isbn/query?appkey=85c75335fa427fe4&isbn=" + that.data.isbn,
+              // url: "https://api.jisuapi.com/isbn/query?appkey=85c75335fa427fe4&isbn=" + that.data.isbn,
+              url: "https://api.avatardata.cn/BookInfo/FindByIsbn?key=9bb781070f8d453f979300897dffb279&isbn=" + that.data.isbn,
               data: {},
               header: {},
               method: "POST",
@@ -213,18 +193,12 @@ Page({
                       summary: "nosummary",
                       isbn: that.data.isbn,
                       publisher: "nopublisher",
-                      pubplace: "5",
                       pubdate: "6",
                       page: "7",
                       price: "8",
                       binding: "9",
                       isbn10: "10",
                       keyword: "nokeyword",
-                      edition: "12",
-                      impression: "13",
-                      language: "14",
-                      format: "15",
-                      category: "16"
                     },
                     header: {
                       'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -235,29 +209,28 @@ Page({
                   })
                 }
                 
-                else(
+                else{
+                var tags = new Array
+                for(var i in res.data.result.tags){
+                  tags[i]=res.data.result.tags[i].name
+                }
+                
                 wx.request({
                   url: Url.Url() + 'rentable/saveisbn',
                   data: {
                     title: res.data.result.title,
-                    subtitle: res.data.result.subtitle.slice(0, 32),
-                    picture: res.data.result.pic,
+                    subtitle: res.data.result.subtitle,
+                    picture: res.data.result.images.small,
                     author: res.data.result.author,
                     summary: res.data.result.summary,
-                    isbn: res.data.result.isbn,
+                    isbn: res.data.result.Isbn13,
                     publisher: res.data.result.publisher,
-                    pubplace: res.data.result.pubplace,
                     pubdate: res.data.result.pubdate,
-                    page: res.data.result.pagestring,
+                    page: res.data.result.pages,
                     price: res.data.result.price,
                     binding: res.data.result.binding,
-                    isbn10: res.data.result.isbn10,
-                    keyword: res.data.result.keyword.slice(0, 32),
-                    edition: res.data.result.edition,
-                    impression: res.data.result.impression,
-                    language: res.data.result.language,
-                    format: res.data.result.format,
-                    category: res.data.result.class
+                    isbn10: res.data.result.Isbn10,
+                    keyword: tags,
                   },
                   header: {
                     'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -267,7 +240,7 @@ Page({
                   console.log(res)
                     }
                 })
-                )
+              }
               },
               fail: function (res) { },
               complete: function (res) { }

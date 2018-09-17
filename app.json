@@ -39,5 +39,9 @@
   "position": "bottom",
   "selectedColor": "#ff00ee",
   "color":"#ffc6c6"
+  },
+
+  "networkTimeout":{
+    "request":3000
   }
 }
