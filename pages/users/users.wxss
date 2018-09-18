@@ -12,10 +12,11 @@
 }
 
 .userinfo-avatar {
+  overflow: hidden;
   width: 128rpx;
   height: 128rpx;
   margin: 20rpx;
-  border-radius: 50%;
+  border-radius: 100%;
 }
 
 .userinfo-nickname {

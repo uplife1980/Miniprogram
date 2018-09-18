@@ -1,6 +1,6 @@
 <view class="bg">
   <view >
-    <input class="search"bindconfirm='search' value="{{search_input_default}}" placeholder="搜索书籍" maxlength='30' comfirm-type="search" />
+    <input class="search" bindfocus="showSearchLayer" bindconfirm='search' value="{{search_input_default}}" placeholder="搜索书籍" maxlength='30' comfirm-type="search" />
   </view>
   <view class="container">
     <scroll-view style="height:1080rpx" scroll-y="true" bindscrolltolower="lower">
@@ -30,10 +30,10 @@
 <!--自定义的模态弹窗套件  -->
 
 <!--mask-->
-<view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view>
+<view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}" catchtouchmove="forbidMove"></view>
 <!--content-->
 <!--使用animation属性指定需要执行的动画-->
-<view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}">
+<view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}" >
 
   <!--drawer content-->
   <view class="drawer_title">{{welcomeTitle}}</view>

@@ -40,8 +40,14 @@ Page({
       that.powerDrawer("open");
     }, 1000)
   },
+  forbidMove:function(){
+
+  },
   getUserInfo: function (e) {
     app.globalData.userInfo = e.detail.userInfo
+  },
+  showSearchLayer:function(){
+
   },
   search: function (e) {
     var that = this;
@@ -157,8 +163,8 @@ Page({
   },
 
   fetchImgListDate: function (keyword = "") { //重要! 从服务器获取图书信息,触发情况包含直接刷新,搜索,下拉
-    var self = this;
-    var data = self.data;
+    var that = this;
+    var data = that.data;
     wx.stopPullDownRefresh()
     wx.showLoading({
       title: '加载中...',
@@ -170,17 +176,17 @@ Page({
       },
     })
     if (data.number === 0) { //前面利用number置0来刷新
-      self.setData({
+      that.setData({
         postsList: []
       });
     }
-    if (self.data.number < self.data.allbooks_len) {
+    if (that.data.number < that.data.allbooks_len) {
       wx.request({
         method: "GET",
         url: Url.Url() + 'bookinfo/ofindex',
         data: {
-          startlocation: self.data.number,
-          size: self.data.size,
+          startlocation: that.data.number,
+          size: that.data.size,
           keyword: keyword
         },
         header: {
@@ -203,7 +209,7 @@ Page({
             })
             return
           }
-          self.setData({
+          that.setData({
             allbooks_len: res.data.len
           })
           for (var i in res.data.result) { //给每个没有图片的书返回个人图片
@@ -234,7 +240,7 @@ Page({
           
         }
       })
-    } else {//不是self.data.number < self.data.allbooks_len的情况
+    } else {//不是that.data.number < that.data.allbooks_len的情况
       wx.showToast({
         title: '已浏览全部商品',
         mask: true,
