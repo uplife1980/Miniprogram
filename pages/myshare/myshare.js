@@ -10,6 +10,8 @@ Page({
   },
   onLoad: function (options) {
     var that = this
+    wx.showShareMenu()
+
     wx.request({
       url: Url.Url() + 'user/viewsharelog',
       data: {

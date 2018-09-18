@@ -12,18 +12,23 @@ Page({
     userinfo_hidden: true,    //补全个人信息表
     checked_man: false,
     checked_woman: true,
-    array: ['预科', '大一', '大二', '大三', '大四', '大五', '研一', '研二', '研三', '博士', '保密'],
     index: 10,       //年级
     // warning_hidden: true,
     getcode: "default",
     getpic: "default",
     showwarn: '',
-    showModalStatus: "false"
+    showModalStatus: false,
+    textbook:true,
+    array: ['预科', '大一', '大二', '大三', '大四', '大五', '研一', '研二', '研三', '博士', '保密'],
+    yuanxi: ['化院', '电信','建工','运载','管经','人文','建艺','机械','材料','能动','外院','物理','光电','数院'],
+    nianji: [ '大一', '大二', '大三', '大四', '大五', '研究生','其他'],
+    zhonglei: ['教材', '参考书']
   },
 
   //从服务器获取用户信息
   onLoad: function () {
     var that = this
+    wx.showShareMenu()
     wx.request({
       url: Url.Url() + 'user/getUserInfo',
       data: {
@@ -299,7 +304,13 @@ Page({
     })
 
   },
-
+isTextbook:function(e){
+var that=this
+  var vul = e.detail.value
+  that.setData({
+    textbook:!vul
+  })
+},
   bindchange: function (e) {      //更改年级显示出来
     this.setData({
       index: e.detail.value

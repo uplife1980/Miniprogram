@@ -13,17 +13,19 @@ Page({
     size: 8, //每次请求图书数量,可改
     postsList: [],
     way: ["不可租售", "出租", "出售", "可租可售"],
-    showModalStatus: false //自定义模态弹窗
-
+    showModalStatus: false, //自定义模态弹窗
+    hideSearchDrawer:true
   },
+  
   onReady: function () { //由卖书转过来
     this.refreshPage()
-
   },
   onPullDownRefresh: function () { //下拉动作 
     this.refreshPage()
   },
   onShow: function () { //tab切换动作,查看完detail之后的返回
+    wx.showShareMenu()
+
   },
   refreshPage: function () { //刷新postsList
     var that = this
@@ -40,14 +42,22 @@ Page({
       that.powerDrawer("open");
     }, 1000)
   },
-  forbidMove:function(){
-
+  forbidMove:function(){//防止滚动穿越
   },
   getUserInfo: function (e) {
     app.globalData.userInfo = e.detail.userInfo
   },
   showSearchLayer:function(){
-
+    var that=this
+    that.setData({
+      hideSearchDrawer:false
+    })
+  },
+  hideSearchLayer:function(){
+    var that=this
+    that.setData({
+      hideSearchDrawer:true
+    })
   },
   search: function (e) {
     var that = this;

@@ -1,33 +1,56 @@
 <!--pages/maishu/maishu.wxml-->
 <view class="container">
   <form bindsubmit='formCheck'>
-    <button bindtap='iwantcode' type="{{getcode}}" style="width:700rpx;margin-bottom:40rpx;">扫描书后条形码</button>
+    <button bindtap='iwantcode' type="{{getcode}}" class="button_type">扫描书后条形码</button>
     <view style="text-align:center">{{showwarn}}</view>
-    <button bindtap='iwantpic' type="{{getpic}}" style="width:700rpx;margin-bottom:40rpx;">图书实拍</button>
+
+    <button bindtap='iwantpic' type="{{getpic}}" class="button_type">图书实拍</button>
     <image src="{{img}}" style="display:{{display1}}" mode="aspectFit" class="juzhong"></image>
+
     <view class="menu">
-       <switch bindchange='switch1' name="rentbtn" hidden="true"/>
-       <!-- 出租 -->
-      <input class="input" type='digit' name="borrow" maxlength='5' hidden="true" placeholder=' 图书每日租价:      元/每日' value=''/> 
+      <switch bindchange='switch1' name="rentbtn" hidden="true" />
+      <!-- 出租 -->
+      <input class="input" type='digit' name="borrow" maxlength='5' hidden="true" placeholder=' 图书每日租价:      元/每日' value='' />
       <switch checked hidden="true" bindchange='switch2' name="sellbtn" />
       <!-- 出售 -->
-      <view>图书出售价格:    元</view>
-      <input class="input" type="digit" name="buy" maxlength='5' hidden="{{input2}}"/>
+      <view>图书出售价格: 元</view>
+      <input class="input" type="digit" name="buy" maxlength='5' hidden="{{input2}}" />
+  
+
+    <switch type='checkbox'bindchange="isTextbook">这是课内书(选填)</switch>
+
+    <view class="textbook_choose menu" hidden="{{textbook}}">
+      <picker-view indicator-style="height: 30rpx;" style="height: 250rpx;">
+        <picker-view-column>
+          <view wx:for="{{yuanxi}}" style="line-height: 50px" wx:key="unique">{{item}}</view>
+        </picker-view-column>
+        <picker-view-column>
+          <view wx:for="{{nianji}}" style="line-height: 50px" wx:key="unique">{{item}}</view>
+        </picker-view-column>
+        <picker-view-column>
+          <view wx:for="{{zhonglei}}" style="line-height: 50px" wx:key="unique">{{item}}</view>
+        </picker-view-column>
+      </picker-view>
     </view>
-    <button bindtap='submitTap' style="width:700rpx;margin-bottom:40rpx;" hidden="{{continue_input}}">继续提交订单↓</button>
+    
+    <button bindtap='submitTap' class="button_type" hidden="{{continue_input}}">继续提交订单↓</button>
+  </view>
     <view hidden='{{userinfo_hidden}}' class="menu">
       <view>手机号码</view>
       <input class="input" type='number' name="tel" value="{{phone}}" placeholder='认真填写以便买家联系' />
+
       <view>性别</view>
       <radio-group name="sex">
         <radio value="man" checked="{{checked_man}}" />男
         <radio value="woman" checked="{{checked_woman}}" />女
         <!-- <radio value="secret" checked="{{checked_secret}}" />保密 -->
       </radio-group>
+
       <picker name="grade" range='{{array}}' value="{{index}}" bindchange='bindchange'>
-        <button style="width:700rpx;margin-bottom:40rpx;">你的年级：{{array[index]}}</button>
+        <button class="button_type">你的年级：{{array[index]}}</button>
       </picker>
-      <button style="width:700rpx;margin-bottom:40rpx;" form-type='submit' type="primary">确认提交</button>
+
+      <button class="button_type" form-type='submit' type="primary">确认提交</button>
     </view>
     <!-- <toast hidden="{{warning_hidden}}" duration="1000" bindchange="remain">{{promptText}}</toast> -->
   </form>

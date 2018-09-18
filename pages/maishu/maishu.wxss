@@ -13,7 +13,21 @@ text-align: center
 .input{
   border:1px grey solid;
   width:700rpx;
-  height:1.8em;
+  height:2em;
   margin:auto;
   margin-bottom:20rpx;
+  border-radius: 5%;
+  line-height: 100rpx;
+}
+.textbook_choose{
+  border:1px solid grey;
+  border-radius: 5%;
+  width:90%;
+  margin-left:5%;
+}
+.button_type{
+width:700rpx;
+margin-bottom:40rpx;
+border-radius: 5%;
+margin-top:20rpx;
 }

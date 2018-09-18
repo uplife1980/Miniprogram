@@ -1,15 +1,19 @@
 <view class="bg">
-  <view >
-    <input class="search" bindfocus="showSearchLayer" bindconfirm='search' value="{{search_input_default}}" placeholder="搜索书籍" maxlength='30' comfirm-type="search" />
+  <input class="search" bindfocus="showSearchLayer" bindconfirm='search' value="{{search_input_default}}" placeholder="搜索书籍" maxlength='30' comfirm-type="search" />
+  <view hidden="{{hideSearchDrawer}}">
+    <view class="drawer_screen_search"   bindtap="hideSearchLayer" catchtouchmove="forbidMove"></view>
+    <view class="drawer_above_search">
+      <button size="mini">>>>试试教材助手</button>
+    </view>
   </view>
   <view class="container">
-    <scroll-view style="height:1080rpx" scroll-y="true" bindscrolltolower="lower">
+    <scroll-view style="height:900rpx" scroll-y="true" bindscrolltolower="lower">
       <block wx:for="{{postsList}}" wx:key="unique">
         <view class="stuff" index="{{index}}" data-bookid="{{item.id}}" catchtap="redictDetail">
           <view class="wenzi">
             <text style="text-align:center">{{item.title}}</text>
             <!-- <view class="line"></view> -->
-              <!-- <text>图书ID:{{item.id}}</text>   -->
+            <!-- <text>图书ID:{{item.id}}</text>   -->
             <view class="line"></view>
 
             <text>状态:{{way[item.way]}}</text>
@@ -33,7 +37,7 @@
 <view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}" catchtouchmove="forbidMove"></view>
 <!--content-->
 <!--使用animation属性指定需要执行的动画-->
-<view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}" >
+<view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}">
 
   <!--drawer content-->
   <view class="drawer_title">{{welcomeTitle}}</view>
@@ -43,8 +47,10 @@
       <label class="title col-0">标题</label>
       <input class="input_base input_h30 col-1" name="rName" value="可自行定义内容"></input>
     </view> -->
-  <view class="tip"><text>{{welcomeText}}\n{{welcomeText2}}</text></view>
-    
+    <view class="tip">
+      <text>{{welcomeText}}\n{{welcomeText2}}</text>
+    </view>
+
   </view>
-  <button class="btn_ok" bindtap="powerClose" bindgetuserinfo="getUserInfo" open-type="getUserInfo"	>我已知晓</button>
+  <button class="btn_ok" bindtap="powerClose" bindgetuserinfo="getUserInfo" open-type="getUserInfo">我已知晓</button>
 </view>

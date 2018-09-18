@@ -21,6 +21,8 @@ Page({
 
   //从服务器获取用户信息
   onLoad: function (options) {
+    wx.showShareMenu()
+
     var that = this
     console.log(options.bookid);
     that.setData({

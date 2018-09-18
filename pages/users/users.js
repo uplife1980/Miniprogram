@@ -7,6 +7,8 @@ Page({
     userInfo:null
   },
   onLoad:function(){
+    wx.showShareMenu()
+
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
