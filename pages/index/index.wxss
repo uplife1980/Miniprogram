@@ -4,9 +4,9 @@
     border-radius:20px;
     text-align: center;
     margin-top: 5rpx;
- font-size: 38rpx;
-  line-height: 3.6;
-  height:90rpx;
+ font-size: 30rpx;
+  line-height: 2.6;
+  height:80rpx;
 }
 .drawer_screen_search { 
  width: 100%; 
@@ -22,7 +22,7 @@
 .drawer_above_search{
   z-index:1001;
    position: fixed; 
-   left:30%;
+   left:38%;
    top:15%;
 
 }

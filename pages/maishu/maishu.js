@@ -20,7 +20,7 @@ Page({
     showModalStatus: false,
     textbook:true,
     array: ['预科', '大一', '大二', '大三', '大四', '大五', '研一', '研二', '研三', '博士', '保密'],
-    yuanxi: ['化院', '电信','建工','运载','管经','人文','建艺','机械','材料','能动','外院','物理','光电','数院'],
+    yuanxi: ['材料', '电信', '管经', '光电', '化院', '机械', '建工', '建艺', '能动', '人文', '数院','外院', '物理','运载','其他'],
     nianji: [ '大一', '大二', '大三', '大四', '大五', '研究生','其他'],
     zhonglei: ['教材', '参考书']
   },
@@ -219,9 +219,10 @@ Page({
               }
 
               else {
-                var tags = new Array
+                var tags=''
                 for (var i in res.data.result.tags) {
-                  tags[i] = res.data.result.tags[i].name
+                  tags+=res.data.result.tags[i].name
+                  tags+=','
                 }
 
                 wx.request({

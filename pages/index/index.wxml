@@ -1,5 +1,5 @@
 <view class="bg">
-  <input class="search" bindfocus="showSearchLayer" bindconfirm='search' value="{{search_input_default}}" placeholder="搜索书籍" maxlength='30' comfirm-type="search" />
+  <input class="search" bindfocus="showSearchLayer" bindconfirm='search' value="{{search_input_default}}" placeholder="搜索书籍/关键字" maxlength='30' comfirm-type="search" />
   <view hidden="{{hideSearchDrawer}}">
     <view class="drawer_screen_search"   bindtap="hideSearchLayer" catchtouchmove="forbidMove"></view>
     <view class="drawer_above_search">
