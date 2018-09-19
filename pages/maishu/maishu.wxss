@@ -24,6 +24,7 @@ text-align: center
   border-radius: 5%;
   width:90%;
   margin-left:5%;
+  margin-bottom: 10%;
 }
 .button_type{
 width:700rpx;

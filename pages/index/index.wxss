@@ -110,7 +110,7 @@ margin-right:5%;
  text-align: center; 
 } 
 .drawer_content { 
- height: 210px; 
+ height: 410rpx; 
  overflow-y: scroll; /*超出父盒子高度可滚动*/ 
 } 
  

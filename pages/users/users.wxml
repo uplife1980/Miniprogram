@@ -20,5 +20,5 @@
  <view  class="option continue">暂未开放</view> -->
 <!-- <navigator url="../needstop/needstop" class="option">待确认的停止分享</navigator>
 <navigator url="../myshare/myshare" class="option">已经不在我手里的书</navigator> -->
-<view class="footer">@ECHO V1.0</view>
+<view class="footer">@ECHO V2.0</view>
 </view>

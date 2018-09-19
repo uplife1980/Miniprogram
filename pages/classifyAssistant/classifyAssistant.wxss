@@ -4,18 +4,26 @@
     border-radius:20px;
     text-align: center;
     margin-top: 5rpx;
+ font-size: 30rpx;
+  line-height: 2.6;
+  height:80rpx;
 }
-.bg{
-  background: #ffFfF1
-}
+
 .container{
   margin-top: 30rpx;
   border-top: 1px solid #ccc;
+    background: #ffFfF1;
+
 }
 .stuff{
   border:1px solid #e5e5e5;
   background-color: #FFFFF8;
   height:400rpx;
+}
+.price{
+   font-weight: bold;
+  color:orange;
+  margin-top:30rpx;
 }
 .img{
   height:300rpx;
@@ -23,6 +31,13 @@
   margin-top:7%;
   margin-left:2%;
 
+}
+.line{
+width:100%;
+height:2rpx;
+margin-top:5px;
+margin-bottom:5rpx;
+background:#aaa;
 }
 .wenzi{
    float:right;
@@ -32,4 +47,10 @@
 	width: 47%;
   margin-top: 5%;
 }
-
+.pick{
+  margin-top:4%;
+}
+.picker{
+  border:1px solid rgb(192, 192, 192);
+  border-radius: 7%;
+}

@@ -1,0 +1,29 @@
+
+  <input class="search" bindfocus="showSearchLayer" bindconfirm='search' value="{{search_input_default}}" placeholder="搜索书籍" maxlength='30' comfirm-type="search" />
+<picker class="pick" mode="multiSelector" range="{{textbook}}" value="{{sort}}" bindchange="requestSort" >
+  <view >
+    <button class="picker">选择专业年级</button>
+  </view>
+</picker>
+
+  <view class="container">
+    <scroll-view style="height:980rpx" scroll-y="true" bindscrolltolower="lower">
+      <block wx:for="{{postsList}}" wx:key="unique">
+        <view class="stuff" index="{{index}}" data-bookid="{{item.id}}" catchtap="redictDetail">
+          <view class="wenzi">
+            <text style="text-align:center">{{item.title}}</text>
+            <!-- <view class="line"></view> -->
+            <!-- <text>图书ID:{{item.id}}</text>   -->
+            <view class="line"></view>
+
+            <text>状态:{{way[item.way]}}</text>
+            <view class="line"></view>
+
+            <text class="price" hidden="{{(item.way===2)?true:false}}">出租价格:{{item.rent_price}}元/天</text>
+            <text class="price" hidden="{{(item.way===1)?true:false}}">出售价格:{{item.sale_price}}元</text>
+          </view>
+          <image class="img" src="{{item.picture}}" mode="aspectFit"></image>
+        </view>
+      </block>
+    </scroll-view>
+  </view>

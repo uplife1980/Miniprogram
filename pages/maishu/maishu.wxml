@@ -17,15 +17,15 @@
       <input class="input" type="digit" name="buy" maxlength='5' hidden="{{input2}}" />
   
 
-    <switch type='checkbox'bindchange="isTextbook">这是课内书(选填)</switch>
+    <switch type='checkbox'bindchange="isTextbook" name="isTextbook"/>这是课内书(选填)
 
-    <view class="textbook_choose menu" hidden="{{textbook}}">
-      <picker-view indicator-style="height: 30rpx;" style="height: 250rpx;">
+    <view class="textbook_choose menu" hidden="{{textbook}}" >
+      <picker-view  indicator-style="height: 30rpx;" style="height: 250rpx;" bindchange="checkTextbook" value="{{publicTextbook}}" name="textbook">
         <picker-view-column>
-          <view wx:for="{{yuanxi}}" style="line-height: 50px" wx:key="unique">{{item}}</view>
+          <view wx:for="{{yuanxi}}" style="line-height: 50px" wx:key="unique" >{{item}}</view>
         </picker-view-column>
         <picker-view-column>
-          <view wx:for="{{nianji}}" style="line-height: 50px" wx:key="unique">{{item}}</view>
+          <view wx:for="{{nianji}}" style="line-height: 50px" wx:key="unique" >{{item}}</view>
         </picker-view-column>
         <picker-view-column>
           <view wx:for="{{zhonglei}}" style="line-height: 50px" wx:key="unique">{{item}}</view>
@@ -46,7 +46,7 @@
         <!-- <radio value="secret" checked="{{checked_secret}}" />保密 -->
       </radio-group>
 
-      <picker name="grade" range='{{array}}' value="{{index}}" bindchange='bindchange'>
+      <picker name="grade" range='{{array}}' value="{{index}}" bindchange='changeAge'>
         <button class="button_type">你的年级：{{array[index]}}</button>
       </picker>
 

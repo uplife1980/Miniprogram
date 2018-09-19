@@ -1,13 +1,14 @@
 <view class="bg">
   <input class="search" bindfocus="showSearchLayer" bindconfirm='search' value="{{search_input_default}}" placeholder="搜索书籍/关键字" maxlength='30' comfirm-type="search" />
   <view hidden="{{hideSearchDrawer}}">
-    <view class="drawer_screen_search"   bindtap="hideSearchLayer" catchtouchmove="forbidMove"></view>
+    <view class="drawer_screen_search" bindtap="hideSearchLayer" catchtouchmove="forbidMove"></view>
     <view class="drawer_above_search">
-      <button size="mini">>>>试试教材助手</button>
+      <button size="mini" bindtap="showSelector">教材助手(即将上线)</button>
+      
     </view>
   </view>
   <view class="container">
-    <scroll-view style="height:900rpx" scroll-y="true" bindscrolltolower="lower">
+    <scroll-view style="height:980rpx" scroll-y="true" bindscrolltolower="lower">
       <block wx:for="{{postsList}}" wx:key="unique">
         <view class="stuff" index="{{index}}" data-bookid="{{item.id}}" catchtap="redictDetail">
           <view class="wenzi">
@@ -52,5 +53,9 @@
     </view>
 
   </view>
-  <button class="btn_ok" bindtap="powerClose" bindgetuserinfo="getUserInfo" open-type="getUserInfo">我已知晓</button>
+  <form bindsubmit="getMessageAbility" report-submit="true">
+    <button class="btn_ok" form-type='submit'>我已知晓</button>
+
+  </form>
+  <!-- <button class="btn_ok" bindtap="powerClose" bindgetuserinfo="getUserInfo" open-type="getUserInfo">我已知晓</button> -->
 </view>

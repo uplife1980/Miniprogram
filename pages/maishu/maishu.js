@@ -18,10 +18,11 @@ Page({
     getpic: "default",
     showwarn: '',
     showModalStatus: false,
-    textbook:true,
+    textbook: true,
+    publicTextbook: [0, 0, 0],
     array: ['预科', '大一', '大二', '大三', '大四', '大五', '研一', '研二', '研三', '博士', '保密'],
-    yuanxi: ['材料', '电信', '管经', '光电', '化院', '机械', '建工', '建艺', '能动', '人文', '数院','外院', '物理','运载','其他'],
-    nianji: [ '大一', '大二', '大三', '大四', '大五', '研究生','其他'],
+    yuanxi: ['公共', '材料', '电信', '管经', '光电', '化院', '机械', '建工', '建艺', '能动', '人文', '数院', '外院', '物理', '运载', '其他'],
+    nianji: ['选修', '大一', '大二', '大三', '大四', '大五', '研究生', '其他'],
     zhonglei: ['教材', '参考书']
   },
 
@@ -152,6 +153,7 @@ Page({
   formSubmit: function (e) {
     var that = this;
     var date = new Date() //9+4
+    var bookid
     var request_id = date.getTime() * 10000 + Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
 
 
@@ -176,7 +178,10 @@ Page({
       },
       method: "POST",
       success: function (res) {
+        console.log(res.data)
+        bookid=res.data.bookid
         //图书不存在时去爬图书信息
+        that.classifyTextbook(e,bookid)
         if (res.data.result != "exist") {
           that.setData({
             isbn: res.data.isbn
@@ -219,10 +224,10 @@ Page({
               }
 
               else {
-                var tags=''
+                var tags = ''
                 for (var i in res.data.result.tags) {
-                  tags+=res.data.result.tags[i].name
-                  tags+=','
+                  tags += res.data.result.tags[i].name
+                  tags += ','
                 }
 
                 wx.request({
@@ -284,7 +289,7 @@ Page({
                   success: function () {
                     wx.showToast({//显示上传成功
                       title: '提交成功！',
-                      mask:true,
+                      mask: true,
                       success: function () {
                         setTimeout(function () {
                           wx.switchTab({
@@ -305,14 +310,60 @@ Page({
     })
 
   },
-isTextbook:function(e){
-var that=this
-  var vul = e.detail.value
-  that.setData({
-    textbook:!vul
-  })
+  isTextbook: function (e) {
+    var that = this
+    var vul = e.detail.value
+    that.setData({
+      textbook: !vul
+    })
+  },
+
+  checkTextbook: function (e) {
+    var that = this
+    var val = e.detail.value
+    if (val[0] == 0) {
+      that.setData({
+        publicTextbook: [0, 0]
+      })
+      if (val[1] != 0 || val[2] != 0)
+        wx.showToast({
+          title: '公共只有选修教材',
+          mask: true,
+          icon: 'none',
+          success: function (res) {
+            setTimeout(function () {
+              wx.hideToast()
+            }, 1000)
+          }
+
+        })
+
+    }
+  },
+
+
+classifyTextbook:function(e,bookid){
+  var val=e.detail.value
+  var that=this
+    if(val.isTextbook)
+      wx.request({
+        method: "POST",
+        url: Url.Url() +'rentable/classifyTextbook',
+        
+        data:{
+          isbn:that.data.isbn,
+          bookid:bookid,
+          sort: val.textbook
+        },
+        header: {
+          'content-type': 'application/json'
+        },
+        success:function(res){
+        }
+      })
+
 },
-  bindchange: function (e) {      //更改年级显示出来
+  changeAge: function (e) {      //更改年级显示出来
     this.setData({
       index: e.detail.value
     })

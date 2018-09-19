@@ -10,7 +10,7 @@
     "pages/needconfirm/needconfirm",
     "pages/needstop/needstop",
     "pages/resumeshare/resumeshare",
-    "pages/infosearch/infosearch"
+    "pages/classifyAssistant/classifyAssistant"
   ],
   "window": {
     "backgroundTextStyle":"dark",

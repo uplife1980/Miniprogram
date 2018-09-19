@@ -29,7 +29,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 3,
 			"list": [
 				{
 					"id": -1,
@@ -48,6 +48,11 @@
 					"name": "users",
 					"pathName": "pages/users/users",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "教材助手",
+					"pathName": "pages/classifyAssistant/classifyAssistant"
 				}
 			]
 		}

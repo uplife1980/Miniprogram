@@ -3,9 +3,6 @@ var Url = require('../../url.js');
 
 Page({
   data: {
-    welcomeText: "您既可以在[我的]界面发布图书并留下联系方式，也可以在[首页]挑拣心怡的图书（支持搜索）。\n点击购买，即可获得卖家的联系方式（通过线下完成交易）。",
-    welcomeText2: "意见反馈:echo_huiyin@163.com",
-    welcomeTitle: "欢迎使用",
     search_input_default: "",
     keyword: [],
     number: 0, //已有图书书目
@@ -13,23 +10,17 @@ Page({
     size: 8, //每次请求图书数量,可改
     postsList: [],
     way: ["不可租售", "出租", "出售", "可租可售"],
-    showModalStatus: false, //自定义模态弹窗
-    hideSearchDrawer: true,
-    hideSelector:true
+    textbook: [
+      ['公共', '材料', '电信', '管经', '光电', '化院', '机械', '建工', '建艺', '能动', '人文', '数院', '外院', '物理', '运载', '其他'],
+      ['选修', '大一', '大二', '大三', '大四', '大五', '研究生', '其他'],
+      ['教材', '参考书']
+    ], //种类的罗列
+    sort: [0, 0, 0], //种类的选择
   },
 
   onReady: function() { //由卖书转过来
-    this.refreshPage()
   },
-  onPullDownRefresh: function() { //下拉动作 
-    var that = this
-    that.refreshPage()
 
-  },
-  onShow: function() { //tab切换动作,查看完detail之后的返回
-    wx.showShareMenu()
-
-  },
   refreshPage: function() { //刷新postsList
     var that = this
     that.setData({
@@ -39,50 +30,12 @@ Page({
     })
     that.fetchImgListDate()
   },
-  onLoad: function() { //2018.5.29增加开屏提示
+  onLoad: function() {
     var that = this
-    setTimeout(function() {
-      that.powerDrawer("open");
-    }, 1000)
-    wx.request({
-      url: Url.Url()+'user/welcome',
-      header: {
-        'content-type': 'application/json'
-      },
-      method: "GET",
-    success:function(res){
-      that.setData({
-        welcomeTitle:res.data.title,
-        welcomeText:res.data.text
-      })
-    }
-    })
+    wx.showShareMenu()
   },
-
-
   forbidMove: function() { //防止滚动穿越
   },
-  getUserInfo: function(e) {
-    app.globalData.userInfo = e.detail.userInfo
-  },
-  showSearchLayer: function() {
-    var that = this
-    that.setData({
-      hideSearchDrawer: false
-    })
-  },
-  hideSearchLayer: function() {
-    var that = this
-    that.setData({
-      hideSearchDrawer: true
-    })
-  },
-
-showSelector:function(){
-wx.navigateTo({
-  url: '../classifyAssistant/classifyAssistant',
-})
-},
 
   search: function(e) {
     var that = this;
@@ -96,11 +49,11 @@ wx.navigateTo({
       })
       that.fetchImgListDate(val)
     }
-    else //搜索框为空时,直接使用原来方法
+     else //搜索框为空时,直接使用原来方法
     {
       that.setData({
         keyword: [],
-        number:0,
+        number: 0,
         allbooks_len: 1,
         hideSearchDrawer: true
 
@@ -112,9 +65,9 @@ wx.navigateTo({
 
   lower: function(e) { //下拉时触发
     var that = this;
-    var keyword=that.data.keyword
-    if(keyword[0])
-keyword=keyword.split(" ")
+    var keyword = that.data.keyword
+    if (keyword[0])
+      keyword = keyword.split(" ")
     that.setData({
       number: that.data.postsList.length //现有图书+新
     });
@@ -142,11 +95,12 @@ keyword=keyword.split(" ")
     if (that.data.number < that.data.allbooks_len) {
       wx.request({
         method: "POST",
-        url: Url.Url() + 'bookinfo/ofindex',
+        url: Url.Url() + 'bookinfo/byClassify',
         data: {
           startlocation: that.data.number,
           size: that.data.size,
-          keyword: keyword
+          keyword: keyword,
+          sort: that.data.sort
         },
         header: {
           'Content-Type': 'application/json'
@@ -249,8 +203,20 @@ keyword=keyword.split(" ")
     })
 
   },
-
-
+  requestSort: function(e) { //承担修改参数的任务,同时用来请求图书和消除暗层
+    var that = this
+    var val = e.detail.value
+    wx.setNavigationBarTitle({
+      title: that.data.textbook[0][val[0]]+that.data.textbook[1][val[1]]+that.data.textbook[2][val[2]],
+    })
+    console.log(val)
+    that.setData({
+      sort: val,
+      number: 0,
+      allbooks_len: 1,
+    })
+    that.fetchImgListDate()
+  },
 
   hidden_warning: function() {
     var that = this;
@@ -259,65 +225,4 @@ keyword=keyword.split(" ")
     })
   },
 
-  getMessageAbility: function(e) { //在这里获得发送信息的能力
-    console.log(e.detail.formId)
-    this.powerClose()
-
-   
-  },
-
-
-
-  //自定义模态弹窗套件
-  powerClose: function(e) { //因为需要开平显示,所以只能手动导入变量
-    this.powerDrawer("close")
-  },
-  powerDrawer: function(e) {
-    var currentStatu = e;
-    this.util(currentStatu)
-  },
-  util: function(currentStatu) {
-    /* 动画部分 */
-    // 第1步：创建动画实例 
-    var animation = wx.createAnimation({
-      duration: 200, //动画时长 
-      timingFunction: "linear", //线性 
-      delay: 0 //0则不延迟 
-    });
-
-    // 第2步：这个动画实例赋给当前的动画实例 
-    this.animation = animation;
-
-    // 第3步：执行第一组动画 
-    animation.opacity(0).rotateX(-100).step();
-
-    // 第4步：导出动画对象赋给数据对象储存 
-    this.setData({
-      animationData: animation.export()
-    })
-
-    // 第5步：设置定时器到指定时候后，执行第二组动画 
-    setTimeout(function() {
-      // 执行第二组动画 
-      animation.opacity(1).rotateX(0).step();
-      // 给数据对象储存的第一组动画，更替为执行完第二组动画的动画对象 
-      this.setData({
-        animationData: animation
-      })
-
-      //关闭 
-      if (currentStatu == "close") {
-        this.setData({
-          showModalStatus: false
-        });
-      }
-    }.bind(this), 200)
-
-    // 显示 
-    if (currentStatu == "open") {
-      this.setData({
-        showModalStatus: true
-      });
-    }
-  }
 })
