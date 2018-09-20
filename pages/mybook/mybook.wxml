@@ -47,7 +47,7 @@
     <view wx:for="{{neverborrow_list}}" wx:key="unique" wx:for-index="neverborrow_index" wx:for-item="neverborrow">
       <view class="stuff">
         <view class="wenzi"> {{neverborrow.title.originphone}}</view>
-        <button bindtap="powerDrawer" data-statu="open" wx:if="{{neverborrow.title.originphone=='自定义书籍'}}">补全图书信息</button>
+        <button bindtap="powerDrawer" type="primary" data-statu="open" wx:if="{{neverborrow.title.originphone=='自定义书籍'}}">补全图书信息</button>
         <!--模态弹窗  补全图书信息  -->
         <!--mask-->
         <view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view>
@@ -81,22 +81,34 @@
         <image class="img" src="{{neverborrow.picture}}" style="width:100%" mode="aspectFit"></image>
 
         <button bindtap="repeal1" id="repeal{{neverborrow_index}}">取消分享</button>
-        <modal hidden="{{confirm}}" bindconfirm="repeal" bindcancel="repealCancel" title="提示">即将停止本图书的分享,您真的要这样做吗?</modal>
+        <modal hidden="{{confirm}}" bindconfirm="repeal" bindcancel="repealCancel" title="提示">即将停止本图书的分享,同时图书也将从售卖列表中消失。您真的要这样做吗?</modal>
       </view>
     </view>
   </view>
 
-
-  <view hidden="{{hidelist[3]}}">
-    <view class="fronttitle">已经购买的图书</view>
+<view hidden="{{hidelist[3]}}">
+    <view class="fronttitle">已购买的图书</view>
     <block wx:for="{{bought_list}}" wx:key="unique" wx:for-index="bought_index" wx:for-item="bought">
       <view class="stuff">
-        <view class="wenzi"> {{bought.title.originphone}}</view>
+        <view class="wenzi"> {{bought.phone}}</view>
         <!-- <view class="wenzi">ISBN:{{bought.information}}</view> -->
         <image src="{{bought.picture}}" mode="aspectFit" /> {{bought.name}}
       </view>
     </block>
   </view>
+
+
+  <view hidden="{{hidelist[4]}}">
+    <view class="fronttitle">被他人预定的图书</view>
+    <block wx:for="{{saling_list}}" wx:key="unique" wx:for-index="saling_index" wx:for-item="saling">
+      <view class="stuff">
+        <view class="wenzi"> 预订人手机号:{{saling.phone}}</view>
+        <!-- <view class="wenzi">ISBN:{{bought.information}}</view> -->
+        <image src="{{saling.picture}}" mode="aspectFit" /> {{saling.name}}
+      </view>
+    </block>
+  </view>
+
 
 </view>
 <toast hidden="{{hidden}}" duration="1000 " bindchange="toastChange ">提交成功</toast>

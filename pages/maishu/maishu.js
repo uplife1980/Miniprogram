@@ -178,14 +178,12 @@ Page({
       },
       method: "POST",
       success: function (res) {
-        console.log(res.data)
-        bookid=res.data.bookid
+        console.log(res.data.result)
+        bookid = res.data.bookid
         //图书不存在时去爬图书信息
-        that.classifyTextbook(e,bookid)
-        if (res.data.result != "exist") {
-          that.setData({
-            isbn: res.data.isbn
-          })
+        that.classifyTextbook(e, bookid)
+        if (!res.data.result) {
+          console.warn("新书,即将访问API")
           wx.request({
             // url: "https://api.jisuapi.com/isbn/query?appkey=85c75335fa427fe4&isbn=" + that.data.isbn,
             url: "https://api.avatardata.cn/BookInfo/FindByIsbn?key=9bb781070f8d453f979300897dffb279&isbn=" + that.data.isbn,
@@ -195,7 +193,7 @@ Page({
             //把服务器没有的信息补全给服务器
             success: function (res) {
               console.log(res)
-              if (res.data.result.title == null) {
+              if (res.data.result != null) {
                 that.setData({ showModatStatus: true })
                 wx.request({
                   url: Url.Url() + 'rentable/saveisbn',
@@ -251,7 +249,7 @@ Page({
                     'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
                   },
                   method: "POST",
-                  success: function (res) { //上传图片部分
+                  success: function (res) {
                     console.log(res)
                   }
                 })
@@ -261,7 +259,7 @@ Page({
             complete: function (res) { }
           })
         }
-        wx.uploadFile({
+        wx.uploadFile({//上传图片部分
           url: Url.Url() + 'upload/image',
           filePath: that.data.img[0],
           name: 'imagefile',
@@ -335,34 +333,34 @@ Page({
               wx.hideToast()
             }, 1000)
           }
-
         })
-
     }
+    that.setData({
+      publicTextbook:e.detail.value
+    })
   },
 
 
-classifyTextbook:function(e,bookid){
-  var val=e.detail.value
-  var that=this
-    if(val.isTextbook)
-      wx.request({
-        method: "POST",
-        url: Url.Url() +'rentable/classifyTextbook',
-        
-        data:{
-          isbn:that.data.isbn,
-          bookid:bookid,
-          sort: val.textbook
-        },
-        header: {
-          'content-type': 'application/json'
-        },
-        success:function(res){
-        }
-      })
+  classifyTextbook: function (e, bookid) {
+    var val = e.detail.value
+    var that = this
+    if (val.isTextbook)
+    wx.request({
+      method: "POST",
+      url: Url.Url() + 'rentable/classifyTextbook',
+      data: {
+        isbn: that.data.isbn,
+        bookid: bookid,
+        sort: val.textbook
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+      }
+    })
 
-},
+  },
   changeAge: function (e) {      //更改年级显示出来
     this.setData({
       index: e.detail.value

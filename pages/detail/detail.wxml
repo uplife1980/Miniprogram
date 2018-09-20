@@ -18,6 +18,7 @@
     <!-- <view>书后ISBN号:{{information}}</view>  -->
     <view class="line"></view>
     <view class="price">
+      <view class="tag" ><text style="text-decoration:line-through">原价:{{price}}</text></view>
       <view class="tag" hidden="{{rentpriceHidden}}">租价:{{rentprice}}元/天</view>
       <view class="tag" hidden="{{salepriceHidden}}">售价:{{saleprice}}元</view>
 
@@ -50,8 +51,6 @@
     <view class="drawer_title">详细信息</view>
     <view class="drawer_content">
       <view class="top grid">
-        <label class="title col-0">版本号</label>
-        <input class="input_base input_h30 col-1" name="rName" value="{{edition}}" disabled></input>
       </view>
      {{summary}}
     </view>

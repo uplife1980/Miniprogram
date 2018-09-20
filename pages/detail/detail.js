@@ -49,6 +49,7 @@ Page({
           "name": res.data.detail.title,
           "author": res.data.detail.author,
           "publisher": res.data.detail.publisher,
+          "price":res.data.detail.price,
           "keyword": res.data.detail.keyword,
           "picture1": res.data.detail.picture,
           "picture2": res.data.rentable.picture,
@@ -59,7 +60,6 @@ Page({
           bookid: res.data.rentable.id,
           "summary": res.data.detail.summary,
           "isbn": res.data.detail.isbn,
-          "edition": res.data.detail.edition
         })
         if (that.data.picture1 == '')
           that.setData({

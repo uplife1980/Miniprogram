@@ -139,7 +139,7 @@ keyword=keyword.split(" ")
         postsList: []
       });
     }
-    if (that.data.number < that.data.allbooks_len) {
+    if (that.data.number <= that.data.allbooks_len) {
       wx.request({
         method: "POST",
         url: Url.Url() + 'bookinfo/ofindex',

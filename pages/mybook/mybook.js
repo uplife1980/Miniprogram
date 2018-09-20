@@ -31,7 +31,7 @@ Page({
 
     var that = this;
     var hidelist = new Array();
-    hidelist = [true, true, true, true]
+    hidelist = [true, true, true, true,true]
     hidelist[parseInt(options.hidelist) + 2] = false,       //5-29这里也有更改+2
       that.setData({
         hidelist: hidelist
@@ -68,6 +68,9 @@ Page({
         for (var i = data.bought.length + data.renting.length + data.outdate.length, j = 0; j < data.rentable.length; i++ , j++) {
           data.rentable[j].title = data.booktitle[i]
         }
+        for (var i = data.bought.length + data.renting.length + data.outdate.length + data.rentable.length, j = 0; j < data.saling.length; i++ , j++) {
+          data.saling[j].title = data.booktitle[i]
+        }
 
 
 
@@ -77,7 +80,8 @@ Page({
           bought_list: data.bought,
           borrowing_list: data.renting,
           notborrow_list: data.outdate,
-          neverborrow_list: data.rentable
+          neverborrow_list: data.rentable,
+          saling_list:data.saling
         })
 
 
@@ -255,6 +259,7 @@ Page({
     })
   },
   fillContent:function(e){
+    var that=this
    if(!e.detail.value.title)
      that.showWarn("至少填写图书名称!")
     else
