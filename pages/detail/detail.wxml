@@ -7,10 +7,10 @@
 
     <scroll-view scroll-x>
       <view>
-        <image src="{{picture1}}" class="top-img" mode="aspectFit"></image>
+        <image src="{{picture1}}" hidden="{{hidepicture}}" class="top-img" mode="aspectFit" bindtap="preview" id="picture1"></image>
       </view>
       <view>
-        <image src="{{picture2}}" class="top-img" mode="aspectFit"></image>
+        <image src="{{picture2}}" class="top-img" mode="aspectFit" bindtap="preview" id="picture2"></image>
       </view>
     </scroll-view>
 
@@ -18,7 +18,7 @@
     <!-- <view>书后ISBN号:{{information}}</view>  -->
     <view class="line"></view>
     <view class="price">
-      <view class="tag" ><text style="text-decoration:line-through">原价:{{price}}</text></view>
+      <view class="tag" ><text style="text-decoration:line-through;color:rgb(255,211,130)">原价:{{price}}</text></view>
       <view class="tag" hidden="{{rentpriceHidden}}">租价:{{rentprice}}元/天</view>
       <view class="tag" hidden="{{salepriceHidden}}">售价:{{saleprice}}元</view>
 

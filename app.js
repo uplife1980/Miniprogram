@@ -9,6 +9,9 @@ App({
   onLaunch: function () {
     var Url = require('url.js');
     var that=this
+    wx.showTabBarRedDot({
+      index:1
+    })
     //新版本去除了getUserInfo
     // wx.getUserInfo({
     //   success:function(res){

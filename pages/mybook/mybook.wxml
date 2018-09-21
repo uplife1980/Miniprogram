@@ -61,15 +61,19 @@
             <view class="drawer_content">
               <view class="top grid">
                 <label class="title col-0">图书名称</label>
-                <input class="input_base input_h30 col-1" name="title"></input>
+                <input class="input_base input_h30 col-1" name="title" placeholder='这类书的名称将由您决定'></input>
               </view>
               <view class="top grid">
                 <label class="title col-0">作者</label>
-                <input class="input_base input_h30 col-1" name="author"></input>
+                <input class="input_base input_h30 col-1" name="author" placeholder='请务必谨慎补全'></input>
               </view>
               <view class="top grid">
                 <label class="title col-0">出版社</label>
-                <input class="input_base input_h30 col-1" name="publisher"></input>
+                <input class="input_base input_h30 col-1" name="publisher" placeholder='感谢您的付出'></input>
+              </view>
+               <view class="top grid">
+                <label class="title col-0">原价</label>
+                <input class="input_base input_h30 col-1" name="price" type="number"></input>
               </view>
 
 

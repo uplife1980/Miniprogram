@@ -1,174 +1,212 @@
-.fronttitle{
+.fronttitle {
   font-weight: bold;
   font-size: 1.5em;
-  width:100%;
+  width: 100%;
   text-align: center;
-  background: #FFF1CA;
-  height:100rpx;
-  padding-top:4%;
-  margin-bottom:4%;
+  background: #fff1ca;
+  height: 100rpx;
+  padding-top: 4%;
+  margin-bottom: 4%;
 }
-.stuff{
-  border:2px rgb(120,120,120) solid;
-  margin-top:2.5%;
-  margin-bottom:4%;
-  padding:20rpx;
+
+.stuff {
+  border: 2px rgb(120, 120, 120) solid;
+  margin-top: 2.5%;
+  margin-bottom: 4%;
+  padding: 20rpx;
 }
-.wenzi{
+
+.wenzi {
   line-height: 80rpx;
 }
 
-.xuming_button{
-  background: rgb(245,150,170);
+.xuming_button {
+  background: rgb(245, 150, 170);
 }
-.no{
-  background: #f67a72
+
+.no {
+  background: #f67a72;
 }
-.line{
-width:100%;
-height:3rpx;
-background:white;
-margin-bottom:20rpx;
+
+.line {
+  width: 100%;
+  height: 3rpx;
+  background: white;
+  margin-bottom: 20rpx;
 }
+
 /*叠加显示层 */
-.modal-box{
-  position:fixed;
-  width:100%;
-  height:100%;
-  top:0px;
-  background:rgba(0,0,0,0.7);
+
+.modal-box {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  background: rgba(0, 0, 0, 0.7);
   overflow: hidden;
-  }
+}
 
-.modal-body{
- background:white;
-  position:relative;
-  height:100%;
-  }
+.modal-body {
+  background: white;
+  position: relative;
+  height: 100%;
+}
 
-.modal-content{
+.modal-content {
   /* width: 60%; */
   overflow: hidden;
-  border-radius: 10rpx;}
-  .input{
-  border:1px grey solid;
-  height:1.8em;
-  margin:auto;
+  border-radius: 10rpx;
 }
-.renew_title{
-  text-align:center;
+
+.input {
+  border: 1px grey solid;
+  height: 1.8em;
+  margin: auto;
+}
+
+.renew_title {
+  text-align: center;
   font-weight: bold;
-  font-size:1.2em;
+  font-size: 1.2em;
 }
-.renew_time{
-  margin-top:50px;
-   text-align:center;
-   font-weight: bold;
+
+.renew_time {
+  margin-top: 50px;
+  text-align: center;
+  font-weight: bold;
 }
-.input{
+
+.input {
   text-align: center;
 }
 
-/*模态弹窗  */
-/*button*/ 
-.btn { 
- width: 80%; 
- padding: 20rpx 0; 
- border-radius: 10rpx; 
- text-align: center; 
- margin: 40rpx 10%; 
- background: #000; 
- color: #fff; 
-} 
- 
-/*mask*/ 
-.drawer_screen { 
- width: 100%; 
- height: 100%; 
- position: fixed; 
- top: 0; 
- left: 0; 
- z-index: 1000; 
- background: #000; 
- opacity: 0.5; 
- overflow: hidden; 
-} 
- 
-/*content*/ 
-.drawer_box { 
- width: 650rpx; 
- overflow: hidden; 
- position: fixed; 
- top: 50%; 
- left: 0; 
- z-index: 1001; 
- background: #FAFAFA; 
- margin: -150px 50rpx 0 50rpx; 
- border-radius: 3px; 
-} 
- 
-.drawer_title{ 
- padding:15px; 
- font: 20px "microsoft yahei"; 
- text-align: center; 
-} 
-.drawer_content { 
- height: 210px; 
- overflow-y: scroll; /*超出父盒子高度可滚动*/ 
-} 
- 
-.btn_ok{ 
- padding: 10px; 
- font: 20px "microsoft yahei"; 
- text-align: center; 
- border-top: 1px solid #E8E8EA; 
- color: #3CC51F; 
-} 
- 
-.top{ 
- padding-top:8px; 
-} 
-.bottom { 
- padding-bottom:8px; 
-} 
-.title { 
- height: 30px; 
- line-height: 30px; 
- width: 160rpx; 
- text-align: center; 
- display: inline-block; 
- font: 300 28rpx/30px "microsoft yahei"; 
-} 
- 
-.input_base { 
- border: 2rpx solid #ccc; 
- padding-left: 10rpx; 
- margin-right: 50rpx; 
-} 
-.input_h30{ 
- height: 30px; 
- line-height: 30px; 
-} 
-.input_h60{ 
- height: 60px; 
-} 
-.input_view{ 
- font: 12px "microsoft yahei"; 
- background: #fff; 
- color:#000; 
- line-height: 30px; 
-} 
- 
-input { 
- font: 12px "microsoft yahei"; 
- background: #fff; 
- color:#000 ; 
-} 
-radio{ 
- margin-right: 20px; 
-} 
-.grid { display: -webkit-box; display: box; } 
-.col-0 {-webkit-box-flex:0;box-flex:0;} 
-.col-1 {-webkit-box-flex:1;box-flex:1;} 
-.fl { float: left;} 
-.fr { float: right;} 
+/* 自定义模态弹窗 */
+
+/*button*/
+
+.tip {
+  text-align: center;
+  margin-top: 8%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+/*mask*/
+
+.drawer_screen {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: #000;
+  opacity: 0.5;
+  overflow: hidden;
+}
+
+/*content*/
+
+.drawer_box {
+  width: 650rpx;
+  overflow: hidden;
+  position: fixed;
+  top: 50%;
+  left: 0;
+  z-index: 1001;
+  background: #fafafa;
+  margin: -150px 50rpx 0 50rpx;
+  border-radius: 3px;
+}
+
+.drawer_title {
+  padding: 15px;
+  font: 20px "microsoft yahei";
+  text-align: center;
+}
+
+.drawer_content {
+  height: 410rpx;
+  overflow-y: scroll; /*超出父盒子高度可滚动*/
+}
+
+.btn_ok {
+  padding: 10px;
+  font: 20px "microsoft yahei";
+  text-align: center;
+  border-top: 1px solid #e8e8ea;
+  color: #3cc51f;
+}
+
+.top {
+  padding-top: 8px;
+  text-align: center;
+}
+
+.bottom {
+  padding-bottom: 8px;
+}
+
+.title {
+  height: 30px;
+  line-height: 30px;
+  width: 160rpx;
+  text-align: center;
+  display: inline-block;
+  font: 300 28rpx/30px "microsoft yahei";
+}
+
+.input_base {
+  border: 2rpx solid #ccc;
+  padding-left: 10rpx;
+  margin-right: 50rpx;
+}
+
+.input_h30 {
+  height: 30px;
+  line-height: 30px;
+}
+
+.input_h60 {
+  height: 60px;
+}
+
+.input_view {
+  font: 12px "microsoft yahei";
+  background: #fff;
+  color: #000;
+  line-height: 30px;
+}
+
+input {
+  font: 12px "microsoft yahei";
+  background: #fff;
+  color: #000;
+}
+
+radio {
+  margin-right: 20px;
+}
+
+.grid {
+  display: -webkit-box;
+  display: box;
+}
+
+.col-0 {
+  -webkit-box-flex: 0;
+  box-flex: 0;
+}
+
+.col-1 {
+  -webkit-box-flex: 1;
+  box-flex: 1;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}

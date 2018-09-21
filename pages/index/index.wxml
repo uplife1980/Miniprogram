@@ -3,7 +3,7 @@
   <view hidden="{{hideSearchDrawer}}">
     <view class="drawer_screen_search" bindtap="hideSearchLayer" catchtouchmove="forbidMove"></view>
     <view class="drawer_above_search">
-      <button size="mini" bindtap="showSelector">>>>试试教材助手</button>
+      <button  bindtap="showSelector">>>>试试教材助手</button>
       
     </view>
   </view>

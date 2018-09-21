@@ -141,15 +141,16 @@ Page({
       that.formSubmit(e)
 
   },
-  showWarn: function (str) {        //具体显示哪里填写不正确
+  showWarn: function (str,time=5000) {        //具体显示哪里填写不正确
     wx.showToast({
       title: str,
       image: '',
       icon: 'none',
       mask: true,
-      success: function (res) { setTimeout(function () { wx.hideToast() }, 5000) }
+      success: function (res) { setTimeout(function () { wx.hideToast() }, time) }
     })
   },
+
   formSubmit: function (e) {
     var that = this;
     var date = new Date() //9+4
@@ -158,7 +159,7 @@ Page({
 
 
     wx.showLoading({
-      title: '正在上传',
+      title: '上传' + that.data.progress + '%',
       mask: true,
     })
     //上传书籍信息部分
@@ -178,88 +179,20 @@ Page({
       },
       method: "POST",
       success: function (res) {
-        console.log(res.data.result)
+        console.log(res.data)
         bookid = res.data.bookid
+        if(res.data.code==500)
+          {
+            that.showWarn("服务器维护中",10000)
+            return
+          }
+        else if(res.data.code==404)
+          var code=res.data.code
         //图书不存在时去爬图书信息
+
         that.classifyTextbook(e, bookid)
-        if (!res.data.result) {
-          console.warn("新书,即将访问API")
-          wx.request({
-            // url: "https://api.jisuapi.com/isbn/query?appkey=85c75335fa427fe4&isbn=" + that.data.isbn,
-            url: "https://api.avatardata.cn/BookInfo/FindByIsbn?key=9bb781070f8d453f979300897dffb279&isbn=" + that.data.isbn,
-            data: {},
-            header: {},
-            method: "POST",
-            //把服务器没有的信息补全给服务器
-            success: function (res) {
-              console.log(res)
-              if (res.data.result != null) {
-                that.setData({ showModatStatus: true })
-                wx.request({
-                  url: Url.Url() + 'rentable/saveisbn',
-                  data: {
-                    title: "自定义书籍",
-                    picture: "",
-                    subtitle: "nosubtitle",
-                    author: "noauthor",
-                    summary: "nosummary",
-                    isbn: that.data.isbn,
-                    publisher: "nopublisher",
-                    pubdate: "6",
-                    page: "7",
-                    price: "8",
-                    binding: "9",
-                    isbn10: "10",
-                    keyword: "nokeyword",
-                  },
-                  header: {
-                    'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
-                  },
-                  method: "POST",
-                  success: function () { //上传图片部分
-                  }
-                })
-              }
 
-              else {
-                var tags = ''
-                for (var i in res.data.result.tags) {
-                  tags += res.data.result.tags[i].name
-                  tags += ','
-                }
-
-                wx.request({
-                  url: Url.Url() + 'rentable/saveisbn',
-                  data: {
-                    title: res.data.result.title,
-                    subtitle: res.data.result.subtitle,
-                    picture: res.data.result.images.small,
-                    author: res.data.result.author,
-                    summary: res.data.result.summary,
-                    isbn: res.data.result.Isbn13,
-                    publisher: res.data.result.publisher,
-                    pubdate: res.data.result.pubdate,
-                    page: res.data.result.pages,
-                    price: res.data.result.price,
-                    binding: res.data.result.binding,
-                    isbn10: res.data.result.Isbn10,
-                    keyword: tags,
-                  },
-                  header: {
-                    'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
-                  },
-                  method: "POST",
-                  success: function (res) {
-                    console.log(res)
-                  }
-                })
-              }
-            },
-            fail: function (res) { },
-            complete: function (res) { }
-          })
-        }
-        wx.uploadFile({//上传图片部分
+        const uploadTask = wx.uploadFile({//上传图片部分
           url: Url.Url() + 'upload/image',
           filePath: that.data.img[0],
           name: 'imagefile',
@@ -286,14 +219,15 @@ Page({
                 wx.hideLoading({//隐藏正在上传
                   success: function () {
                     wx.showToast({//显示上传成功
-                      title: '提交成功！',
+                      title: (code != 404 ? '提交成功！' :'稍后请手动补全图书信息'),
                       mask: true,
+                      icon:'none',
                       success: function () {
                         setTimeout(function () {
                           wx.switchTab({
                             url: '../index/index'
                           })
-                        }, 1500)
+                        }, 1800)
                       }
                     })
                   }
@@ -301,10 +235,14 @@ Page({
               },
             })
           },
-
+        })
+        uploadTask.onProgressUpdate((res) => {
+          wx.showLoading({
+            title: '上传' + res.progress + '%',
+            mask: true,
+          })
         })
       },
-
     })
 
   },
@@ -321,7 +259,7 @@ Page({
     var val = e.detail.value
     if (val[0] == 0) {
       that.setData({
-        publicTextbook: [0, 0]
+        publicTextbook: [0, 0,0]
       })
       if (val[1] != 0 || val[2] != 0)
         wx.showToast({
@@ -335,8 +273,9 @@ Page({
           }
         })
     }
+    else
     that.setData({
-      publicTextbook:e.detail.value
+      publicTextbook: e.detail.value
     })
   },
 
@@ -345,20 +284,20 @@ Page({
     var val = e.detail.value
     var that = this
     if (val.isTextbook)
-    wx.request({
-      method: "POST",
-      url: Url.Url() + 'rentable/classifyTextbook',
-      data: {
-        isbn: that.data.isbn,
-        bookid: bookid,
-        sort: val.textbook
-      },
-      header: {
-        'content-type': 'application/json'
-      },
-      success: function (res) {
-      }
-    })
+      wx.request({
+        method: "POST",
+        url: Url.Url() + 'rentable/classifyTextbook',
+        data: {
+          isbn: that.data.isbn,
+          bookid: bookid,
+          sort: val.textbook
+        },
+        header: {
+          'content-type': 'application/json'
+        },
+        success: function (res) {
+        }
+      })
 
   },
   changeAge: function (e) {      //更改年级显示出来
@@ -367,3 +306,82 @@ Page({
     })
   },
 })
+
+
+// if (res.data.result != "exist") {
+//   console.warn("新书,即将访问API")
+//   wx.request({
+//     // url: "https://api.jisuapi.com/isbn/query?appkey=85c75335fa427fe4&isbn=" + that.data.isbn,
+//     url: "https://api.avatardata.cn/BookInfo/FindByIsbn?key=9bb781070f8d453f979300897dffb279&isbn=" + that.data.isbn,
+//     data: {},
+//     header: {},
+//     method: "POST",
+//     //把服务器没有的信息补全给服务器
+//     success: function (res) {
+//       console.log(res)
+//       if (res.data.result != null) {
+//         that.setData({ showModatStatus: true })
+//         wx.request({
+//           url: Url.Url() + 'rentable/saveisbn',
+//           data: {
+//             title: "自定义书籍",
+//             picture: "",
+//             subtitle: "nosubtitle",
+//             author: "noauthor",
+//             summary: "nosummary",
+//             isbn: that.data.isbn,
+//             publisher: "nopublisher",
+//             pubdate: "6",
+//             page: "7",
+//             price: "8",
+//             binding: "9",
+//             isbn10: "10",
+//             keyword: "nokeyword",
+//           },
+//           header: {
+//             'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
+//           },
+//           method: "POST",
+//           success: function () { //上传图片部分
+//           }
+//         })
+//       }
+
+//       else {
+//         var tags = ''
+//         for (var i in res.data.result.tags) {
+//           tags += res.data.result.tags[i].name
+//           tags += ','
+//         }
+
+//         wx.request({
+//           url: Url.Url() + 'rentable/saveisbn',
+//           data: {
+//             title: res.data.result.title,
+//             subtitle: res.data.result.subtitle,
+//             picture: res.data.result.images.small,
+//             author: res.data.result.author,
+//             summary: res.data.result.summary,
+//             isbn: res.data.result.Isbn13,
+//             publisher: res.data.result.publisher,
+//             pubdate: res.data.result.pubdate,
+//             page: res.data.result.pages,
+//             price: res.data.result.price,
+//             binding: res.data.result.binding,
+//             isbn10: res.data.result.Isbn10,
+//             keyword: tags,
+//           },
+//           header: {
+//             'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
+//           },
+//           method: "POST",
+//           success: function (res) {
+//             console.log(res)
+//           }
+//         })
+//       }
+//     },
+//     fail: function (res) { },
+//     complete: function (res) { }
+//   })
+// }

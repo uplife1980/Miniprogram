@@ -27,11 +27,11 @@ Page({
 
   },
 
-  onLoad: function(options) { //抓取网址的物品ID
+  onLoad: function (options) { //抓取网址的物品ID
     this.fetchData(options.bookid)
   },
 
-  fetchData: function(bookid) { //用ID获取全部信息
+  fetchData: function (bookid) { //用ID获取全部信息
     var that = this;
     wx.request({
       method: "GET",
@@ -43,13 +43,28 @@ Page({
       header: {
         'Content-Type': 'application/json'
       },
-      success: function(res) {
+      success: function (res) {
         console.log(res.data)
+        if(res.data.code==404)
+        {
+          wx.showToast({
+            title: '已经被抢走啦',
+            image: '',
+            icon: 'none',
+            mask: true,
+            success: function (res) { setTimeout(function () { 
+              wx.switchTab({
+                url: '../index/index'
+              })
+            }, 1000) }
+          })
+          return
+        }
         that.setData({
           "name": res.data.detail.title,
           "author": res.data.detail.author,
           "publisher": res.data.detail.publisher,
-          "price":res.data.detail.price,
+          "price": res.data.detail.price,
           "keyword": res.data.detail.keyword,
           "picture1": res.data.detail.picture,
           "picture2": res.data.rentable.picture,
@@ -63,7 +78,8 @@ Page({
         })
         if (that.data.picture1 == '')
           that.setData({
-            picture1: "../../images/nobook.jpg"
+            // picture1: "../../images/nobook.jpg"
+            hidepicture:true
           })
         switch (that.data.way) {
           case 1:
@@ -101,7 +117,17 @@ Page({
 
 
   },
-  rorChange: function(e) { //买租更改时的时长隐藏
+
+
+  preview: function (e) {    //全屏查看图片
+    var that = this
+    console.log(e)
+    wx.previewImage({
+      urls: [that.data.picture1, that.data.picture2],
+      current: that.data[e.target.id]
+    })
+  },
+  rorChange: function (e) { //买租更改时的时长隐藏
     var that = this
     if (e.detail.value == true) {
       that.setData({
@@ -114,12 +140,14 @@ Page({
     }
   },
 
-  bindchange: function(e) { //更改年级显示出来
+
+
+  bindchange: function (e) { //更改年级显示出来
     this.setData({
       index: e.detail.value
     })
   },
-  userCheck: function(e) { //检查用户是否注册?
+  userCheck: function (e) { //检查用户是否注册?
     var that = this
     wx.request({
       url: Url.Url() + 'user/getUserInfo',
@@ -130,7 +158,7 @@ Page({
         'Content-Type': 'application/json'
       },
       method: "GET",
-      success: function(res) {
+      success: function (res) {
         if (res.data.status == 1) {
           that.setData({
             tel: parseInt(res.data.result.phone),
@@ -158,7 +186,7 @@ Page({
     })
   },
 
-  peroid_check: function(e) {
+  peroid_check: function (e) {
     var that = this;
     console.log(that.data.picture2)
     if (e.detail.value == 0) {
@@ -172,7 +200,7 @@ Page({
     }
   },
 
-  formSubmit: function(e) { //购买
+  formSubmit: function (e) { //购买
     var that = this
     var period = e.detail.value.peroid;
     if (e.detail.value.tel == '')
@@ -194,7 +222,7 @@ Page({
           'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
         },
         method: "POST",
-        success: function(res) {
+        success: function (res) {
           that.setData({
             showModalStatus: false
           })
@@ -215,7 +243,7 @@ Page({
           'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
         },
         method: "POST",
-        success: function(res) {
+        success: function (res) {
           if (res.data.result == 'badrequest') {
             wx.showToast({
               title: '图书已经被别人借走啦',
@@ -226,15 +254,15 @@ Page({
           that.setData({
             hidden: false
           })
-          setTimeout(function() {
+          setTimeout(function () {
 
             wx.navigateTo({
               url: '../buysuccess/buysuccess?phone=' + res.data.phone
             })
           }, 760)
         },
-        fail: function(res) {},
-        complete: function(res) {},
+        fail: function (res) { },
+        complete: function (res) { },
       })
     }
   },
@@ -251,11 +279,11 @@ Page({
 
 
   // 模态弹窗--显示补全用户信息
-  powerDrawer: function(e) {
+  powerDrawer: function (e) {
     var currentStatu = e.currentTarget.dataset.statu;
     this.util(currentStatu)
   },
-  util: function(currentStatu) {
+  util: function (currentStatu) {
     /* 动画部分 */
     // 第1步：创建动画实例 
     var animation = wx.createAnimation({
@@ -277,7 +305,7 @@ Page({
     })
 
     // 第5步：设置定时器到指定时候后，执行第二组动画 
-    setTimeout(function() {
+    setTimeout(function () {
       // 执行第二组动画 
       animation.opacity(1).rotateX(0).step();
       // 给数据对象储存的第一组动画，更替为执行完第二组动画的动画对象 
@@ -303,11 +331,11 @@ Page({
 
 
   // 模态弹窗,显示更多信息
-  seeDetail: function(e) {
+  seeDetail: function (e) {
     var currentStatu = e.currentTarget.dataset.statu;
     this.util2(currentStatu)
   },
-  util2: function(currentStatu) {
+  util2: function (currentStatu) {
     /* 动画部分 */
     // 第1步：创建动画实例 
     var animation = wx.createAnimation({
@@ -328,7 +356,7 @@ Page({
     })
 
     // 第5步：设置定时器到指定时候后，执行第二组动画 
-    setTimeout(function() {
+    setTimeout(function () {
       // 执行第二组动画 
       animation.opacity(1).rotateX(0).step();
       // 给数据对象储存的第一组动画，更替为执行完第二组动画的动画对象 

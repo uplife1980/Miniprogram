@@ -8,7 +8,9 @@ Page({
   },
   onLoad:function(){
     wx.showShareMenu()
-
+    wx.hideTabBarRedDot({
+      index:1
+    })
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,

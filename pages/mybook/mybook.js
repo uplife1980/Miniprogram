@@ -22,11 +22,11 @@ Page({
    */
   onLoad: function (options) {
     wx.showShareMenu()
-
     wx.showLoading({
       title: '加载中...',
       mask: true,
-      success: function (res) { setTimeout(function () { wx.hideLoading() }, 1000) },
+      success: function (res) {
+        setTimeout(function () { wx.hideLoading() }, 1000) },
     })
 
     var that = this;
@@ -260,8 +260,10 @@ Page({
   },
   fillContent:function(e){
     var that=this
-   if(!e.detail.value.title)
-     that.showWarn("至少填写图书名称!")
+
+    var val=e.detail.value
+   if(!val.title||!val.author||!val.publisher||!val.price)
+     that.showWarn("请不要漏下任何一项哦")
     else
     wx.request({
       url: Url.Url() + 'rentable/alternobook',
@@ -269,7 +271,8 @@ Page({
         isbn:e.target.id,
         title:e.detail.value.title,
         publisher:e.detail.value.publisher,
-        author:e.detail.value.author
+        author:e.detail.value.author,
+        price:e.detail.value.price+'元'
       },
        header: {
         'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -277,7 +280,7 @@ Page({
       method: "POST",
       success: function (res) {
         wx.showToast({
-          title: '提交成功！',
+          title: '提交成功!',
           success: function () {
             setTimeout(function () {
               wx.switchTab({
