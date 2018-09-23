@@ -47,13 +47,11 @@
     <view wx:for="{{neverborrow_list}}" wx:key="unique" wx:for-index="neverborrow_index" wx:for-item="neverborrow">
       <view class="stuff">
         <view class="wenzi"> {{neverborrow.title.originphone}}</view>
-        <button bindtap="powerDrawer" type="primary" data-statu="open" wx:if="{{neverborrow.title.originphone=='自定义书籍'}}">补全图书信息</button>
+        <button bindtap="powerDrawer" type="primary" data-index="{{neverborrow_index}}" wx:if="{{neverborrow.title.originphone=='自定义书籍'}}">补全图书信息</button>
         <!--模态弹窗  补全图书信息  -->
-        <!--mask-->
-        <view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view>
         <!--content-->
         <!--使用animation属性指定需要执行的动画-->
-        <view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}">
+        <view animation="{{animationData}}" class="drawer_box" wx:if="{{neverborrow.showCompleteSheet}}">
 
           <!--drawer content-->
           <form bindsubmit='fillContent' id="{{neverborrow.information}}">
