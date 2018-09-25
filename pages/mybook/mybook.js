@@ -244,13 +244,13 @@ Page({
       method: "POST",
       success: function (res) {
         wx.showToast({
-          title: '提交成功！',
+          title: '撤销成功！',
           success: function () {
             setTimeout(function () {
-              wx.switchTab({
-                url: '../users/users'
-              }, 1500)
-            })
+              wx.reLaunch({
+                url: '../index/index'
+              })
+            },1500)
           }
         })
       }
@@ -283,7 +283,7 @@ Page({
           title: '提交成功!',
           success: function () {
             setTimeout(function () {
-              wx.switchTab({
+              wx.reLaunch({
                 url: '../users/users'
               })
             },1500)

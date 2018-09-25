@@ -28,7 +28,9 @@ Page({
   },
 
   onLoad: function (options) { //抓取网址的物品ID
-    this.fetchData(options.bookid)
+    var that=this
+    that.fetchData(options.bookid)
+
   },
 
   fetchData: function (bookid) { //用ID获取全部信息
@@ -53,7 +55,7 @@ Page({
             icon: 'none',
             mask: true,
             success: function (res) { setTimeout(function () { 
-              wx.switchTab({
+              wx.reLaunch({
                 url: '../index/index'
               })
             }, 1000) }
@@ -75,6 +77,10 @@ Page({
           bookid: res.data.rentable.id,
           "summary": res.data.detail.summary,
           "isbn": res.data.detail.isbn,
+        })
+
+        wx.setNavigationBarTitle({
+          title: that.data.name.substr(0,10),
         })
         if (that.data.picture1 == '')
           that.setData({

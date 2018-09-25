@@ -224,7 +224,7 @@ Page({
                       icon:'none',
                       success: function () {
                         setTimeout(function () {
-                          wx.switchTab({
+                          wx.reLaunch({
                             url: '../index/index'
                           })
                         }, 1800)
