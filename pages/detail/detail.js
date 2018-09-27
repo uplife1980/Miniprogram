@@ -260,7 +260,6 @@ Page({
           that.setData({
             hidden: false
           })
-          that.sendWXMessage()
           setTimeout(function () {
 
             wx.navigateTo({
@@ -274,26 +273,7 @@ Page({
     }
   },
 
-//给卖家发送模板消息
-  sendWXMessage:function(){
-    var that=this
-    wx.request({
-      method: "POST",
-      url: Url.Url() + 'user/sendWXMessage',
-      data: {
-        bookid:that.data.bookid,
-        userid:app.globalData.openId,
-      },
-      header: {
-        'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
-      },
-      success: function (res) {      
-        console.log("发送模板消息的返回值"+res.data)
-      }
-    })
-
-
-  },
+  
 
   showWarn: function (str) {        //具体显示哪里填写不正确
     wx.showToast({
