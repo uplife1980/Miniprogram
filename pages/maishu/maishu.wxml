@@ -1,6 +1,6 @@
 <!--pages/maishu/maishu.wxml-->
 <view class="container">
-  <form bindsubmit='formCheck'>
+  <form bindsubmit='formCheck' report-submit="true">
     <button bindtap='iwantcode' type="{{getcode}}" class="button_type">扫描书后条形码</button>
     <view style="text-align:center">{{showwarn}}</view>
 
