@@ -93,8 +93,9 @@
     <block wx:for="{{bought_list}}" wx:key="unique" wx:for-index="bought_index" wx:for-item="bought">
       <view class="stuff">
         <view class="wenzi"> {{bought.title.originphone}}</view>
+
         <!-- <view class="wenzi">ISBN:{{bought.information}}</view> -->
-        <image src="{{bought.picture}}" mode="aspectFit" /> {{bought.title.originphone}}
+        <image src="{{bought.picture}}" mode="aspectFit" /> 
       </view>
     </block>
   </view>
@@ -104,8 +105,10 @@
     <view class="fronttitle">被他人预定的图书</view>
     <block wx:for="{{saling_list}}" wx:key="unique" wx:for-index="saling_index" wx:for-item="saling">
       <view class="stuff">
-              <view class="wenzi"> {{saling.title.originphone}}</view>
+      <view class="wenzi" style="text-align:center;font-weight:bold"> {{saling.title.originphone}}</view>
         <view class="wenzi"> 预订人手机号:{{saling.phone}}</view>
+        <text class="price">价格:{{saling.sale_price}}元</text>
+
         <!-- <view class="wenzi">ISBN:{{bought.information}}</view> -->
         <image src="{{saling.picture}}" mode="aspectFit" /> 
       </view>

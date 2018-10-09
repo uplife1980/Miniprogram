@@ -261,6 +261,19 @@ keyword=keyword.split(" ")
 
   getMessageAbility: function(e) { //在这里获得发送信息的能力
     console.log(e.detail.formId)
+    var date = new Date() 
+    wx.request({
+      method: "POST",
+      url: Url.Url() + 'user/saveFormId',
+      data: {
+        userid: app.globalData.openId,
+        formid: e.detail.formId,
+        date: date.getTime()
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      },
+    })
     this.powerClose()
 
    

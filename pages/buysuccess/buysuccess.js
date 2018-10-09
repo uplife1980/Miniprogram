@@ -36,7 +36,6 @@ Page({
       success: function (res) {
         console.log("userid: " + app.globalData.openId)
         console.log("formid: " + e.detail.formId)
-        console.log(date.getTime)
         wx.reLaunch({
           url: '../index/index'
         })

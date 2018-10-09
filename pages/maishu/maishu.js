@@ -178,7 +178,7 @@ Page({
       success: function (res) {
         console.log("userid: " + app.globalData.openId)
         console.log("formid: " + e.detail.formId)
-        console.log(date.getTime)
+        console.log(date.getTime())
       }
     })
 
@@ -257,8 +257,10 @@ Page({
           },
         })
         uploadTask.onProgressUpdate((res) => {
+          var progress=res.progress
+          if(typeof(progress) ==='undefined') console.warn("no use")
           wx.showLoading({
-            title: '上传' + res.progress + '%',
+            title: '上传' + progress + '%',
             mask: true,
           })
         })
