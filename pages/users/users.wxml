@@ -21,4 +21,7 @@
 <!-- <navigator url="../needstop/needstop" class="option">待确认的停止分享</navigator>
 <navigator url="../myshare/myshare" class="option">已经不在我手里的书</navigator> -->
 <view class="footer">@ECHO V2.2</view>
+<view class="ad" >
+  <ad  unit-id="adunit-71cf913800f6e4c3"></ad>
+</view>
 </view>

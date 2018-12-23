@@ -20,7 +20,7 @@ Page({
   },
   //获取formID
   backToIndex: function (e) {
-    var date = new Date() 
+    var date = new Date()
 
     wx.request({
       method: "POST",
@@ -42,5 +42,26 @@ Page({
       }
     })
 
+  },
+  // 复制电话到剪切板
+  setClipBoard: function () {
+    var that = this
+    wx.setClipboardData({
+      data: that.data.phone,
+      success: function () {
+        wx.showToast({ //用于没有搜索到书,第一次查看完所有图书也会显示
+          image: '',
+          icon: 'none',
+          title: '复制成功',
+          mask: true,
+          success: function (res) {
+            setTimeout(function () {
+              wx.hideToast()
+            }, 5000)
+          }
+
+        })
+      }
+    })
   }
 })

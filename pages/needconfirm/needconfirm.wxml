@@ -22,7 +22,7 @@
       <!-- <view class="book wenzi">ISBN号:{{book.information}}</view> -->
       <view class="book wenzi">{{book.title}}</view>
       <image src="{{book.picture}}" style="width:100%" mode="aspectFit"/>
-      <view class="wenzi">联系人手机:{{book.phone}}
+      <view class="wenzi">联系人手机:{{book.phone}}<button id="Clip{{booklist_sales_index}}" bindtap='setClipBoard_sales' size="mini">复制</button>
       </view>
       <view class="wenzi">图书售价
         <text class="price">{{book.sale_price}}元</text>

@@ -106,7 +106,7 @@
     <block wx:for="{{saling_list}}" wx:key="unique" wx:for-index="saling_index" wx:for-item="saling">
       <view class="stuff">
       <view class="wenzi" style="text-align:center;font-weight:bold"> {{saling.title.originphone}}</view>
-        <view class="wenzi"> 预订人手机号:{{saling.phone}}</view>
+        <view class="wenzi"> 预订人手机号:{{saling.phone}}<button id="Clip{{saling_index}}" bindtap='setClipBoard_saling' size="mini">复制</button></view>
         <text class="price">价格:{{saling.sale_price}}元</text>
 
         <!-- <view class="wenzi">ISBN:{{bought.information}}</view> -->

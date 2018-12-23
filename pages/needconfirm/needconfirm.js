@@ -159,5 +159,27 @@ Page({
      cancel_hidden:true
    })
    wx.redirectTo({ url: '../needconfirm/needconfirm' })
- }
+ },
+  // 复制电话到剪切板
+  setClipBoard_sales: function (e) {
+    var that = this;
+    var index = e.target.id.replace(/[^0-9]/ig, ""); 
+    wx.setClipboardData({
+      data: that.data.booklist_sales[index].phone,
+      success: function () {
+        wx.showToast({ //用于没有搜索到书,第一次查看完所有图书也会显示
+          image: '',
+          icon: 'none',
+          title: '复制成功',
+          mask: true,
+          success: function (res) {
+            setTimeout(function () {
+              wx.hideToast()
+            }, 5000)
+          }
+
+        })
+      }
+    })
+  }
 })

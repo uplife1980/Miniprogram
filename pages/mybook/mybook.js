@@ -92,7 +92,28 @@ Page({
       complete: function (res) { },
     })
   },
+  // 复制电话到剪切板
+  setClipBoard_saling: function (e) {
+    var that = this;
+    var index = e.target.id.replace(/[^0-9]/ig, "");
+    wx.setClipboardData({
+      data: that.data.saling_list[index].phone,
+      success: function () {
+        wx.showToast({ //用于没有搜索到书,第一次查看完所有图书也会显示
+          image: '',
+          icon: 'none',
+          title: '复制成功',
+          mask: true,
+          success: function (res) {
+            setTimeout(function () {
+              wx.hideToast()
+            }, 5000)
+          }
 
+        })
+      }
+    })
+  },
   renew: function (e) {        //续命
     var index = e.target.id.replace(/[^0-9]/ig, "");
     var that = this
