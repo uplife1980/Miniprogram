@@ -1,21 +1,48 @@
 <form bindsubmit='formSubmit'>
   <view>
+   
     <view class="bookname">{{name}}</view>
     <view style="text-align:right">{{author}}</view>
     <view style="text-align:right">{{publisher}}</view>
+    <view class="line"></view>
     <button bindtap='seeDetail' data-statu="open">↓ 显示更多信息 ↓</button>
+  <text>\n</text>
+<swiper class="swiper" indicator-dots="true" autoplay="true" interval="5000" duration="1000"
+    >  
+      <block wx:for="{{[1,2]}}" wx:for-index="index"> 
+      <view wx:if="{{index==0}}"> 
+        <swiper-item>  
+          <image src="{{picture1}}" hidden="{{hidepicture}}" class="top-img" mode="aspectFit"  id="picture1"></image> 
+        </swiper-item>  
+        </view>
+      <view wx:if="{{index==1}}">  
+       <swiper-item>  
+          <image src="{{picture2}}" hidden="{{hidepicture}}" class="top-img" mode="aspectFit" id="picture2"></image> 
+        </swiper-item>  
+      </view>
+      </block>  
+    </swiper>
 
     <scroll-view scroll-x>
+   <!--> 
       <view>
         <image src="{{picture1}}" hidden="{{hidepicture}}" class="top-img" mode="aspectFit" bindtap="preview" id="picture1"></image>
       </view>
       <view>
         <image src="{{picture2}}" class="top-img" mode="aspectFit" bindtap="preview" id="picture2"></image>
       </view>
+      <-->
     </scroll-view>
-
+<text>\n</text>
     <view class="line"></view>
     <!-- <view>书后ISBN号:{{information}}</view>  -->
+    <view class="line"></view>
+    <!-->
+    <scroll-view scroll-y="true" style="height: 400rpx;">
+    <text>简介：\n</text>
+    <view class="introduction">{{summary}}</view>
+    </scroll-view>
+    <-->
     <view class="line"></view>
     <view class="price">
       <view class="tag" ><text style="text-decoration:line-through;color:rgb(255,211,130)">原价:{{price}}</text></view>
@@ -52,7 +79,8 @@
     <view class="drawer_content">
       <view class="top grid">
       </view>
-     {{summary}}
+      <view class="introduction">
+     {{summary}}</view>
     </view>
 
 

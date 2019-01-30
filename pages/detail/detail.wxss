@@ -2,13 +2,14 @@
  font-size:1.3em;
  font-weight:bold;
  text-align: center;
- margin-bottom: 70rpx;
+ margin-bottom: 30rpx;
 }
 
 .tag {
   font-weight: bold;
   color: rgb(255, 166, 0);
   font-size: 1.1em;
+  
 }
 
 .line {
@@ -94,6 +95,7 @@
 .drawer_content { 
  height: 210px; 
  overflow-y: scroll; /*超出父盒子高度可滚动*/ 
+
 } 
  
 .btn_ok{ 
@@ -151,3 +153,19 @@ radio{
 .col-1 {-webkit-box-flex:1;box-flex:1;} 
 .fl { float: left;} 
 .fr { float: right;} 
+.swiper {
+  position:relative;
+
+  height: 500rpx;
+  width: 100%;
+}
+.swiper image {
+  height: 100%;
+  width: 100%;
+}
+.introduction
+{
+  display: flex;
+  margin-left: 3%;
+  margin-right:3%;
+}

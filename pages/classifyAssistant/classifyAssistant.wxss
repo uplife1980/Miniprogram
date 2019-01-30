@@ -51,6 +51,25 @@ background:#aaa;
   margin-top:4%;
 }
 .picker{
-  border:1px solid rgb(192, 192, 192);
-  border-radius: 7%;
+ 
+  width: 300rpx;
+  height: 200rpx;
+  margin-top: 20rpx;
+  background-color: white;
+  color: #999999;
+  border-radius: 0rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 30rpx;
+}
+
+.btnImg {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.picker::after {
+  border: 0; 
 }

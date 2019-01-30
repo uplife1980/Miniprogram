@@ -2,7 +2,10 @@
   <input class="search" bindfocus="showSearchLayer" bindconfirm='search' value="{{search_input_default}}" placeholder="搜索书籍" maxlength='30' comfirm-type="search" />
 <picker class="pick" mode="multiSelector" range="{{textbook}}" value="{{sort}}" bindchange="requestSort" >
   <view >
-    <button class="picker">选择专业年级</button>
+    <button class="picker">
+    <image class='btnImg' src='/images/classifyassiant1.png'></image>
+    <view>专业&年级</view>
+    </button>
   </view>
 </picker>
 

@@ -4,7 +4,7 @@ var Url = require('../../url.js');
 Page({
   data: {
     welcomeText: "您既可以在[我的]界面发布图书并留下联系方式，也可以在[首页]挑拣心怡的图书（支持搜索）。\n点击购买，即可获得卖家的联系方式（通过线下完成交易）。",
-    welcomeText2: "意见反馈:echo_huiyin@163.com",
+    welcomeText2: "意见反馈:\necho_huiyin@163.com",
     welcomeTitle: "欢迎使用",
     search_input_default: "",
     keyword: [],
@@ -14,10 +14,20 @@ Page({
     postsList: [],
     way: ["不可租售", "出租", "出售", "可租可售"],
     showModalStatus: false, //自定义模态弹窗
+    
     hideSearchDrawer: true,
-    hideSelector:true
+    hideSelector:true,
+        movies: [
+          { url:'/images/banner1.png'},
+          { url:'/images/banner2.png'},
+         
+        ]
+     
+    
   },
-
+  onLoad: function () {
+  } ,
+  
   onReady: function() { //由卖书转过来
     this.refreshPage()
   },
@@ -30,6 +40,7 @@ Page({
     wx.showShareMenu()
 
   },
+
   refreshPage: function() { //刷新postsList
     var that = this
     that.setData({
@@ -229,6 +240,23 @@ keyword=keyword.split(" ")
       }
     })
   },
+base:function(){
+    wx.chooseImage({
+    success: res => {
+      wx.getFileSystemManager().readFile({
+        filePath: 'imgaes/cover.png', //选择图片返回的相对路径
+        encoding: 'base64', //编码格式
+        success: res => { //成功的回调
+          console.log('data:image/png;base64,' + res.data)
+        }
+      })
+
+      //以下两行注释的是同步方法，不过我不太喜欢用。
+      //let base64 = wx.getFileSystemManager().readFileSync(res.tempFilePaths[0], 'base64') 
+      //console.log(base64)
+    }
+  })
+},
 
   //将每一个item加入到postsList
   addtoPostsList: function(item) {
@@ -261,19 +289,6 @@ keyword=keyword.split(" ")
 
   getMessageAbility: function(e) { //在这里获得发送信息的能力
     console.log(e.detail.formId)
-    var date = new Date() 
-    wx.request({
-      method: "POST",
-      url: Url.Url() + 'user/saveFormId',
-      data: {
-        userid: app.globalData.openId,
-        formid: e.detail.formId,
-        date: date.getTime()
-      },
-      header: {
-        'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
-      },
-    })
     this.powerClose()
 
    
@@ -334,3 +349,4 @@ keyword=keyword.split(" ")
     }
   }
 })
+

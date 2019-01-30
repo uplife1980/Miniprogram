@@ -1,25 +1,44 @@
 <view class="bg">
   <input class="search" bindfocus="showSearchLayer" bindconfirm='search' value="{{search_input_default}}" placeholder="搜索书籍/关键字" maxlength='30' comfirm-type="search" />
+
   <view hidden="{{hideSearchDrawer}}">
     <view class="drawer_screen_search" bindtap="hideSearchLayer" catchtouchmove="forbidMove"></view>
     <view class="drawer_above_search">
-      <button  bindtap="showSelector">>>>试试教材助手</button>
+      <button  bindtap="showSelector" class="btn">
+      <image class='btnImg' src='/images/纸飞机.png'></image>
+      试试教材助手</button>
       
     </view>
   </view>
+
+
+
+
+
   <view class="container">
     <scroll-view style="height:980rpx" scroll-y="true" bindscrolltolower="lower">
+      <!--index.wxml-->  
+    <swiper class="swiper" indicator-dots="true" autoplay="true" interval="5000" duration="1000"
+    >  
+      <block wx:for="{{movies}}" wx:for-index="index">  
+        <swiper-item>  
+          <image src="{{item.url}}" class="slide-image" mode="aspectFill"/>  
+        </swiper-item>  
+      </block>  
+    </swiper> 
+
       <block wx:for="{{postsList}}" wx:key="unique">
         <view class="stuff" index="{{index}}" data-bookid="{{item.id}}" catchtap="redictDetail">
           <view class="wenzi">
             <text style="text-align:center">{{item.title}}</text>
             <!-- <view class="line"></view> -->
             <!-- <text>图书ID:{{item.id}}</text>   -->
+
             <view class="line"></view>
 
             <text>状态:{{way[item.way]}}</text>
             <view class="line"></view>
-
+            <text style="text-decoration:line-through;color:rgb(255,211,130)" hidden="{{(item.way===1)?ture:false}}">原价:{{item.sale_price}}元</text>
             <text class="price" hidden="{{(item.way===2)?true:false}}">出租价格:{{item.rent_price}}元/天</text>
             <text class="price" hidden="{{(item.way===1)?true:false}}">出售价格:{{item.sale_price}}元</text>
           </view>
@@ -39,23 +58,54 @@
 <!--content-->
 <!--使用animation属性指定需要执行的动画-->
 <view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}">
+<!--书本状弹出框><-->
+  <view class="book">
+  <view style="background:url('cover.png')" >
+  <view class="page"id="first">
+      <form bindsubmit="getMessageAbility" report-submit="true">
+    <button class="btn_ok" form-type='submit'>我已知晓</button>
+
+  </form>
+  </view>
+  </view>
+  <view class="page" id="second">
+    <view class="drawer_title">{{welcomeTitle}}</view>
+    <view class="tip">
+      <text>{{welcomeText}}\n{{welcomeText2}}</text>
+    </view>
+
+  
+  
+  </view>
+</view>
+
 
   <!--drawer content-->
+ <!--
+ <image class="drawer_img" src="/images/2-1.png" mode="aspectFill">
+</image>
+-->
+<!--
   <view class="drawer_title">{{welcomeTitle}}</view>
+
   <view class="drawer_content">
 
     <!-- <view class="top grid">
       <label class="title col-0">标题</label>
       <input class="input_base input_h30 col-1" name="rName" value="可自行定义内容"></input>
     </view> -->
+    <!--
     <view class="tip">
       <text>{{welcomeText}}\n{{welcomeText2}}</text>
     </view>
 
   </view>
+  -->
+  <!--
   <form bindsubmit="getMessageAbility" report-submit="true">
     <button class="btn_ok" form-type='submit'>我已知晓</button>
 
   </form>
-  <!-- <button class="btn_ok" bindtap="powerClose" bindgetuserinfo="getUserInfo" open-type="getUserInfo">我已知晓</button> -->
+  -->
+  <!-- <button class="btn_ok" bindtap="powerClose" bindgetuserinfo="getUserInfo" open-type="getUserInfo">我已知晓</button>  -->
 </view>
